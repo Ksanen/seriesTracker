@@ -1,0 +1,26 @@
+.tag {
+  border-radius: 5px;
+  padding: 2px 10px;
+  font-size: 15px;
+  position: relative;
+  background-color: blue;
+  color: White;
+  width: fit-content;
+}
+.remove {
+  position: absolute;
+  fill: white;
+  background-color: red;
+  border-radius: 12px;
+  top: -7px;
+  padding: 2px;
+  right: -7px;
+  cursor: pointer;
+}
+.remove:hover {
+  background-color: rgb(241, 59, 59);
+}
+svg {
+  width: 15px;
+  height: 15px;
+}

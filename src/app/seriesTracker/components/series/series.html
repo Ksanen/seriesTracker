@@ -1,0 +1,46 @@
+@let season=series.season; @let episode=series.episode; @let name=series.name;
+@let hours=series.watchTime?.hours; @let minutes=series.watchTime?.minutes; @let
+seconds=series.watchTime?.seconds; @let watched=series.watched; @let
+type=series.type; @let genre=series.genre; @if(isEditMode){
+<series-form
+  [series]="series"
+  [even]="even"
+  [tagNames]="series.tagNames"
+  (closeForm)="toggleEditMode()"
+></series-form>
+} @else {
+<div
+  class="series"
+  [ngClass]="{
+    even: even,
+    odd: !even
+  }"
+>
+  <div class="series__data">
+    <p class="">Name: {{ name }}</p>
+    <p class="">Season: {{ season }}</p>
+    <p class="">Episode: {{ episode }}</p>
+    <p class="">Watched: {{ watched }}</p>
+    <p class="">
+      WatchTime: {{ hours | number : "2.0" }} : {{ minutes | number : "2.0" }} :
+      {{ seconds | number : "2.0" }}
+    </p>
+    <p>Type: @if(type?.length===0){none}@else{ {{ type }}}</p>
+    <p>Genre: @if(genre?.length===0){none}@else{ {{ genre }}}</p>
+    <div>
+      <div class="series__tags">
+        <div>tags:</div>
+        @for(tagName of series.tagNames; track tagName){
+        <tag [tagName]="tagName"></tag>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="series__buttons">
+    <button class="series__btn series__btn--edit" (click)="toggleEditMode()">
+      Edit
+    </button>
+  </div>
+</div>
+
+}

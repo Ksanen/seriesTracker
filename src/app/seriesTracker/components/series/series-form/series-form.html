@@ -1,0 +1,116 @@
+@let season=series.season; @let episode=series.episode; @let name=series.name;
+@let hours=series.watchTime?.hours; @let minutes=series.watchTime?.minutes; @let
+seconds=series.watchTime?.seconds; @let watched=series.watched; @let
+type=series.type; @let genre=series.genre;
+<form
+  class="series"
+  [ngClass]="{
+    even: even,
+    odd: !even
+  }"
+  [formGroup]="seriesForm"
+  (ngSubmit)="save()"
+>
+  <div class="series__data">
+    <div class="series__data__field">
+      <label>Name:</label>
+      <input type="text" formControlName="name" />
+    </div>
+    <div class="series__data__field">
+      <label>Season:</label>
+      <input
+        type="number"
+        min="0"
+        [value]="season"
+        formControlName="season"
+        required
+      />
+    </div>
+    <div class="series__data__field">
+      <label>Episode:</label>
+      <input
+        type="number"
+        min="0"
+        [value]="episode"
+        formControlName="episode"
+        required
+      />
+    </div>
+    <div class="series__data__field">
+      <label>Watched:</label>
+      <select formControlName="watched">
+        <option value="true">true</option>
+        <option value="false">false</option>
+      </select>
+    </div>
+    <div class="series__data__field">
+      <label>WatchTime:</label>
+      Hours<input
+        type="number"
+        [value]="hours ?? 0"
+        min="0"
+        max="23"
+        formControlName="hours"
+      />
+      Minutes<input
+        type="number"
+        [value]="minutes ?? 0"
+        min="0"
+        max="59"
+        formControlName="minutes"
+      />
+      Seconds<input
+        type="number"
+        [value]="seconds ?? 0"
+        min="0"
+        max="59"
+        formControlName="seconds"
+      />
+    </div>
+    <div class="series__data__field">
+      Type
+      <select formControlName="type">
+        <option value="">Choose type</option>
+        <option value="movie">movie</option>
+        <option value="series">series</option>
+      </select>
+    </div>
+    <div class="series__data__field">
+      Genre
+      <select formControlName="genre">
+        <option value="">Choose genre</option>
+        <option value="anime">anime</option>
+        <option value="donghua">donghua</option>
+        <option value="cartoon">cartoon</option>
+      </select>
+    </div>
+    <div class="series__data__field">
+      <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
+    </div>
+    <div class="series__tags">
+      <div>tags:</div>
+      @for(tagName of tagNames; track tagName){
+      <tag
+        [tagName]="tagName"
+        [changeMode]="true"
+        (tagRemoved)="removeTag($event)"
+      ></tag>
+      }
+    </div>
+  </div>
+  <div class="series__buttons">
+    <input
+      type="button"
+      class="series__btn series__btn--delete"
+      (click)="delete()"
+      value=" Delete"
+    />
+    <input
+      type="button"
+      class="series__btn series__btn--cancel"
+      (click)="cancelChanges()"
+      value="Cancel"
+    />
+    <input type="submit" class="series__btn series__btn--save" value="Save" />
+  </div>
+</form>

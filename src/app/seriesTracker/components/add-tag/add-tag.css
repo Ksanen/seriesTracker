@@ -1,0 +1,8 @@
+select,
+input {
+  padding: 2px;
+}
+.add-tag {
+  display: flex;
+  gap: 2px;
+}

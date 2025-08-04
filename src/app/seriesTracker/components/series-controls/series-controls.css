@@ -1,0 +1,27 @@
+.title {
+  text-align: center;
+}
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.filter__option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tags-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.view__settings {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.view__settings__option {
+  display: flex;
+  justify-content: space-between;
+}

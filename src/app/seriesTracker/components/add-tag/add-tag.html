@@ -1,0 +1,9 @@
+<div class="add-tag">
+  <select [(ngModel)]="tagName">
+    <option value="">select tag</option>
+    @for(tag of possibleTags; track tag){
+    <option [value]="tag">{{ tag }}</option>
+    }
+  </select>
+  <input type="button" value="add" (click)="addTag()" />
+</div>

@@ -1,0 +1,26 @@
+<div
+  class="overlay"
+  [ngClass]="{
+    'overlay--open': addSeriesIsOpen
+  }"
+></div>
+<header class="header">
+  <series-search
+    class="header__search"
+    (nameChange)="name.set($event)"
+  ></series-search>
+  <button class="header__add" (click)="toggleAddSeriesIsOpen()">
+    add Series
+  </button>
+</header>
+<div class="content">
+  <main class="content__list">
+    @if(addSeriesIsOpen){
+    <series-add (closeComponent)="toggleAddSeriesIsOpen()"></series-add>
+    }
+    <series-list [name]="name"></series-list>
+  </main>
+  <aside class="content__aside">
+    <series-controls></series-controls>
+  </aside>
+</div>

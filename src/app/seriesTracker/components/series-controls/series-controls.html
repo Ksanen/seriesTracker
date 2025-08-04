@@ -1,0 +1,82 @@
+<h1 class="title">Filter</h1>
+<div class="filter">
+  <div class="filter__option">
+    <p>Type</p>
+    <select>
+      <option value="">Choose type</option>
+      <option value="movie">movie</option>
+      <option value="series">series</option>
+    </select>
+  </div>
+  <div class="filter__option">
+    <p>Genre</p>
+    <select formControlName="genre">
+      <option value="">Choose genre</option>
+      <option value="anime">Anime</option>
+      <option value="donghua">Donghua</option>
+      <option value="kreskówka">Cartoon</option>
+    </select>
+  </div>
+  <div class="filter__option">
+    <p>watched</p>
+    <select>
+      <option value="">Choose</option>
+      <option value="true">true</option>
+      <option value="false">false</option>
+    </select>
+  </div>
+  <div class="filter__option">
+    <p>tags</p>
+    <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
+  </div>
+  <div class="tags-container">
+    @for(tagName of tagNames;track tagName){
+    <tag
+      [changeMode]="true"
+      [tagName]="tagName"
+      (tagRemoved)="removeTag($event)"
+    ></tag>
+    } @if(tagNames.length===0){ brak tagów }
+  </div>
+  <div class="filter__option">
+    <p>season</p>
+    <input type="number" />
+  </div>
+</div>
+<div class="view">
+  <h1 class="title">View settings</h1>
+  <div class="view__settings">
+    <div class="view__settings__option">
+      <p>Name</p>
+      <input type="checkbox" />
+    </div>
+    <div class="view__settings__option">
+      <p>Season</p>
+      <input type="checkbox" />
+    </div>
+    <div class="view__settings__option">
+      <p>Episode</p>
+      <input type="checkbox" />
+    </div>
+    <div class="view__settings__option">
+      <p>Watched</p>
+      <input type="checkbox" />
+    </div>
+    <div class="view__settings__option">
+      <p>WatchTime</p>
+      <input type="checkbox" />
+    </div>
+    <div class="view__settings__option">
+      <p>Type</p>
+      <input type="checkbox" />
+    </div>
+    <div class="view__settings__option">
+      <p>genre</p>
+      <input type="checkbox" />
+    </div>
+    <div class="view__settings__option">
+      <p>tags</p>
+      <input type="checkbox" />
+    </div>
+  </div>
+</div>

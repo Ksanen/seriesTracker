@@ -1,0 +1,73 @@
+.form {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  width: clamp(200px, 50%, 600px);
+  background-color: rgb(113, 175, 245);
+  padding: 10px;
+  border-radius: 12px;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.form--show {
+  display: flex;
+}
+input[type="text"] {
+  width: clamp(50px, 100%, 300px);
+  padding: 5px;
+  outline: none;
+}
+input[type="text"].invalid {
+  outline: 1px solid red;
+}
+input[type="number"] {
+  width: 50px;
+}
+.form__field {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+.form__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.form__btn {
+  border-radius: 12px;
+  outline: none;
+  border: none;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+}
+.form__btn--add {
+  background-color: green;
+}
+.form__btn--add:hover {
+  background-color: rgb(4, 161, 4);
+}
+.form__btn--close {
+  background-color: red;
+}
+.form__btn--close:hover {
+  background-color: rgb(228, 37, 37);
+}
+.form__field__tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.form__field__time {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.form__field__time__field {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}

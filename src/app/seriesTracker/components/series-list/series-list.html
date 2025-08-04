@@ -1,0 +1,7 @@
+@for(series of filteredAnime() ;track series._id;let even=$even ){
+<div class="list">
+  <series [even]="even" [series]="series"></series>
+</div>
+}@empty{
+<div>There is no series</div>
+}

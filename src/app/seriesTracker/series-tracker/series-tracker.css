@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  padding: 0.5rem;
+  gap: 10px;
+}
+.header__search {
+  flex-grow: 1;
+}
+.header__add {
+  background-color: blue;
+  color: White;
+  border: none;
+  padding: 10px;
+  outline: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 200m ease;
+}
+.header__add:hover {
+  background-color: rgb(50, 50, 245);
+}
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.overlay--open {
+  display: block;
+}
+.content {
+  display: flex;
+}
+.content__list {
+  flex-grow: 1;
+}
+.content__aside {
+  width: 500px;
+  padding: 1rem;
+  background-color: aqua;
+}

@@ -1,0 +1,87 @@
+<form class="form form--show" [formGroup]="seriesForm" (ngSubmit)="onSubmit()">
+  <div class="form__field">
+    Name
+    <input type="text" formControlName="name" />
+  </div>
+  <div class="form__field">
+    Type
+    <select formControlName="type">
+      <option value="">Choose type</option>
+      <option value="movie">movie</option>
+      <option value="series">series</option>
+    </select>
+  </div>
+  <div class="form__field">
+    Genre
+    <select formControlName="genre">
+      <option value="">Choose genre</option>
+      <option value="anime">Anime</option>
+      <option value="donghua">Donghua</option>
+      <option value="kreskówka">Cartoon</option>
+    </select>
+  </div>
+  <div class="form__field">
+    add tag
+    <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
+  </div>
+
+  <div class="form__field">
+    <div>tags:</div>
+    <div class="form__field__tags">
+      @for(tagName of tagNames;track tagName){
+      <tag
+        [changeMode]="true"
+        [tagName]="tagName"
+        (tagRemoved)="removeTag($event)"
+      ></tag>
+      }
+    </div>
+  </div>
+  <div class="form__field">
+    Season:<input min="0" type="number" formControlName="season" />
+  </div>
+  <div class="form__field">
+    Episode:<input min="0" type="number" formControlName="episode" />
+  </div>
+  <div class="form__field">
+    Watched:
+    <select formControlName="watched">
+      <option value="false">false</option>
+      <option value="true">true</option>
+    </select>
+  </div>
+  <div class="form__field">
+    WatchTime:
+    <div class="form__field__time">
+      <div class="form__field__time__field">
+        hours<input type="number" min="0" max="23" formControlName="hours" />
+      </div>
+      <div class="form__field__time__field">
+        minutes<input
+          type="number"
+          min="0"
+          max="59"
+          formControlName="minutes"
+        />
+      </div>
+      <div class="form__field__time__field">
+        seconds<input
+          type="number"
+          min="0"
+          max="59"
+          formControlName="seconds"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="form__buttons">
+    <input
+      type="button"
+      class="form__btn form__btn--close"
+      value="close"
+      (click)="close()"
+    />
+    <input class="form__btn form__btn--add" type="submit" value="add" />
+  </div>
+</form>
