@@ -10,8 +10,11 @@
       class="header__search"
       (nameChange)="name.set($event)"
     ></series-search>
-    <button class="header__add" (click)="toggleAddSeriesIsOpen()">
+    <button class="btn btn--add" (click)="toggleAddSeriesIsOpen()">
       add Series
+    </button>
+    <button class="btn btn--open-settings" (click)="toggleAside()">
+      @if(asideIsOpen){ Close settings }@else { Open settings }
     </button>
   </header>
   <div class="content">
@@ -21,9 +24,16 @@
       }
       <series-list [name]="name"></series-list>
     </main>
-    <aside class="aside aside--open">
-      <series-filter></series-filter>
-      <series-view-settings></series-view-settings>
+    <aside
+      [ngClass]="{
+        aside: true,
+        'aside--open': asideIsOpen
+      }"
+    >
+      <div class="aside__content">
+        <series-filter></series-filter>
+        <series-view-settings></series-view-settings>
+      </div>
     </aside>
   </div>
 </div>

@@ -1,7 +1,5 @@
-@for(series of filteredSeries() ;track series._id;let even=$even ){
 <div class="list">
+  @for(series of filteredSeries() ;track series._id;let even=$even ){
   <series [even]="even" [series]="series"></series>
+  }@empty{ There is no series }
 </div>
-}@empty{
-<div>There is no series</div>
-}

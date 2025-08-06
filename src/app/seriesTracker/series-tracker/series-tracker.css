@@ -11,9 +11,7 @@
 .header__search {
   flex-grow: 1;
 }
-.header__add {
-  background-color: blue;
-  color: White;
+.btn {
   border: none;
   padding: 10px;
   outline: none;
@@ -21,8 +19,18 @@
   cursor: pointer;
   transition: all 200m ease;
 }
-.header__add:hover {
+.btn--add {
+  background-color: blue;
+  color: White;
+}
+.btn--add:hover {
   background-color: rgb(50, 50, 245);
+}
+.btn--open-settings {
+  background-color: yellow;
+}
+.btn--open-settings:hover {
+  background-color: rgb(209, 209, 10);
 }
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
@@ -30,6 +38,7 @@
   width: 100%;
   height: 100%;
   display: none;
+  z-index: 9;
 }
 .overlay--open {
   display: block;
@@ -39,25 +48,44 @@
   flex-grow: 1;
   background-color: gray;
   position: relative;
+  overflow: hidden;
 }
 .content__list {
   flex-grow: 1;
+  overflow-y: auto;
 }
 .aside {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 400px;
-  padding: 1rem;
   background-color: aqua;
-  display: none;
   height: 100%;
+  transition: width 400ms ease;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.aside__content {
+  padding: 1rem;
 }
 .aside--open {
-  display: block;
+  width: 400px;
 }
 @media only screen and (min-width: 1000px) {
   .aside {
     position: static;
+    transform: translateX(0);
+    transition: all 0ms ease;
+    width: 400px;
+  }
+  .btn--open-settings {
+    display: none;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .aside {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .aside--open {
+    width: 100%;
   }
 }
