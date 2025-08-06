@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SeriesControls } from './series-controls';
+import { SeriesFilter } from './series-filter';
 
-describe('SeriesControls', () => {
-  let component: SeriesControls;
-  let fixture: ComponentFixture<SeriesControls>;
+describe('SeriesFilter', () => {
+  let component: SeriesFilter;
+  let fixture: ComponentFixture<SeriesFilter>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SeriesControls]
+      imports: [SeriesFilter]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SeriesControls);
+    fixture = TestBed.createComponent(SeriesFilter);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

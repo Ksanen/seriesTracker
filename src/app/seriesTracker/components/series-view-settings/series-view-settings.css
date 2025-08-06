@@ -1,0 +1,12 @@
+.view__settings {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.view__settings__option {
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  text-align: center;
+}

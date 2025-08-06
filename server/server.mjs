@@ -3,8 +3,11 @@ import connectDb from "./src/config/db.mjs";
 import SeriesModel from "./src/models/series.mjs";
 import cors from "cors";
 import nameExists from "./src/utils/nameExists.mjs";
-import { checkSchema, validationResult } from "express-validator";
+import { checkSchema, validationResult, body } from "express-validator";
 import seriesSchema from "./src/utils/seriesSchema.mjs";
+import SeriesFilterSettingsModel from "./src/models/seriesSettings/filterSettings.mjs";
+import SeriesViewSettingsModel from "./src/models/seriesSettings/viewSettings.mjs";
+import SeriesViewSettingsSchema from "./src/utils/seriesViewSettingsSchema.mjs";
 connectDb();
 const app = express();
 app.use(
@@ -129,3 +132,70 @@ app.patch("/api/series/:id", checkSchema(seriesSchema), async (req, res) => {
       .json({ success: false, msg: "internal server error" });
   }
 });
+
+const defaultViewSettings = {
+  name: true,
+  season: true,
+  episode: true,
+  watched: true,
+  watchtime: true,
+  type: true,
+  genre: true,
+  tags: true,
+};
+const defaultFilterSettings = {
+  type: "",
+  genre: "",
+  watched: "",
+  tags: [],
+  season: "",
+  episode: "",
+};
+app.get("/api/series/settings/view", async (req, res) => {
+  try {
+    await SeriesViewSettingsModel.findOneAndUpdate(
+      {},
+      { $setOnInsert: defaultViewSettings },
+      { upsert: true, new: true }
+    );
+    const settings = await SeriesViewSettingsModel.findOne(
+      {},
+      { _id: 0, __v: 0 }
+    );
+    return res.status(200).json(settings);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "internal server error" });
+  }
+});
+app.get("/api/series/settings/filter", async (req, res) => {
+  try {
+    await SeriesFilterSettingsModel.findOneAndUpdate(
+      {},
+      { $setOnInsert: defaultViewSettings },
+      { upsert: true, new: true }
+    );
+    const settings = await SeriesFilterSettingsModel.findOne(
+      {},
+      { _id: 0, __v: 0 }
+    );
+    return res.status(200).json(settings);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ messaga: "internal server error" });
+  }
+});
+app.post(
+  "/api/series/settings/view",
+  checkSchema(SeriesViewSettingsSchema),
+  async (req, res) => {
+    try {
+      const newSettings = req.body;
+      await SeriesViewSettingsModel.updateOne({}, newSettings);
+      return res.status(200).json({ success: true, msg: "successful update" });
+    } catch (e) {
+      console.log("error: ", e);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
+);

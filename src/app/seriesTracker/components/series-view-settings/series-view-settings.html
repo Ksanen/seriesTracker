@@ -1,0 +1,38 @@
+<form class="view" [formGroup]="seriesViewForm" (ngSubmit)="onSubmit()">
+  <h1 class="title">View Settings</h1>
+  <div class="view__settings">
+    <div class="view__settings__option">
+      <p>Name</p>
+      <input type="checkbox" formControlName="name" />
+    </div>
+    <div class="view__settings__option">
+      <p>Season</p>
+      <input type="checkbox" formControlName="season" />
+    </div>
+    <div class="view__settings__option">
+      <p>Episode</p>
+      <input type="checkbox" formControlName="episode" />
+    </div>
+    <div class="view__settings__option">
+      <p>Watched</p>
+      <input type="checkbox" formControlName="watched" />
+    </div>
+    <div class="view__settings__option">
+      <p>WatchTime</p>
+      <input type="checkbox" formControlName="watchtime" />
+    </div>
+    <div class="view__settings__option">
+      <p>Type</p>
+      <input type="checkbox" formControlName="type" />
+    </div>
+    <div class="view__settings__option">
+      <p>genre</p>
+      <input type="checkbox" formControlName="genre" />
+    </div>
+    <div class="view__settings__option">
+      <p>tags</p>
+      <input type="checkbox" formControlName="tags" />
+    </div>
+  </div>
+  <input type="submit" value="Apply" />
+</form>

@@ -1,4 +1,4 @@
-@for(series of filteredAnime() ;track series._id;let even=$even ){
+@for(series of filteredSeries() ;track series._id;let even=$even ){
 <div class="list">
   <series [even]="even" [series]="series"></series>
 </div>

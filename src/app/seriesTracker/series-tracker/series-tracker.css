@@ -1,3 +1,8 @@
+.series-tracker {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 .header {
   display: flex;
   padding: 0.5rem;
@@ -31,12 +36,28 @@
 }
 .content {
   display: flex;
+  flex-grow: 1;
+  background-color: gray;
+  position: relative;
 }
 .content__list {
   flex-grow: 1;
 }
-.content__aside {
-  width: 500px;
+.aside {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 400px;
   padding: 1rem;
   background-color: aqua;
+  display: none;
+  height: 100%;
+}
+.aside--open {
+  display: block;
+}
+@media only screen and (min-width: 1000px) {
+  .aside {
+    position: static;
+  }
 }

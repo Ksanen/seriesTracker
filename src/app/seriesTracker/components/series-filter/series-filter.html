@@ -1,5 +1,5 @@
-<h1 class="title">Filter</h1>
-<div class="filter">
+<form class="filter">
+  <h1 class="title">Filter</h1>
   <div class="filter__option">
     <p>Type</p>
     <select>
@@ -10,7 +10,7 @@
   </div>
   <div class="filter__option">
     <p>Genre</p>
-    <select formControlName="genre">
+    <select>
       <option value="">Choose genre</option>
       <option value="anime">Anime</option>
       <option value="donghua">Donghua</option>
@@ -46,41 +46,5 @@
     <p>episode</p>
     <input type="number" />
   </div>
-</div>
-<div class="view">
-  <h1 class="title">View settings</h1>
-  <div class="view__settings">
-    <div class="view__settings__option">
-      <p>Name</p>
-      <input type="checkbox" />
-    </div>
-    <div class="view__settings__option">
-      <p>Season</p>
-      <input type="checkbox" />
-    </div>
-    <div class="view__settings__option">
-      <p>Episode</p>
-      <input type="checkbox" />
-    </div>
-    <div class="view__settings__option">
-      <p>Watched</p>
-      <input type="checkbox" />
-    </div>
-    <div class="view__settings__option">
-      <p>WatchTime</p>
-      <input type="checkbox" />
-    </div>
-    <div class="view__settings__option">
-      <p>Type</p>
-      <input type="checkbox" />
-    </div>
-    <div class="view__settings__option">
-      <p>genre</p>
-      <input type="checkbox" />
-    </div>
-    <div class="view__settings__option">
-      <p>tags</p>
-      <input type="checkbox" />
-    </div>
-  </div>
-</div>
+  <input type="submit" value="Apply" />
+</form>

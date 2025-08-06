@@ -17,16 +17,24 @@ type=series.type; @let genre=series.genre; @if(isEditMode){
   }"
 >
   <div class="series__data">
+    @if(viewSettings.name){
     <p class="">Name: {{ name }}</p>
+    } @if(viewSettings.season){
     <p class="">Season: {{ season }}</p>
+    } @if(viewSettings.episode){
     <p class="">Episode: {{ episode }}</p>
+    } @if(viewSettings.watched){
     <p class="">Watched: {{ watched }}</p>
+    } @if(viewSettings.watchtime){
     <p class="">
       WatchTime: {{ hours | number : "2.0" }} : {{ minutes | number : "2.0" }} :
       {{ seconds | number : "2.0" }}
     </p>
+    } @if(viewSettings.type){
     <p>Type: @if(type?.length===0){none}@else{ {{ type }}}</p>
+    } @if(viewSettings.genre){
     <p>Genre: @if(genre?.length===0){none}@else{ {{ genre }}}</p>
+    } @if(viewSettings.tags){
     <div>
       <div class="series__tags">
         <div>tags:</div>
@@ -35,6 +43,7 @@ type=series.type; @let genre=series.genre; @if(isEditMode){
         }
       </div>
     </div>
+    }
   </div>
   <div class="series__buttons">
     <button class="series__btn series__btn--edit" (click)="toggleEditMode()">
