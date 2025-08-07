@@ -17,6 +17,10 @@
 .form--show {
   display: flex;
 }
+input[type="checkbox"] {
+  height: 20px;
+  width: 50px;
+}
 input[type="text"],
 select {
   width: 300px;
@@ -46,22 +50,23 @@ input[type="number"] {
   flex-wrap: wrap;
 }
 .form__field__time {
+  display: flex;
   height: 0;
   flex-direction: column;
   gap: 5px;
   overflow: hidden;
-  transition: height 200ms ease;
+  transition: height 400ms ease;
 }
 .form__field__time--show {
-  display: flex;
-  height: 90px;
+  height: 130px;
   overflow: visible;
-  transition: height 200ms ease;
+  transition: height 400ms ease;
 }
 
 .form__field__time__field {
   display: flex;
   justify-content: space-between;
+  padding-left: 20px;
   gap: 10px;
 }
 @media only screen and (max-width: 600px) {

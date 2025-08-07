@@ -34,7 +34,7 @@
   transition: height 400ms ease;
 }
 .watch-time--show {
-  height: 100px;
+  height: 130px;
   transition: height 400ms ease;
 }
 .watch-time__field {
@@ -43,8 +43,8 @@
   align-items: center;
   justify-content: space-between;
 }
-.watch-time__field input {
-  width: 50px;
+.watch-time__field input[type="number"] {
+  width: 70px;
 }
 .series__tags {
   display: flex;
