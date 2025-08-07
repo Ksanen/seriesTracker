@@ -1,38 +1,68 @@
 <form class="view" [formGroup]="seriesViewForm" (ngSubmit)="onSubmit()">
   <h1 class="title">View Settings</h1>
   <div class="view__settings">
-    <div class="view__settings__option">
+    <div class="view__settings__option form-check form-switch">
       <p>Name</p>
-      <input type="checkbox" formControlName="name" />
+      <input class="form-check-input" type="checkbox" formControlName="name" />
     </div>
-    <div class="view__settings__option">
+    <div class="view__settings__option form-check form-switch">
       <p>Season</p>
-      <input type="checkbox" formControlName="season" />
+      <input
+        class="form-check-input"
+        type="checkbox"
+        formControlName="season"
+      />
     </div>
-    <div class="view__settings__option">
+    <div class="view__settings__option form-check form-switch">
       <p>Episode</p>
-      <input type="checkbox" formControlName="episode" />
+      <input
+        class="form-check-input"
+        type="checkbox"
+        formControlName="episode"
+      />
     </div>
-    <div class="view__settings__option">
+    <div class="view__settings__option form-check form-switch">
       <p>Watched</p>
-      <input type="checkbox" formControlName="watched" />
+      <input
+        class="form-check-input"
+        type="checkbox"
+        formControlName="watched"
+      />
     </div>
-    <div class="view__settings__option">
+    <div class="view__settings__option form-check form-switch">
       <p>WatchTime</p>
-      <input type="checkbox" formControlName="watchtime" />
+      <input
+        class="form-check-input"
+        type="checkbox"
+        formControlName="watchtime"
+      />
     </div>
-    <div class="view__settings__option">
+    <div class="view__settings__option form-check form-switch">
       <p>Type</p>
-      <input type="checkbox" formControlName="type" />
+      <input class="form-check-input" type="checkbox" formControlName="type" />
     </div>
-    <div class="view__settings__option">
+    <div class="view__settings__option form-check form-switch">
       <p>genre</p>
-      <input type="checkbox" formControlName="genre" />
+      <input class="form-check-input" type="checkbox" formControlName="genre" />
     </div>
-    <div class="view__settings__option">
+    <div class="view__settings__option form-check form-switch">
       <p>tags</p>
-      <input type="checkbox" formControlName="tags" />
+      <input class="form-check-input" type="checkbox" formControlName="tags" />
     </div>
   </div>
-  <input type="submit" value="Apply" />
+  <div class="buttons">
+    <input class="btn btn-primary" type="submit" value="Apply" />
+    <input
+      class="btn btn-success"
+      type="button"
+      value="enable all"
+      (click)="enableAll()"
+    />
+    <input
+      class="btn btn-dark"
+      type="button"
+      value="disable all"
+      (click)="disableAll()"
+    />
+  </div>
 </form>

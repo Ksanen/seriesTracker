@@ -16,3 +16,12 @@
   gap: 10px;
   flex-wrap: wrap;
 }
+select,
+input:not(input[type="button"], input[type="submit"]) {
+  width: 200px;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}

@@ -180,7 +180,6 @@ app.get("/api/series/settings/filter", async (req, res) => {
       {},
       { _id: 0, __v: 0 }
     );
-    console.log(settings);
     return res.status(200).json(settings);
   } catch (e) {
     console.log(e);

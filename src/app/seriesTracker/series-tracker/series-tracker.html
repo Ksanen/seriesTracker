@@ -10,10 +10,10 @@
       class="header__search"
       (nameChange)="name.set($event)"
     ></series-search>
-    <button class="btn btn--add" (click)="toggleAddSeriesIsOpen()">
+    <button class="btn btn-primary" (click)="toggleAddSeriesIsOpen()">
       add Series
     </button>
-    <button class="btn btn--open-settings" (click)="toggleAside()">
+    <button class="btn btn-dark hide-on-desktop" (click)="toggleAside()">
       @if(asideIsOpen){ Close settings }@else { Open settings }
     </button>
   </header>

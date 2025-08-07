@@ -5,20 +5,20 @@
   (ngSubmit)="onSubmit()"
 >
   <div class="form__field form__field--default">
-    <label class="form__field__label">Name</label>
-    <input type="text" formControlName="name" />
+    <label>Name</label>
+    <input class="form-control" type="text" formControlName="name" />
   </div>
   <div class="form__field form__field--default">
-    <label class="form__field__label">Type</label>
-    <select class="form__field__select" formControlName="type">
+    <label>Type</label>
+    <select class="form-select" formControlName="type">
       <option value="">Choose type</option>
       <option value="movie">movie</option>
       <option value="series">series</option>
     </select>
   </div>
   <div class="form__field form__field--default">
-    <label class="form__field__label">Genre</label>
-    <select class="form__field__select" formControlName="genre">
+    <label>Genre</label>
+    <select class="form-select" formControlName="genre">
       <option value="">Choose genre</option>
       <option value="anime">Anime</option>
       <option value="donghua">Donghua</option>
@@ -26,7 +26,7 @@
     </select>
   </div>
   <div class="form__field">
-    <label class="form__field__label">Add tag</label>
+    <label>Add tag</label>
     <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
   </div>
 
@@ -43,52 +43,81 @@
     </div>
   </div>
   <div class="form__field">
-    <label class="form__field__label">Season: </label
-    ><input min="0" type="number" formControlName="season" />
+    <label>Season: </label
+    ><input
+      class="form-control"
+      min="0"
+      type="number"
+      formControlName="season"
+    />
   </div>
   <div class="form__field">
-    <label class="form__field__label">Episode: </label
-    ><input min="0" type="number" formControlName="episode" />
+    <label>Episode: </label
+    ><input
+      class="form-control"
+      min="0"
+      type="number"
+      formControlName="episode"
+    />
   </div>
   <div class="form__field">
-    <label class="form__field__label">Watched: </label>
-    <select class="form__field__select" formControlName="watched">
+    <label>Watched: </label>
+    <select class="form-select" formControlName="watched">
       <option value="false">false</option>
       <option value="true">true</option>
     </select>
   </div>
-  <div class="form__field form__field--default">
-    <label class="form__field__label">WatchTime: </label>
-    <div class="form__field__time">
-      <div class="form__field__time__field">
-        hours<input type="number" min="0" max="23" formControlName="hours" />
-      </div>
-      <div class="form__field__time__field">
-        minutes<input
-          type="number"
-          min="0"
-          max="59"
-          formControlName="minutes"
-        />
-      </div>
-      <div class="form__field__time__field">
-        seconds<input
-          type="number"
-          min="0"
-          max="59"
-          formControlName="seconds"
-        />
-      </div>
+  <div class="form__field form-switch">
+    <label>WatchTime: </label>
+    <input
+      class="form-check-input"
+      type="checkbox"
+      [checked]="showWatchTime"
+      (click)="toggleShowWatchTime()"
+    />
+  </div>
+  <div
+    class="form__field__time"
+    [ngClass]="{
+      'form__field__time--show': showWatchTime
+    }"
+  >
+    <div class="form__field__time__field">
+      hours<input
+        class="form-control"
+        type="number"
+        min="0"
+        max="23"
+        formControlName="hours"
+      />
+    </div>
+    <div class="form__field__time__field">
+      minutes<input
+        class="form-control"
+        type="number"
+        min="0"
+        max="59"
+        formControlName="minutes"
+      />
+    </div>
+    <div class="form__field__time__field">
+      seconds<input
+        class="form-control"
+        type="number"
+        min="0"
+        max="59"
+        formControlName="seconds"
+      />
     </div>
   </div>
 
   <div class="form__buttons">
     <input
       type="button"
-      class="form__btn form__btn--close"
+      class="btn btn-danger"
       value="close"
       (click)="close()"
     />
-    <input class="form__btn form__btn--add" type="submit" value="add" />
+    <input class="btn btn-success" type="submit" value="add" />
   </div>
 </form>

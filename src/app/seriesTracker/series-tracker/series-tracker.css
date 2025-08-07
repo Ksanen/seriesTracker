@@ -11,27 +11,6 @@
 .header__search {
   flex-grow: 1;
 }
-.btn {
-  border: none;
-  padding: 10px;
-  outline: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 200m ease;
-}
-.btn--add {
-  background-color: blue;
-  color: White;
-}
-.btn--add:hover {
-  background-color: rgb(50, 50, 245);
-}
-.btn--open-settings {
-  background-color: yellow;
-}
-.btn--open-settings:hover {
-  background-color: rgb(209, 209, 10);
-}
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
@@ -54,6 +33,7 @@
   flex-grow: 1;
   overflow-y: auto;
 }
+
 .aside {
   background-color: aqua;
   height: 100%;
@@ -61,6 +41,7 @@
   width: 0;
   overflow: hidden;
   white-space: nowrap;
+  overflow-y: auto;
 }
 .aside__content {
   padding: 1rem;
@@ -75,8 +56,9 @@
     transition: all 0ms ease;
     width: 400px;
   }
-  .btn--open-settings {
+  .hide-on-desktop {
     display: none;
+    font-size: 50px;
   }
 }
 @media only screen and (max-width: 700px) {

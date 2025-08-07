@@ -32,7 +32,11 @@ export class SeriesForm implements OnInit {
   @Output() closeForm = new EventEmitter();
   @Output() tagNamesChange = new EventEmitter<string[]>();
   seriesForm!: FormGroup;
+  showWatchTime: boolean = true;
   destroyRef = inject(DestroyRef);
+  toggleShowWatchTime() {
+    this.showWatchTime = !this.showWatchTime;
+  }
   ngOnInit(): void {
     this.seriesForm = this.fb.group({
       name: [this.series.name, Validators.required],

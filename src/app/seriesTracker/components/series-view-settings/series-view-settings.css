@@ -6,7 +6,16 @@
 .view__settings__option {
   display: flex;
   justify-content: space-between;
+  padding: 0;
 }
 .title {
   text-align: center;
+}
+input[type="checkbox"] {
+  cursor: pointer;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
 }

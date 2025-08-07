@@ -14,11 +14,12 @@ type=series.type; @let genre=series.genre;
   <div class="series__data">
     <div class="series__data__field">
       <label>Name:</label>
-      <input type="text" formControlName="name" />
+      <input class="form-control" type="text" formControlName="name" />
     </div>
     <div class="series__data__field">
       <label>Season:</label>
       <input
+        class="form-control"
         type="number"
         min="0"
         [value]="season"
@@ -29,6 +30,7 @@ type=series.type; @let genre=series.genre;
     <div class="series__data__field">
       <label>Episode:</label>
       <input
+        class="form-control"
         type="number"
         min="0"
         [value]="episode"
@@ -38,38 +40,57 @@ type=series.type; @let genre=series.genre;
     </div>
     <div class="series__data__field">
       <label>Watched:</label>
-      <select formControlName="watched">
+      <select class="form-select" formControlName="watched">
         <option value="true">true</option>
         <option value="false">false</option>
       </select>
     </div>
-    <div class="series__data__field">
+    <div class="series__data__field form-check form-switch">
       <label>WatchTime:</label>
-      Hours<input
-        type="number"
-        [value]="hours ?? 0"
-        min="0"
-        max="23"
-        formControlName="hours"
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [checked]="showWatchTime"
+        (click)="toggleShowWatchTime()"
       />
-      Minutes<input
-        type="number"
-        [value]="minutes ?? 0"
-        min="0"
-        max="59"
-        formControlName="minutes"
-      />
-      Seconds<input
-        type="number"
-        [value]="seconds ?? 0"
-        min="0"
-        max="59"
-        formControlName="seconds"
-      />
+    </div>
+    <div
+      [ngClass]="{
+        'watch-time': true,
+        'watch-time--show': showWatchTime
+      }"
+    >
+      <div class="watch-time__field">
+        Hours<input
+          type="number"
+          [value]="hours ?? 0"
+          min="0"
+          max="23"
+          formControlName="hours"
+        />
+      </div>
+      <div class="watch-time__field">
+        Minutes<input
+          type="number"
+          [value]="minutes ?? 0"
+          min="0"
+          max="59"
+          formControlName="minutes"
+        />
+      </div>
+      <div class="watch-time__field">
+        Seconds<input
+          type="number"
+          [value]="seconds ?? 0"
+          min="0"
+          max="59"
+          formControlName="seconds"
+        />
+      </div>
     </div>
     <div class="series__data__field">
       Type
-      <select formControlName="type">
+      <select class="form-select" formControlName="type">
         <option value="">Choose type</option>
         <option value="movie">movie</option>
         <option value="series">series</option>
@@ -77,7 +98,7 @@ type=series.type; @let genre=series.genre;
     </div>
     <div class="series__data__field">
       Genre
-      <select formControlName="genre">
+      <select class="form-select" formControlName="genre">
         <option value="">Choose genre</option>
         <option value="anime">anime</option>
         <option value="donghua">donghua</option>
@@ -85,10 +106,10 @@ type=series.type; @let genre=series.genre;
       </select>
     </div>
     <div class="series__data__field">
+      <div>tags:</div>
       <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
     </div>
     <div class="series__tags">
-      <div>tags:</div>
       @for(tagName of tagNames; track tagName){
       <tag
         [tagName]="tagName"
@@ -101,16 +122,16 @@ type=series.type; @let genre=series.genre;
   <div class="series__buttons">
     <input
       type="button"
-      class="series__btn series__btn--delete"
+      class="btn btn-danger"
       (click)="delete()"
       value=" Delete"
     />
     <input
       type="button"
-      class="series__btn series__btn--cancel"
+      class="btn btn-secondary"
       (click)="cancelChanges()"
       value="Cancel"
     />
-    <input type="submit" class="series__btn series__btn--save" value="Save" />
+    <input type="submit" class="btn btn-success" value="Save" />
   </div>
 </form>

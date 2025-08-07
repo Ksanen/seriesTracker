@@ -45,4 +45,28 @@ export class SeriesViewSettings implements OnInit {
     const value = this.seriesViewForm.value;
     this.SeriesSettings.saveViewSettings(value);
   }
+  enableAll() {
+    this.seriesViewForm.patchValue({
+      name: true,
+      season: true,
+      episode: true,
+      watched: true,
+      watchtime: true,
+      type: true,
+      genre: true,
+      tags: true,
+    });
+  }
+  disableAll() {
+    this.seriesViewForm.patchValue({
+      name: false,
+      season: false,
+      episode: false,
+      watched: false,
+      watchtime: false,
+      type: false,
+      genre: false,
+      tags: false,
+    });
+  }
 }

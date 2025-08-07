@@ -18,9 +18,10 @@ import { AddTag } from '../add-tag/add-tag';
 import { SeriesApiService } from '../../services/seriesApiService';
 import SeriesToSend from '../../../shared/interfaces/seriesToSend';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'series-add',
-  imports: [Tag, FormsModule, AddTag, ReactiveFormsModule],
+  imports: [Tag, FormsModule, AddTag, ReactiveFormsModule, CommonModule],
   standalone: true,
   templateUrl: './series-add.html',
   styleUrl: './series-add.css',
@@ -28,6 +29,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class SeriesAdd {
   @Output() closeComponent = new EventEmitter<null>();
   seriesForm!: FormGroup;
+  showWatchTime: boolean = false;
   destroyRef = inject(DestroyRef);
   constructor(
     private fb: FormBuilder,
@@ -99,5 +101,16 @@ export class SeriesAdd {
           }
         },
       });
+  }
+  toggleShowWatchTime() {
+    this.showWatchTime = !this.showWatchTime;
+    this.resetWatchTime();
+  }
+  resetWatchTime() {
+    this.seriesForm.patchValue({
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    });
   }
 }

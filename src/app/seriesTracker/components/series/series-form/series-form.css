@@ -1,7 +1,7 @@
 .series {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   color: #ffffff;
   padding: 1rem;
   flex-wrap: wrap;
@@ -9,6 +9,7 @@
 }
 .series__buttons {
   display: flex;
+  justify-content: center;
   gap: 5px;
 }
 .series__data {
@@ -17,9 +18,33 @@
   gap: 10px;
 }
 .series__data__field {
+  padding: 0;
   display: flex;
   gap: 10px;
   align-items: center;
+  justify-content: space-between;
+}
+.watch-time {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  gap: 5px;
+  height: 0;
+  transition: height 400ms ease;
+}
+.watch-time--show {
+  height: 100px;
+  transition: height 400ms ease;
+}
+.watch-time__field {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+.watch-time__field input {
+  width: 50px;
 }
 .series__tags {
   display: flex;
@@ -31,31 +56,11 @@
 .odd {
   background-color: #1f1f1f;
 }
-.series__btn {
-  padding: 10px;
-  border: none;
-  outline: none;
-  border-radius: 12px;
-  cursor: pointer;
+
+.series__data__field :where(input[type="number"], input[type="text"], select) {
+  width: 300px;
 }
-.series__btn--save {
-  background-color: rgb(4, 75, 4);
-  color: white;
-}
-.series__btn--save:hover {
-  background-color: rgb(7, 114, 7);
-}
-.series__btn--delete {
-  background-color: red;
-  color: white;
-}
-.series__btn--delete:hover {
-  background-color: rgb(255, 43, 43);
-}
-.series__btn--cancel {
-  background-color: rgb(25, 75, 214);
-  color: white;
-}
-.series__btn--cancel:hover {
-  background-color: rgb(56, 102, 228);
+input[type="checkbox"] {
+  height: 20px;
+  width: 50px;
 }
