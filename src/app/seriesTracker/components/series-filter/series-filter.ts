@@ -58,7 +58,6 @@ export class SeriesFilter {
   onSubmit() {
     const value = this.seriesFilterForm.value;
     value.tags = this.tagNames;
-    console.log(value);
     this.SeriesSettings.saveFilterSettings(value);
   }
 

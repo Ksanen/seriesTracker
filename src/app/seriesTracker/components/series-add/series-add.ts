@@ -45,7 +45,7 @@ export class SeriesAdd {
       hours: 0,
       minutes: 0,
       seconds: 0,
-      watched: false,
+      watched: 0,
     });
   }
   tagNames: string[] = [];

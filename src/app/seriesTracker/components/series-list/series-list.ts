@@ -76,7 +76,7 @@ export class SeriesList implements OnInit {
       }
       if (
         settings.watched !== '' &&
-        Boolean(settings.watched) !== series.watched
+        Boolean(Number(settings.watched)) !== series.watched
       )
         return false;
       return true;
