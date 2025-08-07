@@ -1,19 +1,24 @@
-<form class="form form--show" [formGroup]="seriesForm" (ngSubmit)="onSubmit()">
-  <div class="form__field">
-    Name
+<form
+  #formContainer
+  class="form form--show"
+  [formGroup]="seriesForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="form__field form__field--default">
+    <label class="form__field__label">Name</label>
     <input type="text" formControlName="name" />
   </div>
-  <div class="form__field">
-    Type
-    <select formControlName="type">
+  <div class="form__field form__field--default">
+    <label class="form__field__label">Type</label>
+    <select class="form__field__select" formControlName="type">
       <option value="">Choose type</option>
       <option value="movie">movie</option>
       <option value="series">series</option>
     </select>
   </div>
-  <div class="form__field">
-    Genre
-    <select formControlName="genre">
+  <div class="form__field form__field--default">
+    <label class="form__field__label">Genre</label>
+    <select class="form__field__select" formControlName="genre">
       <option value="">Choose genre</option>
       <option value="anime">Anime</option>
       <option value="donghua">Donghua</option>
@@ -21,7 +26,7 @@
     </select>
   </div>
   <div class="form__field">
-    add tag
+    <label class="form__field__label">Add tag</label>
     <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
   </div>
 
@@ -38,20 +43,22 @@
     </div>
   </div>
   <div class="form__field">
-    Season:<input min="0" type="number" formControlName="season" />
+    <label class="form__field__label">Season: </label
+    ><input min="0" type="number" formControlName="season" />
   </div>
   <div class="form__field">
-    Episode:<input min="0" type="number" formControlName="episode" />
+    <label class="form__field__label">Episode: </label
+    ><input min="0" type="number" formControlName="episode" />
   </div>
   <div class="form__field">
-    Watched:
-    <select formControlName="watched">
+    <label class="form__field__label">Watched: </label>
+    <select class="form__field__select" formControlName="watched">
       <option value="false">false</option>
       <option value="true">true</option>
     </select>
   </div>
-  <div class="form__field">
-    WatchTime:
+  <div class="form__field form__field--default">
+    <label class="form__field__label">WatchTime: </label>
     <div class="form__field__time">
       <div class="form__field__time__field">
         hours<input type="number" min="0" max="23" formControlName="hours" />

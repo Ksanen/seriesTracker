@@ -8,6 +8,7 @@ import seriesSchema from "./src/utils/seriesSchema.mjs";
 import SeriesFilterSettingsModel from "./src/models/seriesSettings/filterSettings.mjs";
 import SeriesViewSettingsModel from "./src/models/seriesSettings/viewSettings.mjs";
 import SeriesViewSettingsSchema from "./src/utils/seriesViewSettingsSchema.mjs";
+import SeriesFilterSettingsSchema from "./src/utils/seriesFilterSettingsSchema.mjs";
 connectDb();
 const app = express();
 app.use(
@@ -148,8 +149,8 @@ const defaultFilterSettings = {
   genre: "",
   watched: "",
   tags: [],
-  season: "",
-  episode: "",
+  season: null,
+  episode: null,
 };
 app.get("/api/series/settings/view", async (req, res) => {
   try {
@@ -172,13 +173,14 @@ app.get("/api/series/settings/filter", async (req, res) => {
   try {
     await SeriesFilterSettingsModel.findOneAndUpdate(
       {},
-      { $setOnInsert: defaultViewSettings },
+      { $setOnInsert: defaultFilterSettings },
       { upsert: true, new: true }
     );
     const settings = await SeriesFilterSettingsModel.findOne(
       {},
       { _id: 0, __v: 0 }
     );
+    console.log(settings);
     return res.status(200).json(settings);
   } catch (e) {
     console.log(e);
@@ -192,6 +194,20 @@ app.post(
     try {
       const newSettings = req.body;
       await SeriesViewSettingsModel.updateOne({}, newSettings);
+      return res.status(200).json({ success: true, msg: "successful update" });
+    } catch (e) {
+      console.log("error: ", e);
+      return res.status(500).json({ message: "internal server error" });
+    }
+  }
+);
+app.post(
+  "/api/series/settings/filter",
+  checkSchema(SeriesFilterSettingsSchema),
+  async (req, res) => {
+    try {
+      const newSettings = req.body;
+      await SeriesFilterSettingsModel.updateOne({}, newSettings);
       return res.status(200).json({ success: true, msg: "successful update" });
     } catch (e) {
       console.log("error: ", e);

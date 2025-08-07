@@ -22,8 +22,8 @@ export class SeriesSettingsService {
     genre: '',
     watched: '',
     tags: [],
-    season: '',
-    episode: '',
+    season: null,
+    episode: null,
   };
   private _viewSettings$ = new BehaviorSubject<seriesViewSettings>(
     this.defaultViewSettings
@@ -52,7 +52,7 @@ export class SeriesSettingsService {
   getFilterSettings() {
     this.http
       .get<seriesFilterSettings>(
-        'http://localhost:3000/api/series/settings/view'
+        'http://localhost:3000/api/series/settings/filter'
       )
       .subscribe({
         next: (settings) => {

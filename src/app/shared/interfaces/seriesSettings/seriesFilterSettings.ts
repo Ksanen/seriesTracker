@@ -3,6 +3,6 @@ export default interface seriesFilterSettings {
   genre: string;
   watched: string;
   tags: string[];
-  season: string;
-  episode: string;
+  season: null;
+  episode: null;
 }

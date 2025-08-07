@@ -6,6 +6,7 @@ type=series.type; @let genre=series.genre; @if(isEditMode){
   [series]="series"
   [even]="even"
   [tagNames]="series.tagNames"
+  (tagNamesChange)="series.tagNames = $event"
   (closeForm)="toggleEditMode()"
 ></series-form>
 } @else {

@@ -1,8 +1,16 @@
-<form class="filter">
+<form class="filter" [formGroup]="seriesFilterForm" (ngSubmit)="onSubmit()">
   <h1 class="title">Filter</h1>
   <div class="filter__option">
+    <p>season</p>
+    <input type="number" formControlName="season" />
+  </div>
+  <div class="filter__option">
+    <p>episode</p>
+    <input type="number" formControlName="episode" />
+  </div>
+  <div class="filter__option">
     <p>Type</p>
-    <select>
+    <select formControlName="type">
       <option value="">Choose type</option>
       <option value="movie">movie</option>
       <option value="series">series</option>
@@ -10,7 +18,7 @@
   </div>
   <div class="filter__option">
     <p>Genre</p>
-    <select>
+    <select formControlName="genre">
       <option value="">Choose genre</option>
       <option value="anime">Anime</option>
       <option value="donghua">Donghua</option>
@@ -19,7 +27,7 @@
   </div>
   <div class="filter__option">
     <p>watched</p>
-    <select>
+    <select formControlName="watched">
       <option value="">Choose</option>
       <option value="true">true</option>
       <option value="false">false</option>
@@ -38,13 +46,7 @@
     ></tag>
     } @if(tagNames.length===0){ brak tagów }
   </div>
-  <div class="filter__option">
-    <p>season</p>
-    <input type="number" />
-  </div>
-  <div class="filter__option">
-    <p>episode</p>
-    <input type="number" />
-  </div>
+
   <input type="submit" value="Apply" />
+  <input type="button" value="reset" (click)="clearSettings()" />
 </form>

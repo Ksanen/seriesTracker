@@ -1,10 +1,12 @@
 .form {
   display: none;
   flex-direction: column;
+  max-height: 500px;
+  overflow-y: auto;
   gap: 10px;
   width: clamp(200px, 50%, 600px);
   background-color: rgb(113, 175, 245);
-  padding: 10px;
+  padding: 1rem;
   border-radius: 12px;
   top: 50%;
   left: 50%;
@@ -32,6 +34,7 @@ input[type="number"] {
   justify-content: space-between;
   gap: 5px;
 }
+
 .form__buttons {
   display: flex;
   justify-content: center;
@@ -67,8 +70,19 @@ input[type="number"] {
   flex-direction: column;
   gap: 5px;
 }
+.form__field__select {
+  height: 30px;
+}
 .form__field__time__field {
   display: flex;
   justify-content: space-between;
   gap: 10px;
+}
+@media only screen and (max-width: 600px) {
+  .form__field--default {
+    flex-direction: column;
+  }
+  .form__field--default .form__field__label {
+    text-align: center;
+  }
 }

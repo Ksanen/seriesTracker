@@ -5,14 +5,15 @@ import {
   inject,
 } from '@angular/core';
 import { SeriesSettingsService } from '../../services/seriesSettingsService';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AddTag } from '../add-tag/add-tag';
 import { Tag } from '../tag/tag';
+import seriesFilterSettings from '../../../shared/interfaces/seriesSettings/seriesFilterSettings';
 
 @Component({
   selector: 'series-filter',
-  imports: [AddTag, Tag],
+  imports: [AddTag, Tag, ReactiveFormsModule],
   standalone: true,
   templateUrl: './series-filter.html',
   styleUrl: './series-filter.css',
@@ -21,6 +22,14 @@ export class SeriesFilter {
   tagNames: string[] = [];
   destroyRef = inject(DestroyRef);
   seriesFilterForm!: FormGroup;
+  clearSettingsObject: seriesFilterSettings = {
+    episode: null,
+    season: null,
+    genre: '',
+    tags: [],
+    type: '',
+    watched: '',
+  };
   constructor(
     private SeriesSettings: SeriesSettingsService,
     private fb: FormBuilder,
@@ -36,8 +45,8 @@ export class SeriesFilter {
           watched: settings.watched,
           type: settings.type,
           genre: settings.genre,
-          tags: settings.tags,
         });
+        this.tagNames = [...settings.tags];
         this.cd.detectChanges();
       });
   }
@@ -48,6 +57,12 @@ export class SeriesFilter {
   }
   onSubmit() {
     const value = this.seriesFilterForm.value;
-    this.SeriesSettings.saveViewSettings(value);
+    value.tags = this.tagNames;
+    console.log(value);
+    this.SeriesSettings.saveFilterSettings(value);
+  }
+
+  clearSettings() {
+    this.seriesFilterForm.reset(this.clearSettingsObject);
   }
 }

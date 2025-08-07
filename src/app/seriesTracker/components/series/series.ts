@@ -22,7 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [DecimalPipe, CommonModule, Tag, ReactiveFormsModule, SeriesForm],
   standalone: true,
   templateUrl: './series.html',
-  styleUrl: './styl.css',
+  styleUrl: './series.css',
 })
 export class Series implements OnInit {
   @Input() even!: boolean;

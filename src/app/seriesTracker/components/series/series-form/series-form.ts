@@ -23,13 +23,14 @@ import { SeriesStoreService } from '../../../services/seriesStoreService';
   selector: 'series-form',
   imports: [FormsModule, Tag, AddTag, ReactiveFormsModule, CommonModule],
   templateUrl: './series-form.html',
-  styleUrl: '../styl.css',
+  styleUrl: './series-form.css',
 })
 export class SeriesForm implements OnInit {
   @Input() series!: SeriesInterface;
   @Input() even!: boolean;
   @Input() tagNames: string[] = [];
   @Output() closeForm = new EventEmitter();
+  @Output() tagNamesChange = new EventEmitter<string[]>();
   seriesForm!: FormGroup;
   destroyRef = inject(DestroyRef);
   ngOnInit(): void {
@@ -63,7 +64,9 @@ export class SeriesForm implements OnInit {
       seconds: this.series.watchTime.seconds,
       watched: this.series.watched,
     });
-    this.tagNames = [...this.series.tagNames];
+    console.log(this.tagNames);
+    console.log(this.series.tagNames);
+    this.tagNamesChange.emit(this.series.tagNames);
     this.closeForm.emit();
   }
   save() {
@@ -104,6 +107,7 @@ export class SeriesForm implements OnInit {
     this.store.deleteSeries(this.series._id);
   }
   removeTag(tagToRemove: string) {
+    /*tutaj */
     this.store.removeTagFromSeries(this.series._id, tagToRemove);
   }
 }

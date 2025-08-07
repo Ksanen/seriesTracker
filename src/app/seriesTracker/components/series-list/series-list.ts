@@ -13,6 +13,8 @@ import SeriesInterface from '../../../shared/interfaces/series';
 import { Series } from '../series/series';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SeriesSettingsService } from '../../services/seriesSettingsService';
+import seriesFilterSettings from '../../../shared/interfaces/seriesSettings/seriesFilterSettings';
 @Component({
   selector: 'series-list',
   imports: [Series],
@@ -24,7 +26,19 @@ export class SeriesList implements OnInit {
   @Input() name: Signal<string> = signal('');
   destroyRef = inject(DestroyRef);
   seriesList: WritableSignal<SeriesInterface[]> = signal([]);
-  constructor(private store: SeriesStoreService) {}
+
+  settings: WritableSignal<seriesFilterSettings> = signal({
+    episode: null,
+    season: null,
+    genre: '',
+    tags: [],
+    type: '',
+    watched: '',
+  });
+  constructor(
+    private store: SeriesStoreService,
+    private seriesSettings: SeriesSettingsService
+  ) {}
   ngOnInit(): void {
     this.store.getAllSeries();
     this.store.seriesList$
@@ -32,11 +46,40 @@ export class SeriesList implements OnInit {
       .subscribe((series) => {
         this.seriesList.set(series);
       });
+    this.seriesSettings.filterSettings$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (settings) => {
+          this.settings.set(settings);
+        },
+      });
   }
   filteredSeries = computed(() => {
     const nameValue = this.name().toLowerCase();
+    const settings = this.settings();
     return this.seriesList().filter((series) => {
-      return series.name.toLowerCase().includes(nameValue);
+      if (!series.name.toLowerCase().includes(nameValue)) {
+        return false;
+      }
+      if (settings.type !== '' && series.type !== settings.type) return false;
+      if (settings.genre !== '' && series.genre !== settings.genre)
+        return false;
+      if (settings.season !== null && series.season !== settings.season)
+        return false;
+      if (settings.episode !== null && series.episode !== settings.episode)
+        return false;
+      if (
+        settings.tags.length > 0 &&
+        !settings.tags.every((tag) => series.tagNames.includes(tag))
+      ) {
+        return false;
+      }
+      if (
+        settings.watched !== '' &&
+        Boolean(settings.watched) !== series.watched
+      )
+        return false;
+      return true;
     });
   });
 }
