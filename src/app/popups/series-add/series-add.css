@@ -1,5 +1,5 @@
 .form {
-  display: none;
+  display: flex;
   flex-direction: column;
   max-height: 700px;
   overflow-y: auto;
@@ -8,14 +8,18 @@
   background-color: rgb(113, 175, 245);
   padding: 1rem;
   border-radius: 12px;
-  top: 50%;
+  top: -50%;
   left: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
+  transition: all 400ms ease;
   z-index: 10;
+  opacity: 0;
 }
 .form--show {
-  display: flex;
+  top: 50%;
+  transition: all 400ms ease;
+  opacity: 1;
 }
 input[type="checkbox"] {
   height: 20px;
