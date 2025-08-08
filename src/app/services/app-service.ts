@@ -16,33 +16,23 @@ export class AppService {
     return this._options$.getValue();
   }
   options$ = this._options$.asObservable();
-  toggleAddSeriesForm() {
+  toggleOption<K extends keyof AppOptions>(key: K) {
     const updatedOptions: AppOptions = {
       ...this.currentOptions,
-      showAddSeriesForm: !this.currentOptions.showAddSeriesForm,
+      [key]: !this.currentOptions[key],
     };
     this._options$.next(updatedOptions);
+  }
+  toggleAddSeriesForm() {
+    this.toggleOption('showAddSeriesForm');
   }
   toggleAside() {
-    const updatedOptions: AppOptions = {
-      ...this.currentOptions,
-      showAside: !this.currentOptions.showAside,
-    };
-    this._options$.next(updatedOptions);
+    this.toggleOption('showAside');
   }
   toggleOverlay() {
-    const updatedOptions: AppOptions = {
-      ...this.currentOptions,
-      showOverlay: !this.currentOptions.showOverlay,
-    };
-    this._options$.next(updatedOptions);
+    this.toggleOption('showOverlay');
   }
   toggleShowDeleteSeriesConfirmation() {
-    const updatedOptions: AppOptions = {
-      ...this.currentOptions,
-      showDeleteSeriesConfirmation:
-        !this.currentOptions.showDeleteSeriesConfirmation,
-    };
-    this._options$.next(updatedOptions);
+    this.toggleOption('showDeleteSeriesConfirmation');
   }
 }
