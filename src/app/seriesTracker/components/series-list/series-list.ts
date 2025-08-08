@@ -44,7 +44,7 @@ export class SeriesList implements OnInit {
     this.store.seriesList$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((series) => {
-        this.seriesList.set(series);
+        this.seriesList.set([...series]);
       });
     this.seriesSettings.filterSettings$
       .pipe(takeUntilDestroyed(this.destroyRef))

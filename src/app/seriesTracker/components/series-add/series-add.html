@@ -1,6 +1,9 @@
 <form
   #formContainer
-  class="form form--show"
+  [ngClass]="{
+    form: true,
+    'form--show': showForm
+  }"
   [formGroup]="seriesForm"
   (ngSubmit)="onSubmit()"
 >

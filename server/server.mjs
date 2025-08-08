@@ -51,9 +51,11 @@ app.post("/api/series", checkSchema(seriesSchema), async (req, res) => {
         msg: "this name already exists",
       });
     }
-    await SeriesModel.create(req.body);
+    const lastSeries = await SeriesModel.create(req.body);
+    console.log(lastSeries);
     return res.status(200).send({
       success: true,
+      series: lastSeries,
       msg: "successful addition of the series",
     });
   } catch (e) {

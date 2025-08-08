@@ -1,11 +1,4 @@
-import {
-  Component,
-  DestroyRef,
-  EventEmitter,
-  inject,
-  Output,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Tag } from '../tag/tag';
 import {
   FormBuilder,
@@ -15,10 +8,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { AddTag } from '../add-tag/add-tag';
-import { SeriesApiService } from '../../services/seriesApiService';
 import SeriesToSend from '../../../shared/interfaces/seriesToSend';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+import { SeriesStoreService } from '../../services/seriesStoreService';
+import { AppService } from '../../../services/app-service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'series-add',
   imports: [Tag, FormsModule, AddTag, ReactiveFormsModule, CommonModule],
@@ -26,15 +20,22 @@ import { CommonModule } from '@angular/common';
   templateUrl: './series-add.html',
   styleUrl: './series-add.css',
 })
-export class SeriesAdd {
-  @Output() closeComponent = new EventEmitter<null>();
+export class SeriesAdd implements OnInit {
   seriesForm!: FormGroup;
   showWatchTime: boolean = false;
   destroyRef = inject(DestroyRef);
+  showForm: boolean = false;
+  ngOnInit(): void {
+    this.appService.options$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((options) => {
+        this.showForm = options.showAddSeriesForm;
+      });
+  }
   constructor(
     private fb: FormBuilder,
-    private seriesService: SeriesApiService,
-    private cd: ChangeDetectorRef
+    private store: SeriesStoreService,
+    private appService: AppService
   ) {
     this.seriesForm = this.fb.group({
       name: ['', Validators.required],
@@ -51,7 +52,7 @@ export class SeriesAdd {
   }
   tagNames: string[] = [];
   close() {
-    this.closeComponent.emit();
+    this.appService.toggleAddSeriesForm();
   }
   removeTag(tagNameToRemove: string) {
     this.tagNames = this.tagNames.filter(
@@ -79,30 +80,8 @@ export class SeriesAdd {
       console.log('invalid');
       return;
     }
-    this.seriesService
-      .add(objectToSubmit)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (response) => {
-          if (response.success) {
-            console.log(response);
-            this.close();
-            this.cd.detectChanges();
-          } else {
-            console.log('error1', response);
-          }
-        },
-        error: (e) => {
-          switch (e.status) {
-            case 400:
-              console.log('błąd walidacji');
-              break;
-            case 500:
-              console.log('Internal server error');
-              break;
-          }
-        },
-      });
+    this.store.addSeries(objectToSubmit);
+    this.close();
   }
   toggleShowWatchTime() {
     this.showWatchTime = !this.showWatchTime;

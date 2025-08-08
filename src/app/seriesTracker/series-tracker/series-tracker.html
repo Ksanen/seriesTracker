@@ -1,7 +1,7 @@
 <div
   class="overlay"
   [ngClass]="{
-    'overlay--open': addSeriesIsOpen
+    'overlay--open': options.showOverlay
   }"
 ></div>
 <div class="series-tracker">
@@ -14,20 +14,18 @@
       add Series
     </button>
     <button class="btn btn-dark hide-on-desktop" (click)="toggleAside()">
-      @if(asideIsOpen){ Close settings }@else { Open settings }
+      @if(options.showAside){ Close settings }@else { Open settings }
     </button>
   </header>
   <div class="content">
     <main class="content__list">
-      @if(addSeriesIsOpen){
-      <series-add (closeComponent)="toggleAddSeriesIsOpen()"></series-add>
-      }
+      <series-add></series-add>
       <series-list [name]="name"></series-list>
     </main>
     <aside
       [ngClass]="{
         aside: true,
-        'aside--open': asideIsOpen
+        'aside--open': options.showAside
       }"
     >
       <div class="aside__content">
