@@ -44,7 +44,7 @@ watchTimeActive=series.watchTimeActive; @if(isEditMode){
         <div>tags:</div>
         @for(tagName of series.tagNames; track tagName){
         <tag [tagName]="tagName"></tag>
-        }
+        } @if(series.tagNames.length===0){ none }
       </div>
     </div>
     }

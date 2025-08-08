@@ -20,6 +20,7 @@
 .series__data__field {
   padding: 0;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
   justify-content: space-between;
@@ -63,4 +64,7 @@
 input[type="checkbox"] {
   height: 20px;
   width: 50px;
+}
+label {
+  width: 100px;
 }

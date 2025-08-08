@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AddTag } from '../add-tag/add-tag';
 import { Tag } from '../tag/tag';
-import seriesFilterSettings from '../../../shared/interfaces/seriesSettings/seriesFilterSettings';
+import defaultFilterSettingsValues from '../../../shared/utils/defaultFilterSettingsValues';
 
 @Component({
   selector: 'series-filter',
@@ -22,14 +22,6 @@ export class SeriesFilter {
   tagNames: string[] = [];
   destroyRef = inject(DestroyRef);
   seriesFilterForm!: FormGroup;
-  clearSettingsObject: seriesFilterSettings = {
-    episode: null,
-    season: null,
-    genre: '',
-    tags: [],
-    type: '',
-    watched: '',
-  };
   constructor(
     private SeriesSettings: SeriesSettingsService,
     private fb: FormBuilder,
@@ -60,8 +52,8 @@ export class SeriesFilter {
     value.tags = this.tagNames;
     this.SeriesSettings.saveFilterSettings(value);
   }
-
   clearSettings() {
-    this.seriesFilterForm.reset(this.clearSettingsObject);
+    this.seriesFilterForm.reset(defaultFilterSettingsValues);
+    this.tagNames = [];
   }
 }

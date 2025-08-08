@@ -5,13 +5,13 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { AddTag } from '../../seriesTracker/components/add-tag/add-tag';
 import SeriesToSend from '../../shared/interfaces/seriesToSend';
 import { CommonModule } from '@angular/common';
 import { SeriesStoreService } from '../../seriesTracker/services/seriesStoreService';
 import { AppService } from '../../services/app-service';
+import defaultSeriesFormValues from '../../shared/utils/defaultSeriesFormValues';
 @Component({
   selector: 'series-add',
   imports: [Tag, FormsModule, AddTag, ReactiveFormsModule, CommonModule],
@@ -28,18 +28,7 @@ export class SeriesAdd {
     private store: SeriesStoreService,
     private app: AppService
   ) {
-    this.seriesForm = this.fb.group({
-      name: ['', Validators.required],
-      type: '',
-      genre: '',
-      season: 0,
-      episode: 0,
-      hours: 0,
-      watchTimeActive: false,
-      minutes: 0,
-      seconds: 0,
-      watched: 0,
-    });
+    this.seriesForm = this.fb.group(defaultSeriesFormValues);
   }
   tagNames: string[] = [];
   close() {
@@ -73,6 +62,7 @@ export class SeriesAdd {
       return;
     }
     this.store.addSeries(objectToSubmit);
+    this.seriesForm.reset(defaultSeriesFormValues);
     this.close();
   }
   toggleShowWatchTime() {
