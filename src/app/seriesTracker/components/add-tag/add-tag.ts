@@ -23,6 +23,5 @@ export class AddTag {
     this.tagName = '';
     this.tagNames.push(tagToAdd);
     this.addNewTag.emit(this.tagNames);
-    console.log(this.tagNames, 'add-tag');
   }
 }

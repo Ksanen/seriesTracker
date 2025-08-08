@@ -6,8 +6,7 @@ watchTimeActive=series.watchTimeActive; @if(isEditMode){
 <series-form
   [series]="series"
   [even]="even"
-  [tagNames]="tagNames"
-  (tagNamesChange)="tagNames = $event"
+  (tagNamesChange)="series.tagNames = $event"
   (closeForm)="toggleEditMode()"
 ></series-form>
 } @else {

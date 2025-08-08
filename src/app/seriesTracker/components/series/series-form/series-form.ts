@@ -28,9 +28,9 @@ import { SeriesStoreService } from '../../../services/seriesStoreService';
 export class SeriesForm implements OnInit {
   @Input() series!: SeriesInterface;
   @Input() even!: boolean;
-  @Input() tagNames: string[] = [];
   @Output() closeForm = new EventEmitter();
   @Output() tagNamesChange = new EventEmitter<string[]>();
+  tagNames: string[] = [];
   seriesForm!: FormGroup;
   showWatchTime!: boolean;
   destroyRef = inject(DestroyRef);
@@ -51,7 +51,7 @@ export class SeriesForm implements OnInit {
       seconds: this.series.watchTime.seconds,
       watched: this.series.watched,
     });
-    console.log(this.series.tagNames, 'series-form series');
+    this.tagNames = [...this.series.tagNames];
   }
   constructor(
     private fb: FormBuilder,
@@ -73,7 +73,6 @@ export class SeriesForm implements OnInit {
       watched: this.series.watched,
     });
     this.tagNames = [...this.series.tagNames];
-    console.log(this.tagNames, 'series-form');
     this.closeForm.emit();
   }
   save() {
