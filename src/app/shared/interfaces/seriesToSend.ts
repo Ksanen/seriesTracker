@@ -4,6 +4,7 @@ export default interface SeriesToSend {
   genre: string;
   season: number;
   episode: number;
+  watchTimeActive: boolean;
   watchTime: {
     hours: number;
     minutes: number;

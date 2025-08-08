@@ -5,6 +5,7 @@ export default interface SeriesInterface {
   genre: string;
   season: number;
   episode: number;
+  watchTimeActive: boolean;
   watchTime: {
     hours: number;
     minutes: number;

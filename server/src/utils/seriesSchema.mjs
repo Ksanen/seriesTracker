@@ -33,6 +33,10 @@ const seriesSchema = {
       errorMessage: "The product price must be a Integer",
     },
   },
+  watchTimeActive: {
+    isBoolean: true,
+    errorMessage: "watchTimeActive must be a boolean",
+  },
   "watchTime.*": {
     isInt: {
       required: true,

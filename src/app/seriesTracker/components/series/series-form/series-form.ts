@@ -32,23 +32,26 @@ export class SeriesForm implements OnInit {
   @Output() closeForm = new EventEmitter();
   @Output() tagNamesChange = new EventEmitter<string[]>();
   seriesForm!: FormGroup;
-  showWatchTime: boolean = true;
+  showWatchTime!: boolean;
   destroyRef = inject(DestroyRef);
   toggleShowWatchTime() {
     this.showWatchTime = !this.showWatchTime;
   }
   ngOnInit(): void {
+    this.showWatchTime = this.series.watchTimeActive;
     this.seriesForm = this.fb.group({
       name: [this.series.name, Validators.required],
       type: this.series.type,
       genre: this.series.genre,
       season: this.series.season,
       episode: this.series.episode,
+      watchTimeActive: this.series.watchTimeActive,
       hours: this.series.watchTime.hours,
       minutes: this.series.watchTime.minutes,
       seconds: this.series.watchTime.seconds,
       watched: this.series.watched,
     });
+    console.log(this.series.tagNames, 'series-form series');
   }
   constructor(
     private fb: FormBuilder,
@@ -64,13 +67,13 @@ export class SeriesForm implements OnInit {
       season: this.series.season,
       episode: this.series.episode,
       hours: this.series.watchTime.hours,
+      watchTimeActive: this.series.watchTimeActive,
       minutes: this.series.watchTime.minutes,
       seconds: this.series.watchTime.seconds,
       watched: this.series.watched,
     });
-    console.log(this.tagNames);
-    console.log(this.series.tagNames);
-    this.tagNamesChange.emit(this.series.tagNames);
+    this.tagNames = [...this.series.tagNames];
+    console.log(this.tagNames, 'series-form');
     this.closeForm.emit();
   }
   save() {
@@ -81,6 +84,7 @@ export class SeriesForm implements OnInit {
       genre: form.genre,
       season: form.season,
       episode: form.episode,
+      watchTimeActive: form.watchTimeActive,
       watchTime: {
         hours: form.hours,
         minutes: form.minutes,
@@ -99,6 +103,7 @@ export class SeriesForm implements OnInit {
       .subscribe({
         next: () => {
           Object.assign(this.series, series);
+          //this.tagNamesChange.emit(this.tagNames);
           this.closeForm.emit();
           this.cd.detectChanges();
         },
@@ -111,7 +116,6 @@ export class SeriesForm implements OnInit {
     this.store.deleteSeries(this.series._id);
   }
   removeTag(tagToRemove: string) {
-    /*tutaj */
-    this.store.removeTagFromSeries(this.series._id, tagToRemove);
+    this.tagNames = this.tagNames.filter((tagName) => tagName !== tagToRemove);
   }
 }

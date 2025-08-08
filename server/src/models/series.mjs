@@ -5,6 +5,7 @@ const seriesSchema = mongoose.Schema({
   genre: String,
   season: Number,
   episode: Number,
+  watchTimeActive: Boolean,
   watchTime: {
     hours: Number,
     minutes: Number,

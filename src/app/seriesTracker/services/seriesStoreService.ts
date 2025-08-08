@@ -27,15 +27,4 @@ export class SeriesStoreService {
       error: (err) => console.log(err),
     });
   }
-  removeTagFromSeries(seriesId: string, tagNameToRemove: string) {
-    let currentList = this._seriesList$.getValue();
-    for (let i = 0; i < currentList.length; i++) {
-      if (currentList[i]._id === seriesId) {
-        currentList[i].tagNames = currentList[i].tagNames.filter(
-          (tagName) => tagName !== tagNameToRemove
-        );
-      }
-    }
-    this._seriesList$.next(currentList);
-  }
 }

@@ -30,6 +30,7 @@ export class Series implements OnInit {
   @Output() deleteSeries = new EventEmitter<string>();
   destroyRef = inject(DestroyRef);
   isEditMode: boolean = false;
+  tagNames: string[] = [];
   viewSettings!: seriesViewSettings;
   constructor(
     private seriesSettings: SeriesSettingsService,
@@ -42,6 +43,7 @@ export class Series implements OnInit {
         this.viewSettings = settings;
         this.cd.detectChanges();
       });
+    this.tagNames = [...this.series.tagNames];
   }
   toggleEditMode() {
     this.isEditMode = !this.isEditMode;

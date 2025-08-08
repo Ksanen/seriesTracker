@@ -43,6 +43,7 @@ export class SeriesAdd {
       season: 0,
       episode: 0,
       hours: 0,
+      watchTimeActive: false,
       minutes: 0,
       seconds: 0,
       watched: 0,
@@ -65,6 +66,7 @@ export class SeriesAdd {
       genre: form.genre,
       season: form.season,
       episode: form.episode,
+      watchTimeActive: form.watchTimeActive,
       watchTime: {
         hours: form.hours,
         minutes: form.minutes,

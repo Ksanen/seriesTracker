@@ -1,7 +1,8 @@
 @let season=series.season; @let episode=series.episode; @let name=series.name;
 @let hours=series.watchTime?.hours; @let minutes=series.watchTime?.minutes; @let
 seconds=series.watchTime?.seconds; @let watched=series.watched; @let
-type=series.type; @let genre=series.genre;
+type=series.type; @let genre=series.genre; @let
+watchTimeActive=series.watchTimeActive;
 <form
   class="series"
   [ngClass]="{
@@ -50,8 +51,9 @@ type=series.type; @let genre=series.genre;
       <input
         type="checkbox"
         class="form-check-input"
-        [checked]="showWatchTime"
+        [checked]="watchTimeActive"
         (click)="toggleShowWatchTime()"
+        formControlName="watchTimeActive"
       />
     </div>
     <div

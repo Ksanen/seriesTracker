@@ -1,12 +1,13 @@
 @let season=series.season; @let episode=series.episode; @let name=series.name;
 @let hours=series.watchTime?.hours; @let minutes=series.watchTime?.minutes; @let
 seconds=series.watchTime?.seconds; @let watched=series.watched; @let
-type=series.type; @let genre=series.genre; @if(isEditMode){
+type=series.type; @let genre=series.genre; @let
+watchTimeActive=series.watchTimeActive; @if(isEditMode){
 <series-form
   [series]="series"
   [even]="even"
-  [tagNames]="series.tagNames"
-  (tagNamesChange)="series.tagNames = $event"
+  [tagNames]="tagNames"
+  (tagNamesChange)="tagNames = $event"
   (closeForm)="toggleEditMode()"
 ></series-form>
 } @else {
@@ -27,9 +28,12 @@ type=series.type; @let genre=series.genre; @if(isEditMode){
     } @if(viewSettings.watched){
     <p class="">Watched: {{ watched }}</p>
     } @if(viewSettings.watchtime){
+
     <p class="">
-      WatchTime: {{ hours | number : "2.0" }} : {{ minutes | number : "2.0" }} :
+      @if(watchTimeActive){ WatchTime: {{ hours | number : "2.0" }} :
+      {{ minutes | number : "2.0" }} :
       {{ seconds | number : "2.0" }}
+      } @else { WatchTime: none }
     </p>
     } @if(viewSettings.type){
     <p>Type: @if(type?.length===0){none}@else{ {{ type }}}</p>

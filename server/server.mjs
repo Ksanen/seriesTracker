@@ -107,6 +107,7 @@ app.patch("/api/series/:id", checkSchema(seriesSchema), async (req, res) => {
         genre: series.genre,
         season: series.season,
         episode: series.episode,
+        watchTimeActive: series.watchTimeActive,
         watchTime: {
           hours: series.watchTime.hours,
           minutes: series.watchTime.minutes,
