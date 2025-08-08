@@ -12,10 +12,10 @@ import { SeriesAdd } from '../../popups/series-add/series-add';
 import { CommonModule } from '@angular/common';
 import { SeriesViewSettings } from '../components/series-view-settings/series-view-settings';
 import { SeriesFilter } from '../components/series-filter/series-filter';
-import { AppService } from '../../services/app-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import AppOptions from '../../shared/interfaces/appOptions';
 import { SeriesDelete } from '../../popups/series-delete/series-delete';
+import { SeriesViewService } from '../services/series-view-service';
 @Component({
   selector: 'series-tracker',
   imports: [
@@ -35,19 +35,19 @@ export class SeriesTracker implements OnInit {
   name: WritableSignal<string> = signal('');
   destroyRef = inject(DestroyRef);
   options!: AppOptions;
-  constructor(private app: AppService) {}
+  constructor(private view: SeriesViewService) {}
   ngOnInit(): void {
-    this.app.options$
+    this.view.options$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((options) => {
         this.options = options;
       });
   }
   toggleAddSeriesIsOpen() {
-    this.app.toggleAddSeriesForm();
-    this.app.toggleOverlay();
+    this.view.toggleAddSeriesForm();
+    this.view.toggleOverlay();
   }
   toggleAside() {
-    this.app.toggleAside();
+    this.view.toggleAside();
   }
 }

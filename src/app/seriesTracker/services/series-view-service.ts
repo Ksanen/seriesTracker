@@ -1,11 +1,11 @@
-import { computed, Injectable, signal, Signal } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import AppOptions from '../shared/interfaces/appOptions';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import AppOptions from '../../shared/interfaces/appOptions';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AppService {
+export class SeriesViewService {
   private _options$ = new BehaviorSubject({
     showOverlay: false,
     showAddSeriesForm: false,
@@ -16,6 +16,7 @@ export class AppService {
     return this._options$.getValue();
   }
   options$ = this._options$.asObservable();
+
   toggleOption<K extends keyof AppOptions>(key: K) {
     const updatedOptions: AppOptions = {
       ...this.currentOptions,

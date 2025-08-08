@@ -3,33 +3,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import seriesFilterSettings from '../../shared/interfaces/seriesSettings/seriesFilterSettings';
 import seriesViewSettings from '../../shared/interfaces/seriesSettings/seriesViewSettings';
+import AppOptions from '../../shared/interfaces/appOptions';
+import defaultViewSettings from '../../shared/utils/defaultViewSettings';
+import defaultFilterSettings from '../../shared/utils/defaultFilterSettings';
 @Injectable({
   providedIn: 'root',
 })
 export class SeriesSettingsService {
-  private defaultViewSettings: seriesViewSettings = {
-    name: true,
-    season: true,
-    episode: true,
-    watched: true,
-    watchtime: true,
-    type: true,
-    genre: true,
-    tags: true,
-  };
-  private defaultFilterSettings: seriesFilterSettings = {
-    type: '',
-    genre: '',
-    watched: '',
-    tags: [],
-    season: null,
-    episode: null,
-  };
   private _viewSettings$ = new BehaviorSubject<seriesViewSettings>(
-    this.defaultViewSettings
+    defaultViewSettings
   );
   private _filterSettings$ = new BehaviorSubject<seriesFilterSettings>(
-    this.defaultFilterSettings
+    defaultFilterSettings
   );
   viewSettings$ = this._viewSettings$.asObservable();
   filterSettings$ = this._filterSettings$.asObservable();
@@ -59,7 +44,7 @@ export class SeriesSettingsService {
           this._filterSettings$.next(settings);
         },
         error: (error) => {
-          console.log('getting view settings failed', error);
+          console.log('getting filter settings failed', error);
         },
       });
   }

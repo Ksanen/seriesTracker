@@ -18,7 +18,7 @@ import { Tag } from '../../tag/tag';
 import { AddTag } from '../../add-tag/add-tag';
 import { CommonModule } from '@angular/common';
 import { SeriesStoreService } from '../../../services/seriesStoreService';
-import { AppService } from '../../../../services/app-service';
+import { SeriesViewService } from '../../../services/series-view-service';
 @Component({
   selector: 'series-form',
   imports: [FormsModule, Tag, AddTag, ReactiveFormsModule, CommonModule],
@@ -29,7 +29,6 @@ export class SeriesForm implements OnInit {
   @Input() series!: SeriesInterface;
   @Input() even!: boolean;
   @Output() closeForm = new EventEmitter();
-  @Output() tagNamesChange = new EventEmitter<string[]>();
   tagNames: string[] = [];
   seriesForm!: FormGroup;
   showWatchTime!: boolean;
@@ -58,7 +57,7 @@ export class SeriesForm implements OnInit {
     private seriesService: SeriesApiService,
     private cd: ChangeDetectorRef,
     private store: SeriesStoreService,
-    private app: AppService
+    private view: SeriesViewService
   ) {}
   cancelChanges() {
     this.seriesForm.reset({
@@ -103,7 +102,6 @@ export class SeriesForm implements OnInit {
       .subscribe({
         next: () => {
           Object.assign(this.series, series);
-          //this.tagNamesChange.emit(this.tagNames);
           this.closeForm.emit();
           this.cd.detectChanges();
         },
@@ -114,8 +112,8 @@ export class SeriesForm implements OnInit {
   }
   delete() {
     this.store.idOfSeriesToDelete = this.series._id;
-    this.app.toggleShowDeleteSeriesConfirmation();
-    this.app.toggleOverlay();
+    this.view.toggleShowDeleteSeriesConfirmation();
+    this.view.toggleOverlay();
   }
   removeTag(tagToRemove: string) {
     this.tagNames = this.tagNames.filter((tagName) => tagName !== tagToRemove);

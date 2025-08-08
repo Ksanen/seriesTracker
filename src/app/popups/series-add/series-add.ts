@@ -10,7 +10,7 @@ import { AddTag } from '../../seriesTracker/components/add-tag/add-tag';
 import SeriesToSend from '../../shared/interfaces/seriesToSend';
 import { CommonModule } from '@angular/common';
 import { SeriesStoreService } from '../../seriesTracker/services/seriesStoreService';
-import { AppService } from '../../services/app-service';
+import { SeriesViewService } from '../../seriesTracker/services/series-view-service';
 import defaultSeriesFormValues from '../../shared/utils/defaultSeriesFormValues';
 @Component({
   selector: 'series-add',
@@ -26,14 +26,14 @@ export class SeriesAdd {
   constructor(
     private fb: FormBuilder,
     private store: SeriesStoreService,
-    private app: AppService
+    private view: SeriesViewService
   ) {
     this.seriesForm = this.fb.group(defaultSeriesFormValues);
   }
   tagNames: string[] = [];
   close() {
-    this.app.toggleAddSeriesForm();
-    this.app.toggleOverlay();
+    this.view.toggleAddSeriesForm();
+    this.view.toggleOverlay();
   }
   removeTag(tagNameToRemove: string) {
     this.tagNames = this.tagNames.filter(
