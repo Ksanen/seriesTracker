@@ -18,7 +18,7 @@ import { Tag } from '../../tag/tag';
 import { AddTag } from '../../add-tag/add-tag';
 import { CommonModule } from '@angular/common';
 import { SeriesStoreService } from '../../../services/seriesStoreService';
-import { SeriesViewService } from '../../../services/series-view-service';
+import { SeriesViewService } from '../../../services/seriesViewService';
 @Component({
   selector: 'series-form',
   imports: [FormsModule, Tag, AddTag, ReactiveFormsModule, CommonModule],

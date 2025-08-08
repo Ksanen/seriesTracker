@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { SeriesViewService } from '../../seriesTracker/services/series-view-service';
-import { SeriesStoreService } from '../../seriesTracker/services/seriesStoreService';
+import { SeriesViewService } from '../../services/seriesViewService';
+import { SeriesStoreService } from '../../services/seriesStoreService';
 @Component({
   selector: 'series-delete',
   imports: [CommonModule],

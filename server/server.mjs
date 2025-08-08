@@ -2,6 +2,7 @@ import express from "express";
 import connectDb from "./src/config/db.mjs";
 import SeriesModel from "./src/models/series.mjs";
 import cors from "cors";
+import checkDataBaseConnection from "./src/middlewares/checkDataBaseConnection.mjs";
 import nameExists from "./src/utils/nameExists.mjs";
 import { checkSchema, validationResult, body } from "express-validator";
 import seriesSchema from "./src/utils/seriesSchema.mjs";
@@ -21,7 +22,7 @@ app.use(express.json());
 app.listen(PORT, () => {
   console.log(`server is listening on port ${PORT}`);
 });
-app.get("/api/series", async (req, res) => {
+app.get("/api/series", checkDataBaseConnection, async (req, res) => {
   const series = await SeriesModel.find({}, { __v: 0 });
   res.json(series);
 });
@@ -155,40 +156,48 @@ const defaultFilterSettings = {
   season: null,
   episode: null,
 };
-app.get("/api/series/settings/view", async (req, res) => {
-  try {
-    await SeriesViewSettingsModel.findOneAndUpdate(
-      {},
-      { $setOnInsert: defaultViewSettings },
-      { upsert: true, new: true }
-    );
-    const settings = await SeriesViewSettingsModel.findOne(
-      {},
-      { _id: 0, __v: 0 }
-    );
-    return res.status(200).json(settings);
-  } catch (e) {
-    console.log(e);
-    return res.status(500).json({ message: "internal server error" });
+app.get(
+  "/api/series/settings/view",
+  checkDataBaseConnection,
+  async (req, res) => {
+    try {
+      await SeriesViewSettingsModel.findOneAndUpdate(
+        {},
+        { $setOnInsert: defaultViewSettings },
+        { upsert: true, new: true }
+      );
+      const settings = await SeriesViewSettingsModel.findOne(
+        {},
+        { _id: 0, __v: 0 }
+      );
+      return res.status(200).json(settings);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json({ message: "internal server error" });
+    }
   }
-});
-app.get("/api/series/settings/filter", async (req, res) => {
-  try {
-    await SeriesFilterSettingsModel.findOneAndUpdate(
-      {},
-      { $setOnInsert: defaultFilterSettings },
-      { upsert: true, new: true }
-    );
-    const settings = await SeriesFilterSettingsModel.findOne(
-      {},
-      { _id: 0, __v: 0 }
-    );
-    return res.status(200).json(settings);
-  } catch (e) {
-    console.log(e);
-    return res.status(500).json({ messaga: "internal server error" });
+);
+app.get(
+  "/api/series/settings/filter",
+  checkDataBaseConnection,
+  async (req, res) => {
+    try {
+      await SeriesFilterSettingsModel.findOneAndUpdate(
+        {},
+        { $setOnInsert: defaultFilterSettings },
+        { upsert: true, new: true }
+      );
+      const settings = await SeriesFilterSettingsModel.findOne(
+        {},
+        { _id: 0, __v: 0 }
+      );
+      return res.status(200).json(settings);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json({ messaga: "internal server error" });
+    }
   }
-});
+);
 app.post(
   "/api/series/settings/view",
   checkSchema(SeriesViewSettingsSchema),

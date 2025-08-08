@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SeriesViewService } from './series-view-service';
+import { SeriesViewService } from './seriesViewService';
 
 describe('SeriesViewService', () => {
   let service: SeriesViewService;

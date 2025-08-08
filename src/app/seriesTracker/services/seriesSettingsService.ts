@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import seriesFilterSettings from '../../shared/interfaces/seriesSettings/seriesFilterSettings';
 import seriesViewSettings from '../../shared/interfaces/seriesSettings/seriesViewSettings';
-import AppOptions from '../../shared/interfaces/appOptions';
+import { SeriesViewService } from './seriesViewService';
 import defaultViewSettings from '../../shared/utils/defaultViewSettings';
 import defaultFilterSettings from '../../shared/utils/defaultFilterSettings';
 @Injectable({
@@ -18,7 +18,7 @@ export class SeriesSettingsService {
   );
   viewSettings$ = this._viewSettings$.asObservable();
   filterSettings$ = this._filterSettings$.asObservable();
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private view: SeriesViewService) {
     this.getFilterSettings();
     this.getViewSettings();
   }
@@ -30,7 +30,12 @@ export class SeriesSettingsService {
           this._viewSettings$.next(settings);
         },
         error: (error) => {
-          console.log('getting view settings failed', error);
+          switch (error.status) {
+            case 503:
+              this.view.showDatabaseError();
+              break;
+          }
+          console.log('getting view settings failed');
         },
       });
   }
@@ -44,7 +49,12 @@ export class SeriesSettingsService {
           this._filterSettings$.next(settings);
         },
         error: (error) => {
-          console.log('getting filter settings failed', error);
+          switch (error.status) {
+            case 503:
+              this.view.showDatabaseError();
+              break;
+          }
+          console.log('getting filter settings failed');
         },
       });
   }

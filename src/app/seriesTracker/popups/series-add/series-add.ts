@@ -1,17 +1,17 @@
 import { Component, Input } from '@angular/core';
-import { Tag } from '../../seriesTracker/components/tag/tag';
+import { Tag } from '../../components/tag/tag';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { AddTag } from '../../seriesTracker/components/add-tag/add-tag';
-import SeriesToSend from '../../shared/interfaces/seriesToSend';
+import { AddTag } from '../../components/add-tag/add-tag';
+import SeriesToSend from '../../../shared/interfaces/seriesToSend';
 import { CommonModule } from '@angular/common';
-import { SeriesStoreService } from '../../seriesTracker/services/seriesStoreService';
-import { SeriesViewService } from '../../seriesTracker/services/series-view-service';
-import defaultSeriesFormValues from '../../shared/utils/defaultSeriesFormValues';
+import { SeriesStoreService } from '../../services/seriesStoreService';
+import { SeriesViewService } from '../../services/seriesViewService';
+import defaultSeriesFormValues from '../../../shared/utils/defaultSeriesFormValues';
 @Component({
   selector: 'series-add',
   imports: [Tag, FormsModule, AddTag, ReactiveFormsModule, CommonModule],

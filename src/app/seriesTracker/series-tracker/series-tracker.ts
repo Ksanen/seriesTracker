@@ -8,14 +8,15 @@ import {
 } from '@angular/core';
 import { SeriesSearch } from '../components/series-search/series-search';
 import { SeriesList } from '../components/series-list/series-list';
-import { SeriesAdd } from '../../popups/series-add/series-add';
+import { SeriesAdd } from '../popups/series-add/series-add';
 import { CommonModule } from '@angular/common';
 import { SeriesViewSettings } from '../components/series-view-settings/series-view-settings';
 import { SeriesFilter } from '../components/series-filter/series-filter';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import AppOptions from '../../shared/interfaces/appOptions';
-import { SeriesDelete } from '../../popups/series-delete/series-delete';
-import { SeriesViewService } from '../services/series-view-service';
+import { SeriesDelete } from '../popups/series-delete/series-delete';
+import { SeriesViewService } from '../services/seriesViewService';
+import { SeriesDatabaseError } from '../components/series-database-error/series-database-error';
 @Component({
   selector: 'series-tracker',
   imports: [
@@ -26,6 +27,7 @@ import { SeriesViewService } from '../services/series-view-service';
     SeriesViewSettings,
     SeriesFilter,
     SeriesDelete,
+    SeriesDatabaseError,
   ],
   standalone: true,
   templateUrl: './series-tracker.html',

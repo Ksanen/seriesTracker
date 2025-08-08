@@ -3,4 +3,5 @@ export default interface AppOptions {
   showAddSeriesForm: boolean;
   showAside: boolean;
   showDeleteSeriesConfirmation: boolean;
+  showDatabaseError: boolean;
 }
