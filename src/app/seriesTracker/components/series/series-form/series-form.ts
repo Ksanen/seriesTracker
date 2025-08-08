@@ -18,7 +18,7 @@ import { Tag } from '../../tag/tag';
 import { AddTag } from '../../add-tag/add-tag';
 import { CommonModule } from '@angular/common';
 import { SeriesStoreService } from '../../../services/seriesStoreService';
-
+import { AppService } from '../../../../services/app-service';
 @Component({
   selector: 'series-form',
   imports: [FormsModule, Tag, AddTag, ReactiveFormsModule, CommonModule],
@@ -57,7 +57,8 @@ export class SeriesForm implements OnInit {
     private fb: FormBuilder,
     private seriesService: SeriesApiService,
     private cd: ChangeDetectorRef,
-    private store: SeriesStoreService
+    private store: SeriesStoreService,
+    private app: AppService
   ) {}
   cancelChanges() {
     this.seriesForm.reset({
@@ -112,7 +113,9 @@ export class SeriesForm implements OnInit {
       });
   }
   delete() {
-    this.store.deleteSeries(this.series._id);
+    this.store.idOfSeriesToDelete = this.series._id;
+    this.app.toggleShowDeleteSeriesConfirmation();
+    this.app.toggleOverlay();
   }
   removeTag(tagToRemove: string) {
     this.tagNames = this.tagNames.filter((tagName) => tagName !== tagToRemove);

@@ -5,6 +5,7 @@
   }"
 ></div>
 <div class="series-tracker">
+  <series-delete [show]="options.showDeleteSeriesConfirmation"></series-delete>
   <header class="header">
     <series-search
       class="header__search"
@@ -19,7 +20,7 @@
   </header>
   <div class="content">
     <main class="content__list">
-      <series-add></series-add>
+      <series-add [show]="options.showAddSeriesForm"></series-add>
       <series-list [name]="name"></series-list>
     </main>
     <aside

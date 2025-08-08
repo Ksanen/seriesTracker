@@ -10,6 +10,7 @@ export class AppService {
     showOverlay: false,
     showAddSeriesForm: false,
     showAside: false,
+    showDeleteSeriesConfirmation: false,
   });
   private get currentOptions(): AppOptions {
     return this._options$.getValue();
@@ -19,7 +20,6 @@ export class AppService {
     const updatedOptions: AppOptions = {
       ...this.currentOptions,
       showAddSeriesForm: !this.currentOptions.showAddSeriesForm,
-      showOverlay: !this.currentOptions.showOverlay,
     };
     this._options$.next(updatedOptions);
   }
@@ -34,6 +34,14 @@ export class AppService {
     const updatedOptions: AppOptions = {
       ...this.currentOptions,
       showOverlay: !this.currentOptions.showOverlay,
+    };
+    this._options$.next(updatedOptions);
+  }
+  toggleShowDeleteSeriesConfirmation() {
+    const updatedOptions: AppOptions = {
+      ...this.currentOptions,
+      showDeleteSeriesConfirmation:
+        !this.currentOptions.showDeleteSeriesConfirmation,
     };
     this._options$.next(updatedOptions);
   }

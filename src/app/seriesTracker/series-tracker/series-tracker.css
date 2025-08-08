@@ -35,7 +35,8 @@
 }
 
 .aside {
-  background-color: aqua;
+  background-color: #34495e;
+  color: white;
   height: 100%;
   transition: width 400ms ease;
   width: 0;

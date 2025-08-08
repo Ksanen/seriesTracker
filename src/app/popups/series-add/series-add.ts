@@ -1,5 +1,5 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { Tag } from '../tag/tag';
+import { Component, Input } from '@angular/core';
+import { Tag } from '../../seriesTracker/components/tag/tag';
 import {
   FormBuilder,
   FormGroup,
@@ -7,12 +7,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AddTag } from '../add-tag/add-tag';
-import SeriesToSend from '../../../shared/interfaces/seriesToSend';
+import { AddTag } from '../../seriesTracker/components/add-tag/add-tag';
+import SeriesToSend from '../../shared/interfaces/seriesToSend';
 import { CommonModule } from '@angular/common';
-import { SeriesStoreService } from '../../services/seriesStoreService';
-import { AppService } from '../../../services/app-service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SeriesStoreService } from '../../seriesTracker/services/seriesStoreService';
+import { AppService } from '../../services/app-service';
 @Component({
   selector: 'series-add',
   imports: [Tag, FormsModule, AddTag, ReactiveFormsModule, CommonModule],
@@ -20,22 +19,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './series-add.html',
   styleUrl: './series-add.css',
 })
-export class SeriesAdd implements OnInit {
+export class SeriesAdd {
   seriesForm!: FormGroup;
   showWatchTime: boolean = false;
-  destroyRef = inject(DestroyRef);
-  showForm: boolean = false;
-  ngOnInit(): void {
-    this.appService.options$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((options) => {
-        this.showForm = options.showAddSeriesForm;
-      });
-  }
+  @Input() show: boolean = false;
   constructor(
     private fb: FormBuilder,
     private store: SeriesStoreService,
-    private appService: AppService
+    private app: AppService
   ) {
     this.seriesForm = this.fb.group({
       name: ['', Validators.required],
@@ -52,7 +43,8 @@ export class SeriesAdd implements OnInit {
   }
   tagNames: string[] = [];
   close() {
-    this.appService.toggleAddSeriesForm();
+    this.app.toggleAddSeriesForm();
+    this.app.toggleOverlay();
   }
   removeTag(tagNameToRemove: string) {
     this.tagNames = this.tagNames.filter(

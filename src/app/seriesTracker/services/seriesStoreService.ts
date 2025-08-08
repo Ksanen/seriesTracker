@@ -9,7 +9,7 @@ import SeriesToSend from '../../shared/interfaces/seriesToSend';
 export class SeriesStoreService {
   private _seriesList$ = new BehaviorSubject<SeriesInterface[]>([]);
   seriesList$ = this._seriesList$.asObservable();
-
+  #idOfSeriesToDelete: string = '';
   constructor(private seriesApiService: SeriesApiService) {}
   getAllSeries() {
     this.seriesApiService.getAllSeries().subscribe({
@@ -18,11 +18,16 @@ export class SeriesStoreService {
       },
     });
   }
-  deleteSeries(id: string) {
-    this.seriesApiService.deleteSeries(id).subscribe({
+  set idOfSeriesToDelete(id: string) {
+    this.#idOfSeriesToDelete = id;
+  }
+  deleteSeries() {
+    this.seriesApiService.deleteSeries(this.#idOfSeriesToDelete).subscribe({
       next: () => {
         let currentList = this._seriesList$.getValue();
-        currentList = currentList.filter((series) => series._id !== id);
+        currentList = currentList.filter(
+          (series) => series._id !== this.#idOfSeriesToDelete
+        );
         this._seriesList$.next(currentList);
       },
       error: (err) => console.log(err),
