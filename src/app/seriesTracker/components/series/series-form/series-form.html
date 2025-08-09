@@ -7,7 +7,8 @@ watchTimeActive=series.watchTimeActive;
   class="series"
   [ngClass]="{
     even: even,
-    odd: !even
+    odd: !even,
+    'was-validated': wasValidated
   }"
   [formGroup]="seriesForm"
   (ngSubmit)="save()"
@@ -15,7 +16,7 @@ watchTimeActive=series.watchTimeActive;
   <div class="series__data">
     <div class="series__data__field">
       <label>Name:</label>
-      <input class="form-control" type="text" formControlName="name" />
+      <input class="form-control" type="text" formControlName="name" required />
     </div>
     <div class="series__data__field">
       <label>Season:</label>

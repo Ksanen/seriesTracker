@@ -32,6 +32,7 @@ export class SeriesForm implements OnInit {
   tagNames: string[] = [];
   seriesForm!: FormGroup;
   showWatchTime!: boolean;
+  wasValidated: boolean = false;
   destroyRef = inject(DestroyRef);
   toggleShowWatchTime() {
     this.showWatchTime = !this.showWatchTime;
@@ -76,6 +77,7 @@ export class SeriesForm implements OnInit {
     this.closeForm.emit();
   }
   save() {
+    this.wasValidated = true;
     const form = this.seriesForm.value;
     const series: SeriesToSend = {
       name: form.name,
