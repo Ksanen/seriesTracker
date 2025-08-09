@@ -1,5 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SeriesStoreService } from '../../services/seriesStoreService';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import Tag from '../../../shared/interfaces/tag';
 @Component({
   selector: 'add-tag',
   imports: [FormsModule],
@@ -7,21 +19,23 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './add-tag.html',
   styleUrl: './add-tag.css',
 })
-export class AddTag {
+export class AddTag implements OnInit {
   tagName: string = '';
   @Input() tagNames: string[] = [];
   @Output() addNewTag = new EventEmitter<string[]>();
-
-  possibleTags: string[] = ['cos2', 'cos', 'cos3'];
+  destroyRef = inject(DestroyRef);
+  possibleTags!: Tag[];
+  constructor(private store: SeriesStoreService) {}
+  ngOnInit(): void {
+    this.store.possibleTags
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((tags) => {
+        this.possibleTags = tags;
+      });
+  }
   addTag() {
-    const tagToAdd: string | undefined = this.possibleTags.find(
-      (tagName) => tagName === this.tagName
-    );
-    if (!tagToAdd) return;
-    const tagExists = this.tagNames.find((tagName) => tagName === this.tagName);
-    if (tagExists) return;
-    this.tagName = '';
-    this.tagNames.push(tagToAdd);
+    if (this.tagName === '') return;
+    this.tagNames.push(this.tagName);
     this.addNewTag.emit(this.tagNames);
   }
 }

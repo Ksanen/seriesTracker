@@ -40,7 +40,6 @@ export class SeriesList implements OnInit {
     private seriesSettings: SeriesSettingsService
   ) {}
   ngOnInit(): void {
-    this.store.getAllSeries();
     this.store.seriesList$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((series) => {

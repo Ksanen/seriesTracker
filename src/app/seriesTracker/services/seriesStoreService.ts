@@ -3,14 +3,27 @@ import { BehaviorSubject } from 'rxjs';
 import SeriesInterface from '../../shared/interfaces/series';
 import { SeriesApiService } from './seriesApiService';
 import SeriesToSend from '../../shared/interfaces/seriesToSend';
+import Tag from '../../shared/interfaces/tag';
 @Injectable({
   providedIn: 'root',
 })
 export class SeriesStoreService {
   private _seriesList$ = new BehaviorSubject<SeriesInterface[]>([]);
   seriesList$ = this._seriesList$.asObservable();
+  private _possibleTags$ = new BehaviorSubject<Tag[]>([]);
+  possibleTags = this._possibleTags$.asObservable();
   #idOfSeriesToDelete: string = '';
-  constructor(private seriesApiService: SeriesApiService) {}
+  constructor(private seriesApiService: SeriesApiService) {
+    this.getAllSeries();
+    this.getTags();
+  }
+  getTags() {
+    this.seriesApiService.getTags().subscribe({
+      next: (tags) => {
+        this._possibleTags$.next(tags);
+      },
+    });
+  }
   getAllSeries() {
     this.seriesApiService.getAllSeries().subscribe({
       next: (series) => {

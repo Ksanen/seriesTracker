@@ -10,6 +10,7 @@ import SeriesFilterSettingsModel from "./src/models/seriesSettings/filterSetting
 import SeriesViewSettingsModel from "./src/models/seriesSettings/viewSettings.mjs";
 import SeriesViewSettingsSchema from "./src/utils/seriesViewSettingsSchema.mjs";
 import SeriesFilterSettingsSchema from "./src/utils/seriesFilterSettingsSchema.mjs";
+import tagModel from "./src/models/tag.mjs";
 connectDb();
 const app = express();
 app.use(
@@ -21,6 +22,15 @@ const PORT = 3000;
 app.use(express.json());
 app.listen(PORT, () => {
   console.log(`server is listening on port ${PORT}`);
+});
+app.get("/api/tags", checkDataBaseConnection, async (req, res) => {
+  try {
+    const tags = await tagModel.find({}, { _id: 0 });
+    res.status(200).json(tags);
+  } catch (e) {
+    console.log("error: ", e);
+    res.status(500).json({ success: false, message: "internal server error" });
+  }
 });
 app.get("/api/series", checkDataBaseConnection, async (req, res) => {
   const series = await SeriesModel.find({}, { __v: 0 });

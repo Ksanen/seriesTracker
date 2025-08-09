@@ -2,7 +2,7 @@
   <select [(ngModel)]="tagName" class="form-select">
     <option value="">select tag</option>
     @for(tag of possibleTags; track tag){
-    <option [value]="tag">{{ tag }}</option>
+    <option [value]="tag.name">{{ tag.name }}</option>
     }
   </select>
   <input class="btn btn-primary" type="button" value="add" (click)="addTag()" />
