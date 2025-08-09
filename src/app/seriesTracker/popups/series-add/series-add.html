@@ -1,15 +1,16 @@
 <form
-  #formContainer
   [ngClass]="{
     form: true,
-    'form--show': show
+    'form--show': show,
+    'was-validated': wasValidated,
   }"
   [formGroup]="seriesForm"
   (ngSubmit)="onSubmit()"
+  novalidate
 >
   <div class="form__field form__field--default">
     <label>Name</label>
-    <input class="form-control" type="text" formControlName="name" />
+    <input class="form-control" type="text" formControlName="name" required />
   </div>
   <div class="form__field form__field--default">
     <label>Type</label>

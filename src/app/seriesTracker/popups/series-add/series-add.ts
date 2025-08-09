@@ -1,10 +1,18 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  effect,
+  Input,
+  OnInit,
+  Signal,
+  signal,
+} from '@angular/core';
 import { Tag } from '../../components/tag/tag';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { AddTag } from '../../components/add-tag/add-tag';
 import SeriesToSend from '../../../shared/interfaces/seriesToSend';
@@ -21,6 +29,7 @@ import defaultSeriesFormValues from '../../../shared/utils/defaultSeriesFormValu
 })
 export class SeriesAdd {
   seriesForm!: FormGroup;
+  wasValidated: boolean = false;
   showWatchTime: boolean = false;
   @Input() show: boolean = false;
   constructor(
@@ -28,12 +37,24 @@ export class SeriesAdd {
     private store: SeriesStoreService,
     private view: SeriesViewService
   ) {
-    this.seriesForm = this.fb.group(defaultSeriesFormValues);
+    this.seriesForm = this.fb.group({
+      name: ['', Validators.required],
+      type: '',
+      genre: '',
+      season: 0,
+      episode: 0,
+      hours: 0,
+      watchTimeActive: false,
+      minutes: 0,
+      seconds: 0,
+      watched: 0,
+    });
   }
   tagNames: string[] = [];
   close() {
     this.view.toggleAddSeriesForm();
     this.view.toggleOverlay();
+    this.wasValidated = false;
   }
   removeTag(tagNameToRemove: string) {
     this.tagNames = this.tagNames.filter(
@@ -58,11 +79,12 @@ export class SeriesAdd {
       tagNames: this.tagNames,
     };
     if (this.seriesForm.invalid) {
-      console.log('invalid');
+      this.wasValidated = true;
       return;
     }
     this.store.addSeries(objectToSubmit);
     this.seriesForm.reset(defaultSeriesFormValues);
+    this.wasValidated = false;
     this.close();
   }
   toggleShowWatchTime() {

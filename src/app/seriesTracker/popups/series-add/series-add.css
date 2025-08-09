@@ -16,6 +16,9 @@
   z-index: 10;
   opacity: 0;
 }
+.invalid {
+  border: 1px solid red;
+}
 .form--show {
   top: 50%;
   transition: all 400ms ease;
@@ -33,7 +36,7 @@ input[type="text"].invalid {
   outline: 1px solid red;
 }
 input[type="number"] {
-  width: 70px;
+  width: 100px;
 }
 .form__field {
   display: flex;
