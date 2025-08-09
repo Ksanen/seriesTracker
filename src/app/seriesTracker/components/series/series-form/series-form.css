@@ -45,7 +45,7 @@
   justify-content: space-between;
 }
 .watch-time__field input[type="number"] {
-  width: 70px;
+  width: 90px;
 }
 .series__tags {
   display: flex;

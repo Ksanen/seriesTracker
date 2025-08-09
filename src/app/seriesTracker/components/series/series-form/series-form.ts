@@ -77,7 +77,6 @@ export class SeriesForm implements OnInit {
     this.closeForm.emit();
   }
   save() {
-    this.wasValidated = true;
     const form = this.seriesForm.value;
     const series: SeriesToSend = {
       name: form.name,
@@ -95,7 +94,7 @@ export class SeriesForm implements OnInit {
       tagNames: this.tagNames,
     };
     if (this.seriesForm.invalid) {
-      console.log('invalid');
+      this.wasValidated = true;
       return;
     }
     this.seriesService
@@ -106,6 +105,7 @@ export class SeriesForm implements OnInit {
           Object.assign(this.series, series);
           this.closeForm.emit();
           this.cd.detectChanges();
+          this.wasValidated = false;
         },
         error: (err) => {
           console.log(err);
