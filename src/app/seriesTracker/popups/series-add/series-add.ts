@@ -76,8 +76,11 @@ export class SeriesAdd {
   }
   onSubmit() {
     const form = this.seriesForm.value;
+    const names = this.names.map((name) => name.value);
+    const namesToSubmit = [form.name, ...names];
+    console.log(namesToSubmit);
     const objectToSubmit: SeriesToSend = {
-      name: form.name,
+      names: namesToSubmit,
       type: form.type,
       genre: form.genre,
       season: form.season,
@@ -95,6 +98,7 @@ export class SeriesAdd {
       this.wasValidated = true;
       return;
     }
+
     this.store.addSeries(objectToSubmit);
     this.seriesForm.reset(defaultSeriesFormValues);
     this.wasValidated = false;

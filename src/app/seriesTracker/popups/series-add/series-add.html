@@ -12,7 +12,8 @@
     <label>Main name</label>
     <input class="form-control" type="text" formControlName="name" required />
   </div>
-  @if(names.length>0){ @for (name of names; track name.id;let index=$index) {
+  @if(names.length>0){ Names: @for (name of names; track name.id;let
+  index=$index) {
   <div class="form__field">
     <seriesRemovableNameInput
       [name]="names[index].value"

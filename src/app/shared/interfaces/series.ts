@@ -1,6 +1,6 @@
 export default interface SeriesInterface {
   _id: string;
-  name: string;
+  names: string[];
   type: string;
   genre: string;
   season: number;

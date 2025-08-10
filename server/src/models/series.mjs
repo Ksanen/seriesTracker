@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const seriesSchema = mongoose.Schema({
-  name: String,
+  names: [String],
   type: String,
   genre: String,
   season: Number,

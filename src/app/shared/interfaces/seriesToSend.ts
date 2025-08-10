@@ -1,5 +1,5 @@
 export default interface SeriesToSend {
-  name: string;
+  names: string[];
   type: string;
   genre: string;
   season: number;

@@ -1,10 +1,7 @@
 const seriesSchema = {
-  name: {
-    isString: {
-      errorMessage: "name must be a string",
-    },
-    notEmpty: {
-      errorMessage: "name cannot be empty",
+  names: {
+    isArray: {
+      errorMessage: "names must be an array",
     },
   },
   type: {

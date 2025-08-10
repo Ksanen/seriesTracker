@@ -57,7 +57,9 @@ export class SeriesList implements OnInit {
     const nameValue = this.name().toLowerCase();
     const settings = this.settings();
     return this.seriesList().filter((series) => {
-      if (!series.name.toLowerCase().includes(nameValue)) {
+      if (
+        !series.names.some((name) => name.toLowerCase().includes(nameValue))
+      ) {
         return false;
       }
       if (settings.type !== '' && series.type !== settings.type) return false;

@@ -25,6 +25,10 @@
   align-items: center;
   justify-content: space-between;
 }
+.series__data__field--right {
+  display: flex;
+  justify-content: flex-end;
+}
 .watch-time {
   display: flex;
   flex-direction: column;

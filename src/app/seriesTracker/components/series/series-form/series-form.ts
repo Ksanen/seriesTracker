@@ -19,9 +19,19 @@ import { AddTag } from '../../add-tag/add-tag';
 import { CommonModule } from '@angular/common';
 import { SeriesStoreService } from '../../../services/seriesStoreService';
 import { SeriesViewService } from '../../../services/seriesViewService';
+import { SeriesRemovableNameInput } from '../../series-removable-name-input/series-removable-name-input';
+import RemovableName from '../../../../shared/interfaces/removableName';
+import { NamesService } from '../../../services/names-service';
 @Component({
   selector: 'series-form',
-  imports: [FormsModule, Tag, AddTag, ReactiveFormsModule, CommonModule],
+  imports: [
+    FormsModule,
+    Tag,
+    AddTag,
+    ReactiveFormsModule,
+    CommonModule,
+    SeriesRemovableNameInput,
+  ],
   templateUrl: './series-form.html',
   styleUrl: './series-form.css',
 })
@@ -29,6 +39,7 @@ export class SeriesForm implements OnInit {
   @Input() series!: SeriesInterface;
   @Input() even!: boolean;
   @Output() closeForm = new EventEmitter();
+  names: RemovableName[] = [];
   tagNames: string[] = [];
   seriesForm!: FormGroup;
   showWatchTime!: boolean;
@@ -37,10 +48,18 @@ export class SeriesForm implements OnInit {
   toggleShowWatchTime() {
     this.showWatchTime = !this.showWatchTime;
   }
+  addNewName() {
+    const newName = this.namesService.addNewName(this.names);
+    if (!newName) return;
+    this.names.push(newName);
+  }
+  removeName(id: number) {
+    this.names = this.namesService.removeName(this.names, id);
+  }
   ngOnInit(): void {
     this.showWatchTime = this.series.watchTimeActive;
     this.seriesForm = this.fb.group({
-      name: [this.series.name, Validators.required],
+      name: [this.series.names[0], Validators.required],
       type: this.series.type,
       genre: this.series.genre,
       season: this.series.season,
@@ -51,6 +70,7 @@ export class SeriesForm implements OnInit {
       seconds: this.series.watchTime.seconds,
       watched: this.series.watched,
     });
+    this.names = this.namesService.createRemovableNamesArray(this.series.names);
     this.tagNames = [...this.series.tagNames];
   }
   constructor(
@@ -58,11 +78,12 @@ export class SeriesForm implements OnInit {
     private seriesService: SeriesApiService,
     private cd: ChangeDetectorRef,
     private store: SeriesStoreService,
-    private view: SeriesViewService
+    private view: SeriesViewService,
+    private namesService: NamesService
   ) {}
   cancelChanges() {
     this.seriesForm.reset({
-      name: this.series.name,
+      name: this.series.names[0],
       type: this.series.type,
       genre: this.series.genre,
       season: this.series.season,
@@ -78,8 +99,11 @@ export class SeriesForm implements OnInit {
   }
   save() {
     const form = this.seriesForm.value;
+    let names = this.names.map((name) => name.value);
+    names = this.namesService.removeUnnecessaryNames(names);
+    const namesToSend: string[] = [form.name, ...names];
     const series: SeriesToSend = {
-      name: form.name,
+      names: namesToSend,
       type: form.type,
       genre: form.genre,
       season: form.season,

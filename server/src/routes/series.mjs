@@ -23,13 +23,14 @@ router.delete("/:id", async (req, res) => {
 router.post("/", checkSchema(seriesSchema), async (req, res) => {
   try {
     const result = validationResult(req);
+    console.log(req.body);
     if (!result.isEmpty()) {
       return res.status(400).send({
         success: false,
         msg: "validation error",
       });
     }
-    if (await nameExists(req.body.name)) {
+    if (await nameExists(req.body.names[0])) {
       return res.status(409).send({
         success: false,
         msg: "this name already exists",
@@ -51,7 +52,7 @@ router.post("/", checkSchema(seriesSchema), async (req, res) => {
 router.patch("/:id", checkSchema(seriesSchema), async (req, res) => {
   try {
     const result = validationResult(req);
-    const name = req.body.name;
+    const name = req.body.names[0];
     const id = req.params.id;
     if (!result.isEmpty()) {
       console.log(result.array());
@@ -60,7 +61,6 @@ router.patch("/:id", checkSchema(seriesSchema), async (req, res) => {
         msg: "validation error",
       });
     }
-
     /*
       Sprawdza czy w bazie nie ma serii o takiej nazwie. Upewnia się też, że nie będzie
       błędu gdy użytkownik nie zmieni nazwy, bo w bazie zawsze byłaby seria o tej nazwie, jednakże wtedy
@@ -73,21 +73,20 @@ router.patch("/:id", checkSchema(seriesSchema), async (req, res) => {
         msg: "Series not found",
       });
     }
-    const nameOfSeries = originalSeries.name;
+    const nameOfSeries = originalSeries.names[0];
     if (name !== nameOfSeries && (await nameExists(name))) {
       return res.status(409).send({
         success: false,
         msg: "this name already exists",
       });
     }
-
     const series = req.body;
     const updateResult = await SeriesModel.updateOne(
       {
         _id: id,
       },
       {
-        name: series.name,
+        names: series.names,
         type: series.type,
         genre: series.genre,
         season: series.season,

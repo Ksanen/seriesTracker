@@ -1,7 +1,7 @@
-@let season=series.season; @let episode=series.episode; @let name=series.name;
-@let hours=series.watchTime?.hours; @let minutes=series.watchTime?.minutes; @let
-seconds=series.watchTime?.seconds; @let watched=series.watched; @let
-type=series.type; @let genre=series.genre; @let
+@let season=series.season; @let episode=series.episode; @let
+name=series.names[0]; @let hours=series.watchTime?.hours; @let
+minutes=series.watchTime?.minutes; @let seconds=series.watchTime?.seconds; @let
+watched=series.watched; @let type=series.type; @let genre=series.genre; @let
 watchTimeActive=series.watchTimeActive;
 <form
   class="series"
@@ -18,6 +18,25 @@ watchTimeActive=series.watchTimeActive;
       <label>Name:</label>
       <input class="form-control" type="text" formControlName="name" required />
     </div>
+    <div class="series__data__field--right">
+      <input
+        (click)="addNewName()"
+        class="btn btn-success"
+        type="button"
+        value="add new name"
+      />
+    </div>
+    @if(this.names.length>0){ Names: @for( name of names;track name.id;let
+    index=$index){
+    <div class="series__data__field">
+      <seriesRemovableNameInput
+        [name]="names[index].value"
+        (nameChange)="names[index].value = $event"
+        [id]="name.id"
+        (removeName)="removeName($event)"
+      ></seriesRemovableNameInput>
+    </div>
+    } }
     <div class="series__data__field">
       <label>Season:</label>
       <input
