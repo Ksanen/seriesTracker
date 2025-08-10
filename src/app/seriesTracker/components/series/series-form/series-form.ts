@@ -98,6 +98,14 @@ export class SeriesForm implements OnInit {
     this.closeForm.emit();
   }
   save() {
+    if (!this.showWatchTime) {
+      this.resetWatchTime();
+    }
+    if (this.seriesForm.invalid) {
+      console.log('invalid');
+      this.wasValidated = true;
+      return;
+    }
     const form = this.seriesForm.value;
     let names = this.names.map((name) => name.value);
     names = this.namesService.removeUnnecessaryNames(names);
@@ -117,10 +125,7 @@ export class SeriesForm implements OnInit {
       watched: form.watched,
       tagNames: this.tagNames,
     };
-    if (this.seriesForm.invalid) {
-      this.wasValidated = true;
-      return;
-    }
+
     this.seriesService
       .update(this.series._id, series)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -135,6 +140,13 @@ export class SeriesForm implements OnInit {
           console.log(err);
         },
       });
+  }
+  resetWatchTime() {
+    this.seriesForm.patchValue({
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    });
   }
   delete() {
     this.store.idOfSeriesToDelete = this.series._id;

@@ -45,7 +45,6 @@ watchTimeActive=series.watchTimeActive;
         min="0"
         [value]="season"
         formControlName="season"
-        required
       />
     </div>
     <div class="series__data__field">
@@ -56,7 +55,6 @@ watchTimeActive=series.watchTimeActive;
         min="0"
         [value]="episode"
         formControlName="episode"
-        required
       />
     </div>
     <div class="series__data__field">
@@ -90,6 +88,7 @@ watchTimeActive=series.watchTimeActive;
           min="0"
           max="23"
           formControlName="hours"
+          required
         />
       </div>
       <div class="watch-time__field">
@@ -100,6 +99,7 @@ watchTimeActive=series.watchTimeActive;
           min="0"
           max="59"
           formControlName="minutes"
+          required
         />
       </div>
       <div class="watch-time__field">
@@ -110,6 +110,7 @@ watchTimeActive=series.watchTimeActive;
           min="0"
           max="59"
           formControlName="seconds"
+          required
         />
       </div>
     </div>

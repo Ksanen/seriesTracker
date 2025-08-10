@@ -1,11 +1,4 @@
-import {
-  Component,
-  effect,
-  Input,
-  OnInit,
-  Signal,
-  signal,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Tag } from '../../components/tag/tag';
 import {
   FormBuilder,
@@ -22,6 +15,7 @@ import { SeriesViewService } from '../../services/seriesViewService';
 import defaultSeriesFormValues from '../../../shared/utils/defaultSeriesFormValues';
 import { SeriesRemovableNameInput } from '../../components/series-removable-name-input/series-removable-name-input';
 import RemovableName from '../../../shared/interfaces/removableName';
+import { NamesService } from '../../services/names-service';
 @Component({
   selector: 'series-add',
   imports: [
@@ -48,16 +42,17 @@ export class SeriesAdd {
   constructor(
     private fb: FormBuilder,
     private store: SeriesStoreService,
-    private view: SeriesViewService
+    private view: SeriesViewService,
+    private namesService: NamesService
   ) {
     this.seriesForm = this.fb.group({
       name: ['', Validators.required],
       type: '',
       genre: '',
-      season: 0,
-      episode: 0,
-      hours: 0,
+      season: null,
+      episode: null,
       watchTimeActive: false,
+      hours: 0,
       minutes: 0,
       seconds: 0,
       watched: 0,
@@ -68,6 +63,9 @@ export class SeriesAdd {
     this.view.toggleAddSeriesForm();
     this.view.toggleOverlay();
     this.wasValidated = false;
+    this.resetWatchTime();
+    this.names = [];
+    this.showWatchTime = false;
   }
   removeTag(tagNameToRemove: string) {
     this.tagNames = this.tagNames.filter(
@@ -75,10 +73,17 @@ export class SeriesAdd {
     );
   }
   onSubmit() {
+    if (!this.showWatchTime) {
+      this.resetWatchTime();
+    }
+    if (this.seriesForm.invalid) {
+      this.wasValidated = true;
+      return;
+    }
     const form = this.seriesForm.value;
-    const names = this.names.map((name) => name.value);
+    let names = this.names.map((name) => name.value);
+    names = this.namesService.removeUnnecessaryNames(names);
     const namesToSubmit = [form.name, ...names];
-    console.log(namesToSubmit);
     const objectToSubmit: SeriesToSend = {
       names: namesToSubmit,
       type: form.type,
@@ -94,10 +99,6 @@ export class SeriesAdd {
       watched: form.watched,
       tagNames: this.tagNames,
     };
-    if (this.seriesForm.invalid) {
-      this.wasValidated = true;
-      return;
-    }
 
     this.store.addSeries(objectToSubmit);
     this.seriesForm.reset(defaultSeriesFormValues);
@@ -106,7 +107,6 @@ export class SeriesAdd {
   }
   toggleShowWatchTime() {
     this.showWatchTime = !this.showWatchTime;
-    this.resetWatchTime();
   }
   resetWatchTime() {
     this.seriesForm.patchValue({

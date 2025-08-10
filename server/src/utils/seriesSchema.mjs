@@ -13,21 +13,27 @@ const seriesSchema = {
     errorMessage: "genre must be a string",
   },
   season: {
+    optional: {
+      options: { nullable: true },
+    },
     isInt: {
       options: {
         min: 0,
         errorMessage: "value  cannot be less than 0",
       },
-      errorMessage: "The product price must be a Integer",
+      errorMessage: "season must be a Integer",
     },
   },
   episode: {
+    optional: {
+      options: { nullable: true },
+    },
     isInt: {
       options: {
         min: 0,
         errorMessage: "value  cannot be less than 0",
       },
-      errorMessage: "The product price must be a Integer",
+      errorMessage: "episode must be an Integer",
     },
   },
   watchTimeActive: {
@@ -36,7 +42,6 @@ const seriesSchema = {
   },
   "watchTime.*": {
     isInt: {
-      required: true,
       options: {
         min: 0,
         errorMessage: "value  cannot be less than 0",
