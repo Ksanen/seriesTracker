@@ -23,7 +23,6 @@ router.delete("/:id", async (req, res) => {
 router.post("/", checkSchema(seriesSchema), async (req, res) => {
   try {
     const result = validationResult(req);
-    console.log(req.body);
     if (!result.isEmpty()) {
       return res.status(400).send({
         success: false,
