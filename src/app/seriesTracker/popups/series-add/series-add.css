@@ -45,7 +45,10 @@ input[type="number"] {
   gap: 5px;
   padding: 0;
 }
-
+.form__field--right {
+  display: flex;
+  justify-content: flex-end;
+}
 .form__buttons {
   display: flex;
   justify-content: center;

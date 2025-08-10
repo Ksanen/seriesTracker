@@ -1,0 +1,14 @@
+<div class="container">
+  <input
+    type="text"
+    class="form-control"
+    [(ngModel)]="name"
+    (ngModelChange)="updateName()"
+  />
+  <input
+    type="button"
+    class="btn btn-danger"
+    value="remove"
+    (click)="remove()"
+  />
+</div>

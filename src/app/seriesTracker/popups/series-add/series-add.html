@@ -9,8 +9,26 @@
   novalidate
 >
   <div class="form__field form__field--default">
-    <label>Name</label>
+    <label>Main name</label>
     <input class="form-control" type="text" formControlName="name" required />
+  </div>
+  @if(names.length>0){ @for (name of names; track name.id;let index=$index) {
+  <div class="form__field">
+    <seriesRemovableNameInput
+      [name]="names[index].value"
+      (nameChange)="names[index].value = $event"
+      [id]="name.id"
+      (removeName)="removeName($event)"
+    ></seriesRemovableNameInput>
+  </div>
+  } }
+  <div class="form__field--right">
+    <input
+      (click)="addNewName()"
+      class="btn btn-success"
+      type="button"
+      value="add new name"
+    />
   </div>
   <div class="form__field form__field--default">
     <label>Type</label>
