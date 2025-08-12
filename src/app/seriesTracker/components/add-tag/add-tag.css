@@ -1,4 +1,9 @@
 .add-tag {
   display: flex;
-  gap: 2px;
+  gap: 5px;
+}
+@media only screen and (max-width: 400px) {
+  .add-tag {
+    flex-direction: column;
+  }
 }

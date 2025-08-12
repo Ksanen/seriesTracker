@@ -5,31 +5,42 @@ import { Observable } from 'rxjs';
 import ServerResponse from '../../shared/interfaces/serverResponse';
 import SeriesToSend from '../../shared/interfaces/seriesToSend';
 import Tag from '../../shared/interfaces/tag';
-
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class SeriesApiService {
   constructor(private http: HttpClient) {}
+  private apiUrl = environment.apiUrl;
   getAllSeries(): Observable<SeriesInterface[]> {
-    return this.http.get<SeriesInterface[]>('http://localhost:3000/api/series');
+    return this.http.get<SeriesInterface[]>(`${this.apiUrl}/api/series`);
   }
   getTags() {
-    return this.http.get<Tag[]>('http://localhost:3000/api/tags');
+    return this.http.get<Tag[]>(`${this.apiUrl}/api/tags`);
   }
   deleteSeries(seriesId: string) {
-    return this.http.delete(`http://localhost:3000/api/series/${seriesId}`);
+    return this.http.delete(`${this.apiUrl}/api/series/${seriesId}`);
   }
   add(Series: SeriesToSend): Observable<ServerResponse> {
-    return this.http.post<ServerResponse>(
-      'http://localhost:3000/api/series',
-      Series
-    );
+    return this.http.post<ServerResponse>(`${this.apiUrl}/api/series`, Series);
   }
   update(id: string, Series: SeriesToSend): Observable<ServerResponse> {
     return this.http.patch<ServerResponse>(
-      `http://localhost:3000/api/series/${id}`,
+      `${this.apiUrl}/api/series/${id}`,
       Series
+    );
+  }
+  addTag(tagName: string) {
+    return this.http.post<ServerResponse>(`${this.apiUrl}/api/series/tags`, {
+      tagName: tagName,
+    });
+  }
+
+  /* zwraca serie, które zostały zmienione
+    w wyniku usunięcia z nich taga */
+  deleteTag(tagName: string) {
+    return this.http.delete<SeriesInterface[]>(
+      `${this.apiUrl}/api/series/tags/${tagName}`
     );
   }
 }

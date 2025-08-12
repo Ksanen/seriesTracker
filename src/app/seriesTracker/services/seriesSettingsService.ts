@@ -6,10 +6,12 @@ import seriesViewSettings from '../../shared/interfaces/seriesSettings/seriesVie
 import { SeriesViewService } from './seriesViewService';
 import defaultViewSettings from '../../shared/utils/defaultViewSettings';
 import defaultFilterSettings from '../../shared/utils/defaultFilterSettings';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class SeriesSettingsService {
+  private apiUrl = environment.apiUrl;
   private _viewSettings$ = new BehaviorSubject<seriesViewSettings>(
     defaultViewSettings
   );
@@ -24,7 +26,7 @@ export class SeriesSettingsService {
   }
   getViewSettings() {
     this.http
-      .get<seriesViewSettings>('http://localhost:3000/api/series/settings/view')
+      .get<seriesViewSettings>(`${this.apiUrl}/api/series/settings/view`)
       .subscribe({
         next: (settings) => {
           this._viewSettings$.next(settings);
@@ -41,9 +43,7 @@ export class SeriesSettingsService {
   }
   getFilterSettings() {
     this.http
-      .get<seriesFilterSettings>(
-        'http://localhost:3000/api/series/settings/filter'
-      )
+      .get<seriesFilterSettings>(`${this.apiUrl}/api/series/settings/filter`)
       .subscribe({
         next: (settings) => {
           this._filterSettings$.next(settings);
@@ -60,7 +60,7 @@ export class SeriesSettingsService {
   }
   saveViewSettings(viewSettings: seriesViewSettings) {
     this.http
-      .post('http://localhost:3000/api/series/settings/view', viewSettings)
+      .post(`${this.apiUrl}/api/series/settings/view`, viewSettings)
       .subscribe({
         next: () => {
           this._viewSettings$.next(viewSettings);
@@ -72,7 +72,7 @@ export class SeriesSettingsService {
   }
   saveFilterSettings(filterSettings: seriesFilterSettings) {
     this.http
-      .post('http://localhost:3000/api/series/settings/filter', filterSettings)
+      .post(`${this.apiUrl}/api/series/settings/filter`, filterSettings)
       .subscribe({
         next: () => {
           this._filterSettings$.next(filterSettings);

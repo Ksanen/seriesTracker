@@ -17,6 +17,7 @@ import AppOptions from '../../shared/interfaces/appOptions';
 import { SeriesDelete } from '../popups/series-delete/series-delete';
 import { SeriesViewService } from '../services/seriesViewService';
 import { SeriesDatabaseError } from '../components/series-database-error/series-database-error';
+import { SeriesTagSection } from '../components/series-tag-section/series-tag-section';
 @Component({
   selector: 'series-tracker',
   imports: [
@@ -28,6 +29,7 @@ import { SeriesDatabaseError } from '../components/series-database-error/series-
     SeriesFilter,
     SeriesDelete,
     SeriesDatabaseError,
+    SeriesTagSection,
   ],
   standalone: true,
   templateUrl: './series-tracker.html',

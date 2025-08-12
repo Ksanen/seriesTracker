@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import SeriesInterface from '../../shared/interfaces/series';
 import { SeriesApiService } from './seriesApiService';
@@ -53,6 +53,7 @@ export class SeriesStoreService {
           let currentList = this._seriesList$.getValue();
           currentList.push(response.series);
           this._seriesList$.next(currentList);
+          this.getTags();
         } else {
           console.log('error1', response);
         }
@@ -66,6 +67,51 @@ export class SeriesStoreService {
             console.log('Internal server error');
             break;
         }
+      },
+    });
+  }
+  addTag(tagName: string) {
+    this.seriesApiService.addTag(tagName).subscribe({
+      next: () => {
+        const tags = this._possibleTags$.getValue();
+        tags.push({
+          name: tagName,
+          seriesAttached: [],
+        });
+        this._possibleTags$.next(tags);
+      },
+    });
+  }
+  deleteTag(tagName: string) {
+    this.seriesApiService.deleteTag(tagName).subscribe({
+      next: (updatedSeries) => {
+        /*
+        wysyłanie nowej listy tagów po usunięciu tagu
+        */
+        let tags = this._possibleTags$.getValue();
+        tags = tags.filter((tag) => tag.name !== tagName);
+        this._possibleTags$.next(tags);
+
+        let currentList = this._seriesList$.getValue();
+
+        /*
+          Dla każdej updatowanej serii
+           wyszukuje pasującą serię w liście serii
+          i przypisuje nowe tagi
+        
+        */
+        updatedSeries.forEach((series) => {
+          const id = series._id.toString();
+          for (let i = 0; i < currentList.length; i++) {
+            if (currentList[i]._id === id) {
+              currentList[i].tagNames = series.tagNames;
+            }
+          }
+        });
+        this._seriesList$.next(currentList);
+      },
+      error: (e) => {
+        console.log('error: ', e);
       },
     });
   }

@@ -1,15 +1,10 @@
 .series {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   color: #ffffff;
   padding: 1rem;
   flex-wrap: wrap;
   gap: 20px;
-}
-.series__buttons {
-  display: flex;
-  gap: 5px;
 }
 .series__data {
   display: flex;
@@ -31,21 +26,7 @@
 .odd {
   background-color: #1f1f1f;
 }
-input[type="number"] {
-  width: 50px;
-}
-.series__btn {
-  padding: 10px;
-  border: none;
-  outline: none;
-  border-radius: 12px;
-  cursor: pointer;
-}
-.series__btn--edit {
-  background-color: blue;
-  color: white;
-}
-
-.series__btn--edit:hover {
-  background-color: rgb(61, 61, 233);
+button {
+  width: 200px;
+  margin: 0 auto;
 }

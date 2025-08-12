@@ -4,6 +4,7 @@
     'overlay--open': options.showOverlay
   }"
 ></div>
+<series-add [show]="options.showAddSeriesForm"></series-add>
 <series-database-error></series-database-error>
 <div class="series-tracker">
   <series-delete [show]="options.showDeleteSeriesConfirmation"></series-delete>
@@ -21,7 +22,6 @@
   </header>
   <div class="content">
     <main class="content__list">
-      <series-add [show]="options.showAddSeriesForm"></series-add>
       <series-list [name]="name"></series-list>
     </main>
     <aside
@@ -33,7 +33,7 @@
       <div class="aside__content">
         <series-filter></series-filter>
         <series-view-settings></series-view-settings>
-        <h1 style="text-align: center">Available tags</h1>
+        <seriesTagSection></seriesTagSection>
       </div>
     </aside>
   </div>

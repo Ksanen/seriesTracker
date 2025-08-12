@@ -1,0 +1,27 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 10px;
+}
+.section__tag {
+  display: flex;
+  justify-content: space-between;
+}
+.section__tag__data {
+  display: flex;
+  flex-direction: column;
+}
+.section__tag__data__name {
+  color: rgb(207, 83, 83);
+  font-weight: bold;
+}
+.section__tag__buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.add-tag {
+  display: flex;
+  gap: 5px;
+}

@@ -1,5 +1,6 @@
 .series-tracker {
-  height: 100vh;
+  max-height: 100vh;
+  max-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -27,28 +28,28 @@
   flex-grow: 1;
   background-color: gray;
   position: relative;
-  overflow: hidden;
+  max-height: 100vh;
 }
 .content__list {
   flex-grow: 1;
+
   overflow-y: auto;
 }
 
 .aside {
   background-color: #34495e;
   color: white;
-  height: 100%;
   transition: width 400ms ease;
   width: 0;
-  overflow: hidden;
+  overflow: auto;
   white-space: nowrap;
-  overflow-y: auto;
 }
 .aside__content {
   padding: 1rem;
 }
 .aside--open {
   width: 400px;
+  flex-shrink: 0;
   transition: width 400ms ease;
 }
 @media only screen and (min-width: 1000px) {
@@ -71,5 +72,10 @@
   }
   .aside--open {
     width: 100%;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .header {
+    flex-direction: column;
   }
 }

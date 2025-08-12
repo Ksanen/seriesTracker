@@ -63,7 +63,7 @@ export class SeriesAdd {
     this.view.toggleAddSeriesForm();
     this.view.toggleOverlay();
     this.wasValidated = false;
-    this.resetWatchTime();
+    this.seriesForm.reset(defaultSeriesFormValues);
     this.names = [];
     this.showWatchTime = false;
   }

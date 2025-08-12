@@ -39,7 +39,7 @@
       <option value="series">series</option>
     </select>
   </div>
-  <div class="form__field form__field--default">
+  <div class="form__field">
     <label>Genre</label>
     <select class="form-select" formControlName="genre">
       <option value="">Choose genre</option>
@@ -48,8 +48,7 @@
       <option value="kreskówka">Cartoon</option>
     </select>
   </div>
-  <div class="form__field">
-    <label>Add tag</label>
+  <div class="form__field form__field--right">
     <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
   </div>
 

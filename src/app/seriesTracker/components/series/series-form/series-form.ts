@@ -125,7 +125,7 @@ export class SeriesForm implements OnInit {
       watched: form.watched,
       tagNames: this.tagNames,
     };
-
+    //
     this.seriesService
       .update(this.series._id, series)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -133,6 +133,7 @@ export class SeriesForm implements OnInit {
         next: () => {
           Object.assign(this.series, series);
           this.closeForm.emit();
+          this.store.getTags();
           this.cd.detectChanges();
           this.wasValidated = false;
         },

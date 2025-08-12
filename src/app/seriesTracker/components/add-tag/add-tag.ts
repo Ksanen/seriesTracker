@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   EventEmitter,
@@ -10,7 +11,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
 import Tag from '../../../shared/interfaces/tag';
 @Component({
   selector: 'add-tag',
@@ -25,17 +25,22 @@ export class AddTag implements OnInit {
   @Output() addNewTag = new EventEmitter<string[]>();
   destroyRef = inject(DestroyRef);
   possibleTags!: Tag[];
-  constructor(private store: SeriesStoreService) {}
+  constructor(
+    private store: SeriesStoreService,
+    private cd: ChangeDetectorRef
+  ) {}
   ngOnInit(): void {
     this.store.possibleTags
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((tags) => {
         this.possibleTags = tags;
+        this.cd.detectChanges();
       });
   }
   addTag() {
     if (this.tagName === '') return;
     this.tagNames.push(this.tagName);
+    this.tagNames = [...new Set(this.tagNames)];
     this.addNewTag.emit(this.tagNames);
   }
 }

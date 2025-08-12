@@ -9,14 +9,14 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:4200",
+    origin: ["http://localhost:4200", "http://192.168.0.53:4200"],
   })
 );
 app.use(routes);
 
 const PORT = 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`server is listening on port ${PORT}`);
 });
 app.get("/api/tags", checkDataBaseConnection, async (req, res) => {

@@ -1,0 +1,29 @@
+<h1 style="text-align: center">Available tags</h1>
+<div class="add-tag">
+  <input
+    type="text"
+    [(ngModel)]="tagName"
+    class="form-control"
+    placeholder="wpisz nazwę..."
+  />
+  <input type="button" class="btn btn-success" value="add" (click)="addTag()" />
+</div>
+<div class="section">
+  @for(tag of possibleTags;track tag.name){
+  <div class="section__tag">
+    <div class="section__tag__data">
+      <h3 class="section__tag__data__name">{{ tag.name }}</h3>
+      <p>series attached: {{ tag.seriesAttached.length }}</p>
+    </div>
+
+    <div class="section__tag__buttons">
+      <input
+        type="button"
+        value="delete"
+        (click)="delete(tag.name)"
+        class="btn btn-danger"
+      />
+    </div>
+  </div>
+  }
+</div>

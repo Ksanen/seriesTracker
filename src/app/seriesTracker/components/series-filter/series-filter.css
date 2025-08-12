@@ -25,3 +25,8 @@ input:not(input[type="button"], input[type="submit"]) {
   justify-content: center;
   gap: 5px;
 }
+@media only screen and (max-width: 400px) {
+  .filter__option {
+    flex-direction: column;
+  }
+}
