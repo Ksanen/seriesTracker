@@ -33,7 +33,7 @@ import { NamesService } from '../../../services/names-service';
     SeriesRemovableNameInput,
   ],
   templateUrl: './series-form.html',
-  styleUrl: './series-form.css',
+  styleUrl: '../series.css',
 })
 export class SeriesForm implements OnInit {
   @Input() series!: SeriesInterface;

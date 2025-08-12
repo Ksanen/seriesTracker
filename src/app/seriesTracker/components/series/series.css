@@ -11,22 +11,76 @@
   flex-direction: column;
   gap: 10px;
 }
-.series__data__field {
+.field {
   display: flex;
   gap: 10px;
   align-items: center;
+}
+.field__data {
+  width: 300px;
+}
+.field--form {
+  padding: 0;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.field--right {
+  display: flex;
+  justify-content: flex-end;
 }
 .series__tags {
   display: flex;
   gap: 10px;
 }
+
+button {
+  width: 200px;
+  margin: 0 auto;
+}
+
 .even {
   background-color: #2a2a2a;
 }
 .odd {
   background-color: #1f1f1f;
 }
-button {
-  width: 200px;
-  margin: 0 auto;
+
+.watch-time {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  gap: 5px;
+  height: 0;
+  transition: height 400ms ease;
+}
+.watch-time--show {
+  height: 130px;
+  transition: height 400ms ease;
+}
+.watch-time__field {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+.watch-time__field input[type="number"] {
+  width: 90px;
+}
+.series__tags {
+  display: flex;
+  gap: 10px;
+}
+
+input[type="checkbox"] {
+  height: 20px;
+  width: 50px;
+}
+label {
+  width: 100px;
+}
+.series__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
 }

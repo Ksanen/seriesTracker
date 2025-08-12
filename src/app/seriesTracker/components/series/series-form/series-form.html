@@ -14,11 +14,16 @@ watchTimeActive=series.watchTimeActive;
   (ngSubmit)="save()"
 >
   <div class="series__data">
-    <div class="series__data__field">
+    <div class="field field--form">
       <label>Name:</label>
-      <input class="form-control" type="text" formControlName="name" required />
+      <input
+        class="form-control field__data"
+        type="text"
+        formControlName="name"
+        required
+      />
     </div>
-    <div class="series__data__field--right">
+    <div class="field--right field--form">
       <input
         (click)="addNewName()"
         class="btn btn-success"
@@ -28,7 +33,7 @@ watchTimeActive=series.watchTimeActive;
     </div>
     @if(this.names.length>0){ Names: @for( name of names;track name.id;let
     index=$index){
-    <div class="series__data__field">
+    <div class="field field--form">
       <seriesRemovableNameInput
         [name]="names[index].value"
         (nameChange)="names[index].value = $event"
@@ -37,38 +42,38 @@ watchTimeActive=series.watchTimeActive;
       ></seriesRemovableNameInput>
     </div>
     } }
-    <div class="series__data__field">
+    <div class="field field--form">
       <label>Season:</label>
       <input
-        class="form-control"
+        class="form-control field__data"
         type="number"
         min="0"
         [value]="season"
         formControlName="season"
       />
     </div>
-    <div class="series__data__field">
+    <div class="field field--form">
       <label>Episode:</label>
       <input
-        class="form-control"
+        class="form-control field__data"
         type="number"
         min="0"
         [value]="episode"
         formControlName="episode"
       />
     </div>
-    <div class="series__data__field">
+    <div class="field field--form">
       <label>Watched:</label>
-      <select class="form-select" formControlName="watched">
+      <select class="form-select field__data" formControlName="watched">
         <option value="true">true</option>
         <option value="false">false</option>
       </select>
     </div>
-    <div class="series__data__field form-check form-switch">
+    <div class="field field--form form-check form-switch">
       <label>WatchTime:</label>
       <input
         type="checkbox"
-        class="form-check-input"
+        class="form-check-input field__data"
         [checked]="watchTimeActive"
         (click)="toggleShowWatchTime()"
         formControlName="watchTimeActive"
@@ -82,7 +87,7 @@ watchTimeActive=series.watchTimeActive;
     >
       <div class="watch-time__field">
         Hours<input
-          class="form-control"
+          class="form-control field__data"
           type="number"
           [value]="hours ?? 0"
           min="0"
@@ -91,7 +96,7 @@ watchTimeActive=series.watchTimeActive;
           required
         />
       </div>
-      <div class="watch-time__field">
+      <div class="watch-time__field field__data">
         Minutes<input
           class="form-control"
           type="number"
@@ -102,7 +107,7 @@ watchTimeActive=series.watchTimeActive;
           required
         />
       </div>
-      <div class="watch-time__field">
+      <div class="watch-time__field field__data">
         Seconds<input
           class="form-control"
           type="number"
@@ -114,24 +119,24 @@ watchTimeActive=series.watchTimeActive;
         />
       </div>
     </div>
-    <div class="series__data__field">
+    <div class="field field--form">
       Type
-      <select class="form-select" formControlName="type">
+      <select class="form-select field__data" formControlName="type">
         <option value="">Choose type</option>
         <option value="movie">movie</option>
         <option value="series">series</option>
       </select>
     </div>
-    <div class="series__data__field">
+    <div class="field field--form">
       Genre
-      <select class="form-select" formControlName="genre">
+      <select class="form-select field__data" formControlName="genre">
         <option value="">Choose genre</option>
         <option value="anime">anime</option>
         <option value="donghua">donghua</option>
         <option value="cartoon">cartoon</option>
       </select>
     </div>
-    <div class="series__data__field">
+    <div class="field field--form">
       <div>tags:</div>
       <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
     </div>
