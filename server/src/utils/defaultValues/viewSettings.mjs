@@ -6,6 +6,7 @@ const defaultViewSettings = {
   watchtime: true,
   type: true,
   genre: true,
+  animation: true,
   tags: true,
 };
 export default defaultViewSettings;

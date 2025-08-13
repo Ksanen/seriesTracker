@@ -9,154 +9,137 @@ seconds=series.watchTime.seconds; @let watchTimeActive=series.watchTimeActive;
     'was-validated': wasValidated
   }"
   [formGroup]="seriesForm"
-  (ngSubmit)="save()"
+  (ngSubmit)="onSaveSeries()"
 >
-  <div class="series__data">
-    <div class="field field--form">
-      <label>Name:</label>
-      <input
+  <div class="field field--form">
+    <label>Name:</label>
+    <input
+      class="form-control field__data"
+      type="text"
+      formControlName="name"
+      required
+    />
+  </div>
+  <series-names
+    [seriesNames]="namesValues"
+    (namesValues)="namesValues = $event"
+  ></series-names>
+  <div class="field field--form">
+    <label>Season:</label>
+    <input
+      class="form-control field__data"
+      type="number"
+      min="0"
+      [value]="season"
+      formControlName="season"
+    />
+  </div>
+  <div class="field field--form">
+    <label>Episode:</label>
+    <input
+      class="form-control field__data"
+      type="number"
+      min="0"
+      [value]="episode"
+      formControlName="episode"
+    />
+  </div>
+  <div class="field field--form">
+    <label>Watched:</label>
+    <select class="form-select field__data" formControlName="watched">
+      <option value="true">true</option>
+      <option value="false">false</option>
+    </select>
+  </div>
+  <div class="field field--form form-check form-switch">
+    <label>WatchTime:</label>
+    <input
+      type="checkbox"
+      class="form-check-input field__data"
+      [checked]="watchTimeActive"
+      (click)="toggleShowWatchTime()"
+      formControlName="watchTimeActive"
+    />
+  </div>
+  <div
+    [ngClass]="{
+      'watch-time': true,
+      'watch-time--show': showWatchTime
+    }"
+  >
+    <div class="watch-time__field">
+      Hours<input
         class="form-control field__data"
-        type="text"
-        formControlName="name"
+        type="number"
+        [value]="hours ?? 0"
+        min="0"
+        max="23"
+        formControlName="hours"
         required
       />
     </div>
-    <div class="field--right field--form">
-      <input
-        (click)="addNewName()"
-        class="btn btn-success"
-        type="button"
-        value="add new name"
-      />
-    </div>
-    @if(this.names.length>0){ Names: @for( name of names;track name.id;let
-    index=$index){
-    <div class="field field--form">
-      <seriesRemovableNameInput
-        [name]="names[index].value"
-        (nameChange)="names[index].value = $event"
-        [id]="name.id"
-        (removeName)="removeName($event)"
-      ></seriesRemovableNameInput>
-    </div>
-    } }
-    <div class="field field--form">
-      <label>Season:</label>
-      <input
-        class="form-control field__data"
+    <div class="watch-time__field">
+      Minutes<input
+        class="form-control"
         type="number"
+        [value]="minutes ?? 0"
         min="0"
-        [value]="season"
-        formControlName="season"
+        max="59"
+        formControlName="minutes"
+        required
       />
     </div>
-    <div class="field field--form">
-      <label>Episode:</label>
-      <input
-        class="form-control field__data"
+    <div class="watch-time__field">
+      Seconds<input
+        class="form-control"
         type="number"
+        [value]="seconds ?? 0"
         min="0"
-        [value]="episode"
-        formControlName="episode"
+        max="59"
+        formControlName="seconds"
+        required
       />
     </div>
-    <div class="field field--form">
-      <label>Watched:</label>
-      <select class="form-select field__data" formControlName="watched">
-        <option value="true">true</option>
-        <option value="false">false</option>
-      </select>
-    </div>
-    <div class="field field--form form-check form-switch">
-      <label>WatchTime:</label>
-      <input
-        type="checkbox"
-        class="form-check-input field__data"
-        [checked]="watchTimeActive"
-        (click)="toggleShowWatchTime()"
-        formControlName="watchTimeActive"
-      />
-    </div>
-    <div
-      [ngClass]="{
-        'watch-time': true,
-        'watch-time--show': showWatchTime
-      }"
-    >
-      <div class="watch-time__field">
-        Hours<input
-          class="form-control field__data"
-          type="number"
-          [value]="hours ?? 0"
-          min="0"
-          max="23"
-          formControlName="hours"
-          required
-        />
-      </div>
-      <div class="watch-time__field">
-        Minutes<input
-          class="form-control"
-          type="number"
-          [value]="minutes ?? 0"
-          min="0"
-          max="59"
-          formControlName="minutes"
-          required
-        />
-      </div>
-      <div class="watch-time__field">
-        Seconds<input
-          class="form-control"
-          type="number"
-          [value]="seconds ?? 0"
-          min="0"
-          max="59"
-          formControlName="seconds"
-          required
-        />
-      </div>
-    </div>
-    <div class="field field--form">
-      Type
-      <select class="form-select field__data" formControlName="type">
-        <option value="">Choose type</option>
-        @for(name of typeList | async;track name){
-        <option [value]="name">{{ name }}</option>
-        }
-      </select>
-    </div>
-    <div class="field field--form">
-      Genre
-      <select class="form-select field__data" formControlName="genre">
-        <option value="">Choose genre</option>
-        @for(name of genreList | async;track name){
-        <option [value]="name">{{ name }}</option>
-        }
-      </select>
-    </div>
-    <div class="field field--form">
-      Animation
-      <select class="form-select field__data" formControlName="animation">
-        <option value="">Choose animation</option>
-        @for(name of animationList | async;track name){
-        <option [value]="name">{{ name }}</option>
-        }
-      </select>
-    </div>
-    <div class="field field--form">
-      <div>tags:</div>
-      <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
-    </div>
-    <div class="series__tags">
-      @for(tagName of tagNames; track tagName){
-      <tag
-        [tagName]="tagName"
-        [changeMode]="true"
-        (tagRemoved)="removeTag($event)"
-      ></tag>
+  </div>
+  <div class="field field--form">
+    Type
+    <select class="form-select field__data" formControlName="type">
+      <option value="">Choose type</option>
+      @for(name of typeList | async;track name){
+      <option [value]="name">{{ name }}</option>
       }
-    </div>
+    </select>
+  </div>
+  <div class="field field--form">
+    Genre
+    <select class="form-select field__data" formControlName="genre">
+      <option value="">Choose genre</option>
+      @for(name of genreList | async;track name){
+      <option [value]="name">{{ name }}</option>
+      }
+    </select>
+  </div>
+  <div class="field field--form">
+    Animation
+    <select class="form-select field__data" formControlName="animation">
+      <option value="">Choose animation</option>
+      @for(name of animationList | async;track name){
+      <option [value]="name">{{ name }}</option>
+      }
+    </select>
+  </div>
+  <div class="field field--form">
+    <div>tags:</div>
+    <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
+  </div>
+  <div class="series__tags">
+    @for(tagName of tagNames; track tagName){
+    <tag
+      [tagName]="tagName"
+      [changeMode]="true"
+      (tagRemoved)="removeTag($event)"
+    ></tag>
+    }
   </div>
   <div class="series__buttons">
     <input

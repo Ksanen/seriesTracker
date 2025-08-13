@@ -13,10 +13,10 @@ import { CommonModule } from '@angular/common';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 import { SeriesViewService } from '../../services/seriesViewService';
 import defaultSeriesFormValues from '../../../shared/utils/defaultValues/defaultSeriesFormValues';
-import { SeriesRemovableNameInput } from '../../components/series-removable-name-input/series-removable-name-input';
 import RemovableName from '../../../shared/interfaces/removableName';
 import { NamesService } from '../../services/names-service';
 import { Observable } from 'rxjs';
+import { SeriesNames } from '../../components/series-names/series-names';
 @Component({
   selector: 'series-add',
   imports: [
@@ -25,7 +25,7 @@ import { Observable } from 'rxjs';
     AddTag,
     ReactiveFormsModule,
     CommonModule,
-    SeriesRemovableNameInput,
+    SeriesNames,
   ],
   standalone: true,
   templateUrl: './series-add.html',
@@ -35,13 +35,11 @@ export class SeriesAdd implements OnInit {
   genreList!: Observable<string[]>;
   typeList!: Observable<string[]>;
   animationList!: Observable<string[]>;
+  namesValues!: string[];
   ngOnInit(): void {
     this.genreList = this.store.genreList$;
     this.typeList = this.store.typeList$;
     this.animationList = this.store.animationList$;
-  }
-  removeName(id: number) {
-    this.names = this.names.filter((name) => name.id !== id);
   }
   seriesForm!: FormGroup;
   names: RemovableName[] = [];
@@ -91,8 +89,8 @@ export class SeriesAdd implements OnInit {
       return;
     }
     const form = this.seriesForm.value;
-    let names = this.names.map((name) => name.value);
-    names = this.namesService.removeUnnecessaryNames(names);
+    let names = this.namesService.removeUnnecessaryNames(this.namesValues);
+
     const namesToSubmit = [form.name, ...names];
     const objectToSubmit: SeriesToSend = {
       names: namesToSubmit,
@@ -124,24 +122,6 @@ export class SeriesAdd implements OnInit {
       hours: 0,
       minutes: 0,
       seconds: 0,
-    });
-  }
-  addNewName() {
-    if (
-      this.names.length > 0 &&
-      this.names[this.names.length - 1].value === ''
-    ) {
-      return;
-    }
-    const idOfNames = this.names.map((name) => name.id);
-    let id = Math.floor(Math.random() * 1000);
-    while (idOfNames.includes(id)) {
-      console.log(id);
-      id = Math.floor(Math.random() * 1000);
-    }
-    this.names.push({
-      id: id,
-      value: '',
     });
   }
 }

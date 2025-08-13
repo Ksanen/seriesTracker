@@ -21,10 +21,9 @@ import { AddTag } from '../../add-tag/add-tag';
 import { CommonModule } from '@angular/common';
 import { SeriesStoreService } from '../../../services/seriesStoreService';
 import { SeriesViewService } from '../../../services/seriesViewService';
-import { SeriesRemovableNameInput } from '../../series-removable-name-input/series-removable-name-input';
-import RemovableName from '../../../../shared/interfaces/removableName';
 import { NamesService } from '../../../services/names-service';
 import { Observable } from 'rxjs';
+import { SeriesNames } from '../../series-names/series-names';
 @Component({
   selector: 'series-form',
   imports: [
@@ -33,7 +32,7 @@ import { Observable } from 'rxjs';
     AddTag,
     ReactiveFormsModule,
     CommonModule,
-    SeriesRemovableNameInput,
+    SeriesNames,
   ],
   templateUrl: './series-form.html',
   styleUrl: '../series.css',
@@ -42,7 +41,7 @@ export class SeriesForm implements OnInit {
   @Input() series!: SeriesInterface;
   @Input() even!: boolean;
   @Output() closeForm = new EventEmitter();
-  names: RemovableName[] = [];
+  namesValues: string[] = [];
   tagNames: string[] = [];
   seriesForm!: FormGroup;
   showWatchTime!: boolean;
@@ -54,14 +53,7 @@ export class SeriesForm implements OnInit {
   toggleShowWatchTime() {
     this.showWatchTime = !this.showWatchTime;
   }
-  addNewName() {
-    const newName = this.namesService.addNewName(this.names);
-    if (!newName) return;
-    this.names.push(newName);
-  }
-  removeName(id: number) {
-    this.names = this.namesService.removeName(this.names, id);
-  }
+
   ngOnInit(): void {
     this.showWatchTime = this.series.watchTimeActive;
     this.seriesForm = this.fb.group({
@@ -77,9 +69,8 @@ export class SeriesForm implements OnInit {
       seconds: this.series.watchTime.seconds,
       watched: this.series.watched,
     });
-    this.names = this.namesService.createRemovableNamesArray(this.series.names);
+    this.namesValues = this.series.names;
     this.tagNames = [...this.series.tagNames];
-
     this.genreList = this.store.genreList$;
     this.typeList = this.store.typeList$;
     this.animationList = this.store.animationList$;
@@ -109,7 +100,7 @@ export class SeriesForm implements OnInit {
     this.tagNames = [...this.series.tagNames];
     this.closeForm.emit();
   }
-  save() {
+  onSaveSeries() {
     if (!this.showWatchTime) {
       this.resetWatchTime();
     }
@@ -119,8 +110,7 @@ export class SeriesForm implements OnInit {
       return;
     }
     const form = this.seriesForm.value;
-    let names = this.names.map((name) => name.value);
-    names = this.namesService.removeUnnecessaryNames(names);
+    const names = this.namesService.removeUnnecessaryNames(this.namesValues);
     const namesToSend: string[] = [form.name, ...names];
     const series: SeriesToSend = {
       names: namesToSend,
@@ -138,7 +128,6 @@ export class SeriesForm implements OnInit {
       watched: form.watched,
       tagNames: this.tagNames,
     };
-    //
     this.seriesService
       .update(this.series._id, series)
       .pipe(takeUntilDestroyed(this.destroyRef))

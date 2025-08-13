@@ -139,6 +139,7 @@ router.patch("/:id", checkSchema(seriesSchema), async (req, res) => {
         names: series.names,
         type: series.type,
         genre: series.genre,
+        animation: series.animation,
         season: series.season,
         episode: series.episode,
         watchTimeActive: series.watchTimeActive,

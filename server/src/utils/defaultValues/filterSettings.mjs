@@ -1,6 +1,7 @@
 const defaultFilterSettings = {
   type: "",
   genre: "",
+  animation: "",
   watched: "",
   tags: [],
   season: null,
