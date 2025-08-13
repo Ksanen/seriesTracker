@@ -66,6 +66,8 @@ export class SeriesList implements OnInit {
       if (settings.type !== '' && series.type !== settings.type) return false;
       if (settings.genre !== '' && series.genre !== settings.genre)
         return false;
+      if (settings.animation !== '' && series.animation !== settings.animation)
+        return false;
       if (settings.season !== null && series.season !== settings.season)
         return false;
       if (settings.episode !== null && series.episode !== settings.episode)
