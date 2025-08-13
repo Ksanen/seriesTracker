@@ -15,6 +15,10 @@ const SeriesFilterSettingsSchema = {
     isString: true,
     errorMessage: "genre must be a string",
   },
+  animation: {
+    isString: true,
+    errorMessage: "animation must be a string",
+  },
   watched: {
     isString: true,
     errorMessage: "watched must be a string",

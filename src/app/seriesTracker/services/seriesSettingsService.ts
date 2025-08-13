@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import seriesFilterSettings from '../../shared/interfaces/seriesSettings/seriesFilterSettings';
 import seriesViewSettings from '../../shared/interfaces/seriesSettings/seriesViewSettings';
 import { SeriesViewService } from './seriesViewService';
-import defaultViewSettings from '../../shared/utils/defaultViewSettings';
-import defaultFilterSettings from '../../shared/utils/defaultFilterSettings';
+import defaultViewSettings from '../../shared/utils/defaultValues/defaultViewSettings';
+import defaultFilterSettings from '../../shared/utils/defaultValues/defaultFilterSettings';
 import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',

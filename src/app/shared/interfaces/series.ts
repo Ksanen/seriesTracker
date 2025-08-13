@@ -1,8 +1,8 @@
-export default interface SeriesInterface {
-  _id: string;
+interface BaseSeries {
   names: string[];
   type: string;
   genre: string;
+  animation: string;
   season: number;
   episode: number;
   watchTimeActive: boolean;
@@ -14,3 +14,8 @@ export default interface SeriesInterface {
   watched: boolean;
   tagNames: string[];
 }
+
+export interface SeriesInterface extends BaseSeries {
+  _id: string;
+}
+export interface SeriesToSend extends BaseSeries {}

@@ -2,7 +2,8 @@
 name=series.names[0]; @let hours=series.watchTime?.hours; @let
 minutes=series.watchTime?.minutes; @let seconds=series.watchTime?.seconds; @let
 watched=series.watched; @let type=series.type; @let genre=series.genre; @let
-watchTimeActive=series.watchTimeActive; @if(isEditMode){
+watchTimeActive=series.watchTimeActive; @let animation=series.animation;
+@if(isEditMode){
 <series-form
   [series]="series"
   [even]="even"
@@ -37,6 +38,8 @@ watchTimeActive=series.watchTimeActive; @if(isEditMode){
     <p>Type: @if(type?.length===0){none}@else{ {{ type }}}</p>
     } @if(viewSettings.genre){
     <p>Genre: @if(genre?.length===0){none}@else{ {{ genre }}}</p>
+    } @if(viewSettings.animation){
+    <p>Animation: @if(animation?.length===0){none}@else{ {{ animation }}}</p>
     } @if(viewSettings.tags){
     <div>
       <div class="series__tags">

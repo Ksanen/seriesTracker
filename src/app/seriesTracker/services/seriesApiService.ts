@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import SeriesInterface from '../../shared/interfaces/series';
+import { SeriesInterface, SeriesToSend } from '../../shared/interfaces/series';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import ServerResponse from '../../shared/interfaces/serverResponse';
-import SeriesToSend from '../../shared/interfaces/seriesToSend';
 import Tag from '../../shared/interfaces/tag';
 import { environment } from '../../../environments/environment';
 @Injectable({

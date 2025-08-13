@@ -2,6 +2,7 @@ const defaultSeriesFormValues = {
   name: '',
   type: '',
   genre: '',
+  animation: '',
   season: 0,
   episode: 0,
   hours: 0,

@@ -9,7 +9,7 @@ import {
   Signal,
   WritableSignal,
 } from '@angular/core';
-import SeriesInterface from '../../../shared/interfaces/series';
+import { SeriesInterface } from '../../../shared/interfaces/series';
 import { Series } from '../series/series';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -31,6 +31,7 @@ export class SeriesList implements OnInit {
     episode: null,
     season: null,
     genre: '',
+    animation: '',
     tags: [],
     type: '',
     watched: '',

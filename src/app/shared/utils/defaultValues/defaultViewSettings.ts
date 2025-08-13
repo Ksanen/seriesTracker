@@ -1,4 +1,4 @@
-import seriesViewSettings from '../interfaces/seriesSettings/seriesViewSettings';
+import seriesViewSettings from '../../interfaces/seriesSettings/seriesViewSettings';
 
 const defaultViewSettings: seriesViewSettings = {
   name: true,
@@ -8,6 +8,7 @@ const defaultViewSettings: seriesViewSettings = {
   watchtime: true,
   type: true,
   genre: true,
+  animation: true,
   tags: true,
 };
 export default defaultViewSettings;

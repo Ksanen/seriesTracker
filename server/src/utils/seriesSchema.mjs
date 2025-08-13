@@ -12,6 +12,10 @@ const seriesSchema = {
     isString: true,
     errorMessage: "genre must be a string",
   },
+  animation: {
+    isString: true,
+    errorMessage: "animation must be a string",
+  },
   season: {
     optional: {
       options: { nullable: true },

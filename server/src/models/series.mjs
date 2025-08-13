@@ -3,6 +3,7 @@ const seriesSchema = mongoose.Schema({
   names: [String],
   type: String,
   genre: String,
+  animation: String,
   season: Number,
   episode: Number,
   watchTimeActive: Boolean,

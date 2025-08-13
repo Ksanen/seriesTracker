@@ -1,7 +1,8 @@
-import SeriesInterface from './series';
+import { SeriesInterface } from './series';
 
-export default interface ServerResponse {
+interface ServerResponse {
   success: boolean;
-  msg: string;
+  message: string;
   series: SeriesInterface;
 }
+export default ServerResponse;

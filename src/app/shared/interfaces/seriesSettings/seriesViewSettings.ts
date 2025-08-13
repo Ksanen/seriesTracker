@@ -6,5 +6,6 @@ export default interface seriesViewSettings {
   watchtime: boolean;
   type: boolean;
   genre: boolean;
+  animation: boolean;
   tags: boolean;
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Tag } from '../../components/tag/tag';
 import {
   FormBuilder,
@@ -8,14 +8,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { AddTag } from '../../components/add-tag/add-tag';
-import SeriesToSend from '../../../shared/interfaces/seriesToSend';
+import { SeriesToSend } from '../../../shared/interfaces/series';
 import { CommonModule } from '@angular/common';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 import { SeriesViewService } from '../../services/seriesViewService';
-import defaultSeriesFormValues from '../../../shared/utils/defaultSeriesFormValues';
+import defaultSeriesFormValues from '../../../shared/utils/defaultValues/defaultSeriesFormValues';
 import { SeriesRemovableNameInput } from '../../components/series-removable-name-input/series-removable-name-input';
 import RemovableName from '../../../shared/interfaces/removableName';
 import { NamesService } from '../../services/names-service';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'series-add',
   imports: [
@@ -30,7 +31,15 @@ import { NamesService } from '../../services/names-service';
   templateUrl: './series-add.html',
   styleUrl: './series-add.css',
 })
-export class SeriesAdd {
+export class SeriesAdd implements OnInit {
+  genreList!: Observable<string[]>;
+  typeList!: Observable<string[]>;
+  animationList!: Observable<string[]>;
+  ngOnInit(): void {
+    this.genreList = this.store.genreList$;
+    this.typeList = this.store.typeList$;
+    this.animationList = this.store.animationList$;
+  }
   removeName(id: number) {
     this.names = this.names.filter((name) => name.id !== id);
   }
@@ -49,6 +58,7 @@ export class SeriesAdd {
       name: ['', Validators.required],
       type: '',
       genre: '',
+      animation: '',
       season: null,
       episode: null,
       watchTimeActive: false,
@@ -88,6 +98,7 @@ export class SeriesAdd {
       names: namesToSubmit,
       type: form.type,
       genre: form.genre,
+      animation: form.animation,
       season: form.season,
       episode: form.episode,
       watchTimeActive: form.watchTimeActive,

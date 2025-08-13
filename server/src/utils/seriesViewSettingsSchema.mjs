@@ -27,6 +27,10 @@ const SeriesViewSettingsSchema = {
     isBoolean: true,
     errorMessage: "genre must be  a boolean",
   },
+  animation: {
+    isBoolean: true,
+    errorMessage: "animation must be  a boolean",
+  },
   tags: {
     isBoolean: true,
     errorMessage: "tags must be  a boolean",

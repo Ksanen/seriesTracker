@@ -36,6 +36,7 @@ export class SeriesViewSettings implements OnInit {
           watchtime: settings.watchtime,
           type: settings.type,
           genre: settings.genre,
+          animation: settings.animation,
           tags: settings.tags,
         });
         this.cd.detectChanges();
@@ -54,6 +55,7 @@ export class SeriesViewSettings implements OnInit {
       watchtime: true,
       type: true,
       genre: true,
+      animation: true,
       tags: true,
     });
   }
@@ -66,6 +68,7 @@ export class SeriesViewSettings implements OnInit {
       watchtime: false,
       type: false,
       genre: false,
+      animation: false,
       tags: false,
     });
   }

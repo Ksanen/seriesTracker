@@ -8,6 +8,7 @@ const viewSettings = mongoose.Schema({
   watchtime: Boolean,
   type: Boolean,
   genre: Boolean,
+  animation: Boolean,
   tags: Boolean,
 });
 const SeriesViewSettingsModel = mongoose.model(

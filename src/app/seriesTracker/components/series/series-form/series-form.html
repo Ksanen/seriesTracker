@@ -96,7 +96,7 @@ watchTimeActive=series.watchTimeActive;
           required
         />
       </div>
-      <div class="watch-time__field field__data">
+      <div class="watch-time__field">
         Minutes<input
           class="form-control"
           type="number"
@@ -107,7 +107,7 @@ watchTimeActive=series.watchTimeActive;
           required
         />
       </div>
-      <div class="watch-time__field field__data">
+      <div class="watch-time__field">
         Seconds<input
           class="form-control"
           type="number"
@@ -123,17 +123,27 @@ watchTimeActive=series.watchTimeActive;
       Type
       <select class="form-select field__data" formControlName="type">
         <option value="">Choose type</option>
-        <option value="movie">movie</option>
-        <option value="series">series</option>
+        @for(name of typeList | async;track name){
+        <option [value]="name">{{ name }}</option>
+        }
       </select>
     </div>
     <div class="field field--form">
       Genre
-      <select class="form-select field__data" formControlName="genre">
+      <select class="form-select field__data">
         <option value="">Choose genre</option>
-        <option value="anime">anime</option>
-        <option value="donghua">donghua</option>
-        <option value="cartoon">cartoon</option>
+        @for(name of genreList | async;track name){
+        <option [value]="name">{{ name }}</option>
+        }
+      </select>
+    </div>
+    <div class="field field--form">
+      Animation
+      <select class="form-select field__data" formControlName="animation">
+        <option value="">Choose animation</option>
+        @for(name of animationList | async;track name){
+        <option [value]="name">{{ name }}</option>
+        }
       </select>
     </div>
     <div class="field field--form">

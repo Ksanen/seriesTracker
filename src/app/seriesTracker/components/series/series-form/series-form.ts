@@ -9,8 +9,10 @@ import {
   Output,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import SeriesInterface from '../../../../shared/interfaces/series';
-import SeriesToSend from '../../../../shared/interfaces/seriesToSend';
+import {
+  SeriesInterface,
+  SeriesToSend,
+} from '../../../../shared/interfaces/series';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SeriesApiService } from '../../../services/seriesApiService';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -22,6 +24,7 @@ import { SeriesViewService } from '../../../services/seriesViewService';
 import { SeriesRemovableNameInput } from '../../series-removable-name-input/series-removable-name-input';
 import RemovableName from '../../../../shared/interfaces/removableName';
 import { NamesService } from '../../../services/names-service';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'series-form',
   imports: [
@@ -44,6 +47,9 @@ export class SeriesForm implements OnInit {
   seriesForm!: FormGroup;
   showWatchTime!: boolean;
   wasValidated: boolean = false;
+  genreList!: Observable<string[]>;
+  typeList!: Observable<string[]>;
+  animationList!: Observable<string[]>;
   destroyRef = inject(DestroyRef);
   toggleShowWatchTime() {
     this.showWatchTime = !this.showWatchTime;
@@ -62,6 +68,7 @@ export class SeriesForm implements OnInit {
       name: [this.series.names[0], Validators.required],
       type: this.series.type,
       genre: this.series.genre,
+      animation: this.series.animation,
       season: this.series.season,
       episode: this.series.episode,
       watchTimeActive: this.series.watchTimeActive,
@@ -72,6 +79,10 @@ export class SeriesForm implements OnInit {
     });
     this.names = this.namesService.createRemovableNamesArray(this.series.names);
     this.tagNames = [...this.series.tagNames];
+
+    this.genreList = this.store.genreList$;
+    this.typeList = this.store.typeList$;
+    this.animationList = this.store.animationList$;
   }
   constructor(
     private fb: FormBuilder,
@@ -86,6 +97,7 @@ export class SeriesForm implements OnInit {
       name: this.series.names[0],
       type: this.series.type,
       genre: this.series.genre,
+      animation: this.series.animation,
       season: this.series.season,
       episode: this.series.episode,
       hours: this.series.watchTime.hours,
@@ -114,6 +126,7 @@ export class SeriesForm implements OnInit {
       names: namesToSend,
       type: form.type,
       genre: form.genre,
+      animation: form.animation,
       season: form.season,
       episode: form.episode,
       watchTimeActive: form.watchTimeActive,

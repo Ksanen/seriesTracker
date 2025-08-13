@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const filterSettings = mongoose.Schema({
   type: String,
   genre: String,
+  animation: String,
   watched: String,
   tags: [String],
   season: String,

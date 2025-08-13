@@ -35,17 +35,27 @@
     <label>Type</label>
     <select class="form-select" formControlName="type">
       <option value="">Choose type</option>
-      <option value="movie">movie</option>
-      <option value="series">series</option>
+      @for(name of typeList | async;track name){
+      <option [value]="name">{{ name }}</option>
+      }
     </select>
   </div>
   <div class="form__field">
     <label>Genre</label>
     <select class="form-select" formControlName="genre">
       <option value="">Choose genre</option>
-      <option value="anime">Anime</option>
-      <option value="donghua">Donghua</option>
-      <option value="kreskówka">Cartoon</option>
+      @for(name of genreList | async;track name){
+      <option [value]="name">{{ name }}</option>
+      }
+    </select>
+  </div>
+  <div class="form__field">
+    <label>Animation</label>
+    <select class="form-select" formControlName="animation">
+      <option value="">Choose animation</option>
+      @for(name of animationList | async;track name){
+      <option [value]="name">{{ name }}</option>
+      }
     </select>
   </div>
   <div class="form__field form__field--right">

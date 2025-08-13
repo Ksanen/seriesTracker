@@ -1,15 +1,23 @@
-import { ChangeDetectorRef, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import SeriesInterface from '../../shared/interfaces/series';
+import { SeriesInterface, SeriesToSend } from '../../shared/interfaces/series';
 import { SeriesApiService } from './seriesApiService';
-import SeriesToSend from '../../shared/interfaces/seriesToSend';
 import Tag from '../../shared/interfaces/tag';
+import defaultGenres from '../../shared/utils/defaultValues/defaultGenre';
+import defaultTypes from '../../shared/utils/defaultValues/defaultTypes';
+import defaultAnimations from '../../shared/utils/defaultValues/defaultAnimations';
 @Injectable({
   providedIn: 'root',
 })
 export class SeriesStoreService {
   private _seriesList$ = new BehaviorSubject<SeriesInterface[]>([]);
   seriesList$ = this._seriesList$.asObservable();
+  private _genreList$ = new BehaviorSubject<string[]>(defaultGenres);
+  genreList$ = this._genreList$.asObservable();
+  private _typeList$ = new BehaviorSubject<string[]>(defaultTypes);
+  typeList$ = this._typeList$.asObservable();
+  private _animationList$ = new BehaviorSubject<string[]>(defaultAnimations);
+  animationList$ = this._animationList$.asObservable();
   private _possibleTags$ = new BehaviorSubject<Tag[]>([]);
   possibleTags = this._possibleTags$.asObservable();
   #idOfSeriesToDelete: string = '';

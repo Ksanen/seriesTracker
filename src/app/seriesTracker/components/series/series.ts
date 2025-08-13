@@ -7,7 +7,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import SeriesInterface from '../../../shared/interfaces/series';
+import { SeriesInterface } from '../../../shared/interfaces/series';
 import { DecimalPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Tag } from '../tag/tag';
