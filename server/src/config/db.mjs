@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const connectDb = async () => {
   try {
     const connection = await mongoose
-      .connect("mongodb://127.0.0.1:27017/seriesTracker")
+      .connect(`${process.env.DB_URL}`)
       .catch(() => {
         console.log("brak połączenia z bazą");
       });

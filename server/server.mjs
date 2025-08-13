@@ -4,6 +4,8 @@ import cors from "cors";
 import checkDataBaseConnection from "./src/middlewares/checkDataBaseConnection.mjs";
 import tagModel from "./src/models/tag.mjs";
 import routes from "./src/routes/index.mjs";
+import dotenv from "dotenv";
+dotenv.config();
 connectDb();
 const app = express();
 app.use(express.json());
