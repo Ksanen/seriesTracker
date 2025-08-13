@@ -7,8 +7,9 @@ import {
   Input,
   OnInit,
   Output,
+  signal,
 } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   SeriesInterface,
   SeriesToSend,
@@ -24,6 +25,7 @@ import { SeriesViewService } from '../../../services/seriesViewService';
 import { NamesService } from '../../../services/names-service';
 import { Observable } from 'rxjs';
 import { SeriesNames } from '../../series-names/series-names';
+import { SeriesWatchtime } from '../../series-watchtime/series-watchtime';
 @Component({
   selector: 'series-form',
   imports: [
@@ -33,6 +35,7 @@ import { SeriesNames } from '../../series-names/series-names';
     ReactiveFormsModule,
     CommonModule,
     SeriesNames,
+    SeriesWatchtime,
   ],
   templateUrl: './series-form.html',
   styleUrl: '../series.css',
@@ -44,18 +47,20 @@ export class SeriesForm implements OnInit {
   namesValues: string[] = [];
   tagNames: string[] = [];
   seriesForm!: FormGroup;
-  showWatchTime!: boolean;
+  showWatchTime = signal(false);
   wasValidated: boolean = false;
   genreList!: Observable<string[]>;
   typeList!: Observable<string[]>;
   animationList!: Observable<string[]>;
   destroyRef = inject(DestroyRef);
   toggleShowWatchTime() {
-    this.showWatchTime = !this.showWatchTime;
+    this.showWatchTime.set(!this.showWatchTime());
   }
-
+  get watchTimeForm(): FormGroup {
+    return this.seriesForm.get('watchTime') as FormGroup;
+  }
   ngOnInit(): void {
-    this.showWatchTime = this.series.watchTimeActive;
+    this.showWatchTime.set(this.series.watchTimeActive);
     this.seriesForm = this.fb.group({
       name: [this.series.names[0], Validators.required],
       type: this.series.type,
@@ -64,9 +69,11 @@ export class SeriesForm implements OnInit {
       season: this.series.season,
       episode: this.series.episode,
       watchTimeActive: this.series.watchTimeActive,
-      hours: this.series.watchTime.hours,
-      minutes: this.series.watchTime.minutes,
-      seconds: this.series.watchTime.seconds,
+      watchTime: new FormGroup({
+        hours: new FormControl(this.series.watchTime.hours),
+        minutes: new FormControl(this.series.watchTime.minutes),
+        seconds: new FormControl(this.series.watchTime.seconds),
+      }),
       watched: this.series.watched,
     });
     this.namesValues = this.series.names;
@@ -83,27 +90,7 @@ export class SeriesForm implements OnInit {
     private view: SeriesViewService,
     private namesService: NamesService
   ) {}
-  cancelChanges() {
-    this.seriesForm.reset({
-      name: this.series.names[0],
-      type: this.series.type,
-      genre: this.series.genre,
-      animation: this.series.animation,
-      season: this.series.season,
-      episode: this.series.episode,
-      hours: this.series.watchTime.hours,
-      watchTimeActive: this.series.watchTimeActive,
-      minutes: this.series.watchTime.minutes,
-      seconds: this.series.watchTime.seconds,
-      watched: this.series.watched,
-    });
-    this.tagNames = [...this.series.tagNames];
-    this.closeForm.emit();
-  }
   onSaveSeries() {
-    if (!this.showWatchTime) {
-      this.resetWatchTime();
-    }
     if (this.seriesForm.invalid) {
       console.log('invalid');
       this.wasValidated = true;
@@ -114,18 +101,7 @@ export class SeriesForm implements OnInit {
     const namesToSend: string[] = [form.name, ...names];
     const series: SeriesToSend = {
       names: namesToSend,
-      type: form.type,
-      genre: form.genre,
-      animation: form.animation,
-      season: form.season,
-      episode: form.episode,
-      watchTimeActive: form.watchTimeActive,
-      watchTime: {
-        hours: form.hours,
-        minutes: form.minutes,
-        seconds: form.seconds,
-      },
-      watched: form.watched,
+      ...form,
       tagNames: this.tagNames,
     };
     this.seriesService
@@ -143,13 +119,6 @@ export class SeriesForm implements OnInit {
           console.log(err);
         },
       });
-  }
-  resetWatchTime() {
-    this.seriesForm.patchValue({
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    });
   }
   delete() {
     this.store.idOfSeriesToDelete = this.series._id;

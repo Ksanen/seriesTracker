@@ -1,14 +1,15 @@
 const defaultSeriesFormValues = {
-  name: '',
   type: '',
   genre: '',
   animation: '',
-  season: 0,
-  episode: 0,
-  hours: 0,
+  season: null,
+  episode: null,
   watchTimeActive: false,
-  minutes: 0,
-  seconds: 0,
+  watchTime: {
+    minutes: 0,
+    seconds: 0,
+    hours: 0,
+  },
   watched: 0,
 };
 export default defaultSeriesFormValues;

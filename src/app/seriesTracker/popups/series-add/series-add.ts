@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, effect, Input, OnInit, signal } from '@angular/core';
 import { Tag } from '../../components/tag/tag';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -17,6 +18,7 @@ import RemovableName from '../../../shared/interfaces/removableName';
 import { NamesService } from '../../services/names-service';
 import { Observable } from 'rxjs';
 import { SeriesNames } from '../../components/series-names/series-names';
+import { SeriesWatchtime } from '../../components/series-watchtime/series-watchtime';
 @Component({
   selector: 'series-add',
   imports: [
@@ -26,6 +28,7 @@ import { SeriesNames } from '../../components/series-names/series-names';
     ReactiveFormsModule,
     CommonModule,
     SeriesNames,
+    SeriesWatchtime,
   ],
   standalone: true,
   templateUrl: './series-add.html',
@@ -44,14 +47,20 @@ export class SeriesAdd implements OnInit {
   seriesForm!: FormGroup;
   names: RemovableName[] = [];
   wasValidated: boolean = false;
-  showWatchTime: boolean = false;
+  showWatchTime = signal(false);
   @Input() show: boolean = false;
+  get watchTimeGroup(): FormGroup {
+    return this.seriesForm.get('watchTime') as FormGroup;
+  }
   constructor(
     private fb: FormBuilder,
     private store: SeriesStoreService,
     private view: SeriesViewService,
     private namesService: NamesService
   ) {
+    effect(() => {
+      console.log(this.showWatchTime());
+    });
     this.seriesForm = this.fb.group({
       name: ['', Validators.required],
       type: '',
@@ -60,9 +69,11 @@ export class SeriesAdd implements OnInit {
       season: null,
       episode: null,
       watchTimeActive: false,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
+      watchTime: new FormGroup({
+        hours: new FormControl(0),
+        minutes: new FormControl(0),
+        seconds: new FormControl(0),
+      }),
       watched: 0,
     });
   }
@@ -73,7 +84,6 @@ export class SeriesAdd implements OnInit {
     this.wasValidated = false;
     this.seriesForm.reset(defaultSeriesFormValues);
     this.names = [];
-    this.showWatchTime = false;
   }
   removeTag(tagNameToRemove: string) {
     this.tagNames = this.tagNames.filter(
@@ -81,9 +91,6 @@ export class SeriesAdd implements OnInit {
     );
   }
   onSubmit() {
-    if (!this.showWatchTime) {
-      this.resetWatchTime();
-    }
     if (this.seriesForm.invalid) {
       this.wasValidated = true;
       return;
@@ -94,34 +101,15 @@ export class SeriesAdd implements OnInit {
     const namesToSubmit = [form.name, ...names];
     const objectToSubmit: SeriesToSend = {
       names: namesToSubmit,
-      type: form.type,
-      genre: form.genre,
-      animation: form.animation,
-      season: form.season,
-      episode: form.episode,
-      watchTimeActive: form.watchTimeActive,
-      watchTime: {
-        hours: form.hours,
-        minutes: form.minutes,
-        seconds: form.seconds,
-      },
-      watched: form.watched,
+      ...form,
       tagNames: this.tagNames,
     };
-
     this.store.addSeries(objectToSubmit);
     this.seriesForm.reset(defaultSeriesFormValues);
     this.wasValidated = false;
     this.close();
   }
   toggleShowWatchTime() {
-    this.showWatchTime = !this.showWatchTime;
-  }
-  resetWatchTime() {
-    this.seriesForm.patchValue({
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    });
+    this.showWatchTime.set(!this.showWatchTime());
   }
 }

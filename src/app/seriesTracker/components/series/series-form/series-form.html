@@ -61,46 +61,10 @@ seconds=series.watchTime.seconds; @let watchTimeActive=series.watchTimeActive;
       formControlName="watchTimeActive"
     />
   </div>
-  <div
-    [ngClass]="{
-      'watch-time': true,
-      'watch-time--show': showWatchTime
-    }"
-  >
-    <div class="watch-time__field">
-      Hours<input
-        class="form-control field__data"
-        type="number"
-        [value]="hours ?? 0"
-        min="0"
-        max="23"
-        formControlName="hours"
-        required
-      />
-    </div>
-    <div class="watch-time__field">
-      Minutes<input
-        class="form-control"
-        type="number"
-        [value]="minutes ?? 0"
-        min="0"
-        max="59"
-        formControlName="minutes"
-        required
-      />
-    </div>
-    <div class="watch-time__field">
-      Seconds<input
-        class="form-control"
-        type="number"
-        [value]="seconds ?? 0"
-        min="0"
-        max="59"
-        formControlName="seconds"
-        required
-      />
-    </div>
-  </div>
+  <series-watchtime
+    [form]="watchTimeForm"
+    [showWatchTime]="showWatchTime"
+  ></series-watchtime>
   <div class="field field--form">
     Type
     <select class="form-select field__data" formControlName="type">
@@ -151,7 +115,7 @@ seconds=series.watchTime.seconds; @let watchTimeActive=series.watchTimeActive;
     <input
       type="button"
       class="btn btn-secondary"
-      (click)="cancelChanges()"
+      (click)="closeForm.emit()"
       value="Cancel"
     />
     <input type="submit" class="btn btn-success" value="Save" />

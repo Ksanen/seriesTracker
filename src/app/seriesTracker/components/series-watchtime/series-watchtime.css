@@ -1,0 +1,22 @@
+.watch-time {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  gap: 5px;
+  height: 0;
+  transition: height 400ms ease;
+}
+.watch-time--show {
+  height: 130px;
+  transition: height 400ms ease;
+}
+.watch-time__field {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+.watch-time__field input[type="number"] {
+  width: 90px;
+}

@@ -1,0 +1,38 @@
+<div
+  [ngClass]="{
+    'watch-time': true,
+    'watch-time--show': showWatchTime()
+  }"
+  [formGroup]="form"
+>
+  <div class="watch-time__field">
+    Hours<input
+      class="form-control field__data"
+      type="number"
+      min="0"
+      max="23"
+      formControlName="hours"
+      required
+    />
+  </div>
+  <div class="watch-time__field">
+    Minutes<input
+      class="form-control"
+      type="number"
+      min="0"
+      max="59"
+      formControlName="minutes"
+      required
+    />
+  </div>
+  <div class="watch-time__field">
+    Seconds<input
+      class="form-control"
+      type="number"
+      min="0"
+      max="59"
+      formControlName="seconds"
+      required
+    />
+  </div>
+</div>
