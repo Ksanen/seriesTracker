@@ -42,5 +42,4 @@ Thumbs.db
 
 # others
 .env
-
 /server/node_modules
