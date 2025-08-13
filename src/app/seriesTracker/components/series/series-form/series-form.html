@@ -1,8 +1,6 @@
 @let season=series.season; @let episode=series.episode; @let
-name=series.names[0]; @let hours=series.watchTime?.hours; @let
-minutes=series.watchTime?.minutes; @let seconds=series.watchTime?.seconds; @let
-watched=series.watched; @let type=series.type; @let genre=series.genre; @let
-watchTimeActive=series.watchTimeActive;
+hours=series.watchTime.hours; @let minutes=series.watchTime.minutes; @let
+seconds=series.watchTime.seconds; @let watchTimeActive=series.watchTimeActive;
 <form
   class="series"
   [ngClass]="{
@@ -130,7 +128,7 @@ watchTimeActive=series.watchTimeActive;
     </div>
     <div class="field field--form">
       Genre
-      <select class="form-select field__data">
+      <select class="form-select field__data" formControlName="genre">
         <option value="">Choose genre</option>
         @for(name of genreList | async;track name){
         <option [value]="name">{{ name }}</option>
