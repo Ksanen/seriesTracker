@@ -2,11 +2,11 @@ const defaultViewSettings = {
   name: true,
   season: true,
   episode: true,
-  watched: true,
-  watchtime: true,
-  type: true,
-  genre: true,
-  animation: true,
-  tags: true,
+  watched: false,
+  watchtime: false,
+  type: false,
+  genre: false,
+  animation: false,
+  tags: false,
 };
 export default defaultViewSettings;
