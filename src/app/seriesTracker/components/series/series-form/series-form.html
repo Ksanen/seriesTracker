@@ -1,6 +1,4 @@
-@let season=series.season; @let episode=series.episode; @let
-hours=series.watchTime.hours; @let minutes=series.watchTime.minutes; @let
-seconds=series.watchTime.seconds; @let watchTimeActive=series.watchTimeActive;
+@let watchTimeActive=series.watchTimeActive;
 <form
   class="series"
   [ngClass]="{
@@ -30,7 +28,6 @@ seconds=series.watchTime.seconds; @let watchTimeActive=series.watchTimeActive;
       class="form-control field__data"
       type="number"
       min="0"
-      [value]="season"
       formControlName="season"
     />
   </div>
@@ -40,7 +37,6 @@ seconds=series.watchTime.seconds; @let watchTimeActive=series.watchTimeActive;
       class="form-control field__data"
       type="number"
       min="0"
-      [value]="episode"
       formControlName="episode"
     />
   </div>
