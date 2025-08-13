@@ -15,7 +15,6 @@ Jeśli to jest film to możesz ustawić czas na którym skończyłeś oglądanie
 -angular<br>
 -express.js <br>
 -mongodb <br>
-#Wygląd
 
 ## Wygląd
 <img width="920" height="908" alt="screen" src="https://github.com/user-attachments/assets/ddadb0be-64e1-41fc-b688-49cffb936510" />
