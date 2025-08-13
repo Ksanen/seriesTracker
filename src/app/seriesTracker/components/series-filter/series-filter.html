@@ -29,7 +29,7 @@
   <div class="filter__option">
     <p>Animation</p>
     <select formControlName="animation" class="form-select">
-      <option value="">Choose genre</option>
+      <option value="">Choose animation</option>
       @for(name of animationList | async;track name){
       <option [value]="name">{{ name }}</option>
       }
