@@ -170,36 +170,40 @@ router.patch("/:id", checkSchema(seriesSchema), async (req, res) => {
       .json({ success: false, msg: "internal server error" });
   }
 });
-router.post("/tags", body("tagName").isString(), async (req, res) => {
-  try {
-    const result = validationResult(req);
-    if (!result.isEmpty()) {
-      return res.status(400).send({
-        success: false,
-        msg: "validation error",
+router.post(
+  "/tags",
+  body("tagName").isString().notEmpty(),
+  async (req, res) => {
+    try {
+      const result = validationResult(req);
+      if (!result.isEmpty()) {
+        return res.status(400).send({
+          success: false,
+          msg: "validation error",
+        });
+      }
+      const tagExists = await tagModel.exists({
+        name: req.body.tagName,
       });
-    }
-    const tagExists = await tagModel.exists({
-      name: req.body.tagName,
-    });
-    if (tagExists) {
-      return res.status(409).send({
-        success: false,
-        msg: "Tag exists",
+      if (tagExists) {
+        return res.status(409).send({
+          success: false,
+          msg: "Tag exists",
+        });
+      }
+      await tagModel.create({
+        name: req.body.tagName,
+        seriesAttached: [],
       });
+      return res.status(200).send({
+        success: true,
+        msg: "successful creation of tag",
+      });
+    } catch (e) {
+      res.status(500).json({ success: false, msg: "internal server error" });
     }
-    await tagModel.create({
-      name: req.body.tagName,
-      seriesAttached: [],
-    });
-    return res.status(200).send({
-      success: true,
-      msg: "successful creation of tag",
-    });
-  } catch (e) {
-    res.status(500).json({ success: false, msg: "internal server error" });
   }
-});
+);
 router.delete("/tags/:name", async (req, res) => {
   try {
     const name = req.params.name;
