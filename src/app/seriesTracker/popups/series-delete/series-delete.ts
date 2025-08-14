@@ -21,7 +21,7 @@ export class SeriesDelete implements OnInit {
     this.hideConfirmationPopUp();
   }
   cancel() {
-    this.store.idOfSeriesToDelete = '';
+    this.store.setIdOfSeriesToDelete('');
     this.hideConfirmationPopUp();
   }
   hideConfirmationPopUp() {

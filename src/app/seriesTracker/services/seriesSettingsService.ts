@@ -7,6 +7,7 @@ import { SeriesViewService } from './seriesViewService';
 import defaultViewSettings from '../../shared/utils/defaultValues/defaultViewSettings';
 import defaultFilterSettings from '../../shared/utils/defaultValues/defaultFilterSettings';
 import { environment } from '../../../environments/environment';
+import handleError from '../../shared/utils/defaultValues/handleError';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,7 +22,6 @@ export class SeriesSettingsService {
   viewSettings$ = this._viewSettings$.asObservable();
   filterSettings$ = this._filterSettings$.asObservable();
   constructor(private http: HttpClient, private view: SeriesViewService) {
-    this.getFilterSettings();
     this.getViewSettings();
   }
   getViewSettings() {
@@ -32,29 +32,8 @@ export class SeriesSettingsService {
           this._viewSettings$.next(settings);
         },
         error: (error) => {
-          switch (error.status) {
-            case 503:
-              this.view.showDatabaseError();
-              break;
-          }
+          handleError(error);
           console.log('getting view settings failed');
-        },
-      });
-  }
-  getFilterSettings() {
-    this.http
-      .get<seriesFilterSettings>(`${this.apiUrl}/api/series/settings/filter`)
-      .subscribe({
-        next: (settings) => {
-          this._filterSettings$.next(settings);
-        },
-        error: (error) => {
-          switch (error.status) {
-            case 503:
-              this.view.showDatabaseError();
-              break;
-          }
-          console.log('getting filter settings failed');
         },
       });
   }
@@ -66,20 +45,12 @@ export class SeriesSettingsService {
           this._viewSettings$.next(viewSettings);
         },
         error: (error) => {
+          handleError(error);
           console.log('saving failed', error);
         },
       });
   }
-  saveFilterSettings(filterSettings: seriesFilterSettings) {
-    this.http
-      .post(`${this.apiUrl}/api/series/settings/filter`, filterSettings)
-      .subscribe({
-        next: () => {
-          this._filterSettings$.next(filterSettings);
-        },
-        error: (error) => {
-          console.log('saving failed', error);
-        },
-      });
+  updateFilterSettings(filterSettings: seriesFilterSettings) {
+    this._filterSettings$.next(filterSettings);
   }
 }

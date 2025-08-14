@@ -59,13 +59,17 @@ export class SeriesFilter implements OnInit {
       (tagName) => tagName !== tagNameToRemove
     );
   }
-  onSubmit() {
+  updateFilterSettings() {
     const value = this.seriesFilterForm.value;
     value.tags = this.tagNames;
-    this.SeriesSettings.saveFilterSettings(value);
+    this.SeriesSettings.updateFilterSettings(value);
+  }
+  onSubmit() {
+    this.updateFilterSettings();
   }
   clearSettings() {
     this.seriesFilterForm.reset(defaultFilterSettings);
     this.tagNames = [];
+    this.updateFilterSettings();
   }
 }

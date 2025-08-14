@@ -121,7 +121,7 @@ export class SeriesForm implements OnInit {
       });
   }
   delete() {
-    this.store.idOfSeriesToDelete = this.series._id;
+    this.store.setIdOfSeriesToDelete(this.series._id);
     this.view.toggleShowDeleteSeriesConfirmation();
     this.view.toggleOverlay();
   }

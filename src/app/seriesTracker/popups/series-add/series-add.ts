@@ -58,9 +58,6 @@ export class SeriesAdd implements OnInit {
     private view: SeriesViewService,
     private namesService: NamesService
   ) {
-    effect(() => {
-      console.log(this.showWatchTime());
-    });
     this.seriesForm = this.fb.group({
       name: ['', Validators.required],
       type: '',
