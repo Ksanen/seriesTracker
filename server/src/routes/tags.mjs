@@ -2,7 +2,17 @@ import { body, validationResult } from "express-validator";
 import tagModel from "../models/tag.mjs";
 import SeriesModel from "../models/series.mjs";
 import { Router } from "express";
+import checkDataBaseConnection from "../middlewares/checkDataBaseConnection.mjs";
 const router = Router();
+router.get("/", checkDataBaseConnection, async (req, res) => {
+  try {
+    const tags = await tagModel.find({}, { _id: 0 });
+    res.status(200).json(tags);
+  } catch (e) {
+    console.log("error: ", e);
+    res.status(500).json({ success: false, message: "internal server error" });
+  }
+});
 router.post("/", body("tagName").isString().notEmpty(), async (req, res) => {
   try {
     const result = validationResult(req);
