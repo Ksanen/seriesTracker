@@ -1,9 +1,4 @@
-@let season=series.season; @let episode=series.episode; @let
-name=series.names[0]; @let hours=series.watchTime.hours; @let
-minutes=series.watchTime.minutes; @let seconds=series.watchTime.seconds; @let
-watched=series.watched; @let type=series.type; @let genre=series.genre; @let
-watchTimeActive=series.watchTimeActive; @let animation=series.animation;
-@if(isEditMode){
+@let watchTimeActive=series.watchTimeActive; @if(isEditMode){
 <series-form
   [series]="series"
   [even]="even"
@@ -19,27 +14,35 @@ watchTimeActive=series.watchTimeActive; @let animation=series.animation;
 >
   <div class="series__data">
     @if(viewSettings.name){
-    <p class="">Name: {{ name }}</p>
+    <p class="">Name: {{ series.names[0] }}</p>
     } @if(viewSettings.season){
-    <p class="">Season: @if(season===null){ none } @else { {{ season }} }</p>
+    <p class="">
+      Season: @if(series.season===null){ none } @else { {{ series.season }} }
+    </p>
     } @if(viewSettings.episode){
-    <p class="">Episode: @if(episode===null){ none } @else { {{ episode }} }</p>
+    <p class="">
+      Episode: @if(series.episode===null){ none } @else { {{ series.episode }} }
+    </p>
     } @if(viewSettings.watched){
-    <p class="">Watched: {{ watched }}</p>
+    <p class="">Watched: {{ series.watched }}</p>
     } @if(viewSettings.watchtime){
 
     <p class="">
-      @if(watchTimeActive){ WatchTime: {{ hours | number : "2.0" }} :
-      {{ minutes | number : "2.0" }} :
-      {{ seconds | number : "2.0" }}
+      @if(watchTimeActive){ WatchTime:
+      {{ series.watchTime.hours | number : "2.0" }} :
+      {{ series.watchTime.minutes | number : "2.0" }} :
+      {{ series.watchTime.seconds | number : "2.0" }}
       } @else { WatchTime: none }
     </p>
     } @if(viewSettings.type){
-    <p>Type: @if(type?.length===0){none}@else{ {{ type }}}</p>
+    <p>Type: @if(series.type.length===0){none}@else{ {{ series.type }}}</p>
     } @if(viewSettings.genre){
-    <p>Genre: @if(genre?.length===0){none}@else{ {{ genre }}}</p>
+    <p>Genre: @if(series.genre.length===0){none}@else{ {{ series.genre }}}</p>
     } @if(viewSettings.animation){
-    <p>Animation: @if(animation?.length===0){none}@else{ {{ animation }}}</p>
+    <p>
+      Animation: @if(series.animation.length===0){none}@else{
+      {{ series.animation }}}
+    </p>
     } @if(viewSettings.tags){
     <div>
       <div class="series__tags">
