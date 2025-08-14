@@ -30,7 +30,7 @@ export class SeriesApiService {
     );
   }
   addTag(tagName: string) {
-    return this.http.post<ServerResponse>(`${this.apiUrl}/api/series/tags`, {
+    return this.http.post<ServerResponse>(`${this.apiUrl}/api/tags`, {
       tagName: tagName,
     });
   }
@@ -39,7 +39,7 @@ export class SeriesApiService {
     w wyniku usunięcia z nich taga */
   deleteTag(tagName: string) {
     return this.http.delete<SeriesInterface[]>(
-      `${this.apiUrl}/api/series/tags/${tagName}`
+      `${this.apiUrl}/api/tags/${tagName}`
     );
   }
 }

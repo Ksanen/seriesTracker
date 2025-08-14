@@ -50,6 +50,7 @@ export class SeriesStoreService {
           (series) => series._id !== this.#idOfSeriesToDelete
         );
         this._seriesList$.next(currentList);
+        this.getTags();
       },
       error: (err) => console.log(err),
     });
