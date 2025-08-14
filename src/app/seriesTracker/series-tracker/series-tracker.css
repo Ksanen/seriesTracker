@@ -26,9 +26,9 @@
 .content {
   display: flex;
   flex-grow: 1;
-  background-color: gray;
+  background-color: rgb(169, 207, 165);
   position: relative;
-  max-height: 100vh;
+  height: 100vh;
 }
 .content__list {
   flex-grow: 1;
