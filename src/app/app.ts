@@ -1,10 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { SeriesTracker } from './seriesTracker/series-tracker/series-tracker';
+import { SeriesTracker } from './seriesTracker/series-tracker';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SeriesTracker],
+  imports: [SeriesTracker],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

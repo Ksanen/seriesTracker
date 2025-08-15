@@ -8,9 +8,8 @@ describe('SeriesTracker', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SeriesTracker]
-    })
-    .compileComponents();
+      imports: [SeriesTracker],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SeriesTracker);
     component = fixture.componentInstance;
