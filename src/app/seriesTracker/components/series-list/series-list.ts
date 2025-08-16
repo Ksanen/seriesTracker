@@ -3,10 +3,9 @@ import {
   computed,
   DestroyRef,
   inject,
-  Input,
+  input,
   OnInit,
   signal,
-  Signal,
   WritableSignal,
 } from '@angular/core';
 import { SeriesInterface } from '../../../shared/interfaces/series';
@@ -15,6 +14,8 @@ import { SeriesStoreService } from '../../services/seriesStoreService';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SeriesSettingsService } from '../../services/seriesSettingsService';
 import seriesFilterSettings from '../../../shared/interfaces/seriesSettings/seriesFilterSettings';
+import defaultFilterSettings from '../../../shared/utils/defaultValues/defaultFilterSettings';
+import filterSeries from '../../../shared/utils/fitlerSeries';
 @Component({
   selector: 'series-list',
   imports: [Series],
@@ -23,19 +24,12 @@ import seriesFilterSettings from '../../../shared/interfaces/seriesSettings/seri
   styleUrl: './series-list.css',
 })
 export class SeriesList implements OnInit {
-  @Input() name: Signal<string> = signal('');
+  name = input<string>('');
   destroyRef = inject(DestroyRef);
   seriesList: WritableSignal<SeriesInterface[]> = signal([]);
-
-  settings: WritableSignal<seriesFilterSettings> = signal({
-    episode: null,
-    season: null,
-    genre: '',
-    animation: '',
-    tags: [],
-    type: '',
-    watched: '',
-  });
+  settings: WritableSignal<seriesFilterSettings> = signal(
+    defaultFilterSettings
+  );
   constructor(
     private store: SeriesStoreService,
     private seriesSettings: SeriesSettingsService
@@ -57,33 +51,8 @@ export class SeriesList implements OnInit {
   filteredSeries = computed(() => {
     const nameValue = this.name().toLowerCase();
     const settings = this.settings();
-    return this.seriesList().filter((series) => {
-      if (
-        !series.names.some((name) => name.toLowerCase().includes(nameValue))
-      ) {
-        return false;
-      }
-      if (settings.type !== '' && series.type !== settings.type) return false;
-      if (settings.genre !== '' && series.genre !== settings.genre)
-        return false;
-      if (settings.animation !== '' && series.animation !== settings.animation)
-        return false;
-      if (settings.season !== null && series.season !== settings.season)
-        return false;
-      if (settings.episode !== null && series.episode !== settings.episode)
-        return false;
-      if (
-        settings.tags.length > 0 &&
-        !settings.tags.every((tag) => series.tagNames.includes(tag))
-      ) {
-        return false;
-      }
-      if (
-        settings.watched !== '' &&
-        Boolean(Number(settings.watched)) !== series.watched
-      )
-        return false;
-      return true;
-    });
+    return this.seriesList().filter((series) =>
+      filterSeries(series, settings, nameValue)
+    );
   });
 }

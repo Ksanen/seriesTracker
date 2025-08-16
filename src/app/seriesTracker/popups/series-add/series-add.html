@@ -1,7 +1,7 @@
 <form
   [ngClass]="{
     form: true,
-    'form--show': show,
+    'form--show': show(),
     'was-validated': wasValidated,
   }"
   [formGroup]="seriesForm"
@@ -12,7 +12,10 @@
     <label>Main name</label>
     <input class="form-control" type="text" formControlName="name" required />
   </div>
-  <series-names (namesValues)="namesValues = $event"></series-names>
+  <series-names
+    [seriesNames]="namesValues"
+    (namesValues)="namesValues = $event"
+  ></series-names>
 
   <div class="form__field form__field--default">
     <label>Type</label>
@@ -87,14 +90,12 @@
     <input
       class="form-check-input"
       type="checkbox"
-      [checked]="showWatchTime()"
-      (click)="toggleShowWatchTime()"
       formControlName="watchTimeActive"
     />
   </div>
   <series-watchtime
     [form]="watchTimeGroup"
-    [showWatchTime]="showWatchTime"
+    [showWatchTime]="seriesForm.get('watchTimeActive')?.value"
   ></series-watchtime>
 
   <div class="form__buttons">

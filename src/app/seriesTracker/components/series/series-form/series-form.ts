@@ -7,7 +7,6 @@ import {
   Input,
   OnInit,
   Output,
-  signal,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -47,20 +46,15 @@ export class SeriesForm implements OnInit {
   namesValues: string[] = [];
   tagNames: string[] = [];
   seriesForm!: FormGroup;
-  showWatchTime = signal(false);
   wasValidated: boolean = false;
   genreList!: Observable<string[]>;
   typeList!: Observable<string[]>;
   animationList!: Observable<string[]>;
   destroyRef = inject(DestroyRef);
-  toggleShowWatchTime() {
-    this.showWatchTime.set(!this.showWatchTime());
-  }
   get watchTimeForm(): FormGroup {
     return this.seriesForm.get('watchTime') as FormGroup;
   }
   ngOnInit(): void {
-    this.showWatchTime.set(this.series.watchTimeActive);
     this.seriesForm = this.fb.group({
       name: [this.series.names[0], Validators.required],
       type: this.series.type,
@@ -97,8 +91,8 @@ export class SeriesForm implements OnInit {
       return;
     }
     const form = this.seriesForm.value;
-    const names = this.namesService.removeUnnecessaryNames(this.namesValues);
-    const namesToSend: string[] = [form.name, ...names];
+    let namesToSend: string[] = [form.name, ...this.namesValues];
+    namesToSend = this.namesService.removeUnnecessaryNames(namesToSend);
     const series: SeriesToSend = {
       names: namesToSend,
       ...form,

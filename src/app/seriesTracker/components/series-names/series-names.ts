@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  effect,
+  EventEmitter,
+  input,
+  OnInit,
+  Output,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { SeriesRemovableNameInput } from '../series-removable-name-input/series-removable-name-input';
 import { NamesService } from '../../services/names-service';
 import RemovableName from '../../../shared/interfaces/removableName';
@@ -11,26 +20,33 @@ import RemovableName from '../../../shared/interfaces/removableName';
   styleUrl: './series-names.css',
 })
 export class SeriesNames implements OnInit {
-  names: RemovableName[] = [];
   @Output() namesValues = new EventEmitter<string[]>();
-  @Input() seriesNames: string[] = [];
-  constructor(private namesService: NamesService) {}
+  seriesNames = input<string[]>([]);
+  names: WritableSignal<RemovableName[]> = signal([]);
+  constructor(private namesService: NamesService) {
+    effect(() => {
+      if (this.seriesNames().length === 0 && this.names().length !== 0) {
+        this.names.set([]);
+      }
+    });
+  }
   ngOnInit(): void {
-    if (this.seriesNames.length === 0) return;
-    this.names = this.namesService.createRemovableNamesArray(this.seriesNames);
-    this.updateNamesValues();
+    if (this.seriesNames().length === 0) return;
+    this.names.set(
+      this.namesService.createRemovableNamesArray(this.seriesNames())
+    );
   }
   addNewName() {
-    const newName = this.namesService.addNewName(this.names);
+    const newName = this.namesService.addNewName(this.names());
     if (!newName) return;
-    this.names.push(newName);
+    this.names().push(newName);
     this.updateNamesValues();
   }
   removeName(id: number) {
-    this.names = this.namesService.removeName(this.names, id);
+    this.names.set(this.namesService.removeName(this.names(), id));
   }
   updateNamesValues() {
-    let namesValues = this.names.map((name) => name.value);
+    let namesValues = this.names().map((name) => name.value);
     this.namesValues.emit(namesValues);
   }
 }

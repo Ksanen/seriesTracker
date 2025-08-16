@@ -1,4 +1,3 @@
-@let watchTimeActive=series.watchTimeActive;
 <form
   class="series"
   [ngClass]="{
@@ -52,14 +51,12 @@
     <input
       type="checkbox"
       class="form-check-input field__data"
-      [checked]="watchTimeActive"
-      (click)="toggleShowWatchTime()"
       formControlName="watchTimeActive"
     />
   </div>
   <series-watchtime
     [form]="watchTimeForm"
-    [showWatchTime]="showWatchTime"
+    [showWatchTime]="seriesForm.get('watchTimeActive')?.value"
   ></series-watchtime>
   <div class="field field--form">
     Type

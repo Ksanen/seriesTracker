@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, Input, signal } from '@angular/core';
+import { Component, effect, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import defaultWatchTime from '../../../shared/utils/defaultValues/defaultWatchTimeValues';
 @Component({
   selector: 'series-watchtime',
   imports: [CommonModule, ReactiveFormsModule],
@@ -9,8 +10,8 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './series-watchtime.css',
 })
 export class SeriesWatchtime {
-  @Input() showWatchTime = signal(false);
-  @Input() form!: FormGroup;
+  showWatchTime = input<boolean>(false);
+  form = input<FormGroup>(new FormGroup({}));
   constructor() {
     effect(() => {
       if (this.showWatchTime() === false) {
@@ -19,10 +20,6 @@ export class SeriesWatchtime {
     });
   }
   resetWatchTime() {
-    this.form.patchValue({
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    });
+    this.form().patchValue(defaultWatchTime);
   }
 }

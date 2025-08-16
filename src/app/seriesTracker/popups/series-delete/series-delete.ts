@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { SeriesViewService } from '../../services/seriesViewService';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 @Component({
@@ -10,7 +10,7 @@ import { SeriesStoreService } from '../../services/seriesStoreService';
   styleUrl: './series-delete.css',
 })
 export class SeriesDelete implements OnInit {
-  @Input() show!: boolean;
+  show = input<boolean>(false);
   constructor(
     private store: SeriesStoreService,
     private view: SeriesViewService

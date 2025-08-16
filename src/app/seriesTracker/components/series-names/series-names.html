@@ -7,15 +7,14 @@
       value="add new name"
     />
   </div>
-  @if(this.names.length>0){ Names: @for( name of names;track name.id;let
-  index=$index){
+  @for( name of names();track name.id;let index=$index){
   <div class="field">
     <seriesRemovableNameInput
-      [name]="names[index].value"
-      (nameChange)="names[index].value = $event; updateNamesValues()"
+      [name]="names()[index].value"
+      (nameChange)="names()[index].value = $event; updateNamesValues()"
       [id]="name.id"
       (removeName)="removeName($event); updateNamesValues()"
     ></seriesRemovableNameInput>
   </div>
-  } }
+  }
 </div>

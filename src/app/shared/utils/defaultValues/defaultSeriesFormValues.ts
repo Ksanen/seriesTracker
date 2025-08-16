@@ -1,3 +1,5 @@
+import defaultWatchTime from './defaultWatchTimeValues';
+
 const defaultSeriesFormValues = {
   type: '',
   genre: '',
@@ -5,11 +7,7 @@ const defaultSeriesFormValues = {
   season: null,
   episode: null,
   watchTimeActive: false,
-  watchTime: {
-    minutes: 0,
-    seconds: 0,
-    hours: 0,
-  },
+  watchTime: defaultWatchTime,
   watched: 0,
 };
 export default defaultSeriesFormValues;
