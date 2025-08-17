@@ -4,6 +4,7 @@ import {
   DestroyRef,
   EventEmitter,
   inject,
+  input,
   Input,
   OnInit,
   Output,
@@ -41,7 +42,7 @@ import { SeriesWatchtime } from '../../series-watchtime/series-watchtime';
 })
 export class SeriesForm implements OnInit {
   @Input() series!: SeriesInterface;
-  @Input() even!: boolean;
+  even = input.required<boolean>();
   @Output() closeForm = new EventEmitter();
   namesValues: string[] = [];
   tagNames: string[] = [];

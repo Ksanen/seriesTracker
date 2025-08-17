@@ -1,15 +1,15 @@
 @let watchTimeActive=series.watchTimeActive; @if(isEditMode){
 <series-form
   [series]="series"
-  [even]="even"
+  [even]="even()"
   (closeForm)="toggleEditMode()"
 ></series-form>
 } @else {
 <div
   class="series"
   [ngClass]="{
-    even: even,
-    odd: !even
+    even: even(),
+    odd: !even()
   }"
 >
   <div class="series__data">

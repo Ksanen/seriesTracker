@@ -3,6 +3,7 @@ import {
   DestroyRef,
   EventEmitter,
   inject,
+  input,
   Input,
   OnInit,
   Output,
@@ -25,7 +26,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './series.css',
 })
 export class Series implements OnInit {
-  @Input() even!: boolean;
+  even = input.required<boolean>();
   @Input() series!: SeriesInterface;
   @Output() deleteSeries = new EventEmitter<string>();
   destroyRef = inject(DestroyRef);

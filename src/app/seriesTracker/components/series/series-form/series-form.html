@@ -1,8 +1,8 @@
 <form
   class="series"
   [ngClass]="{
-    even: even,
-    odd: !even,
+    even: even(),
+    odd: !even(),
     'was-validated': wasValidated
   }"
   [formGroup]="seriesForm"
