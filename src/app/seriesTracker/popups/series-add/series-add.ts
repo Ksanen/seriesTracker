@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { Tag } from '../../components/tag/tag';
 import {
   FormBuilder,
@@ -18,6 +18,7 @@ import { NamesService } from '../../services/names-service';
 import { Observable } from 'rxjs';
 import { SeriesNames } from '../../components/series-names/series-names';
 import { SeriesWatchtime } from '../../components/series-watchtime/series-watchtime';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'series-add',
   imports: [
@@ -39,6 +40,8 @@ export class SeriesAdd implements OnInit {
   typeList!: Observable<string[]>;
   animationList!: Observable<string[]>;
   namesValues: string[] = [];
+  destroyRef = inject(DestroyRef);
+  error: string = '';
   ngOnInit(): void {
     this.genreList = this.store.genreList$;
     this.typeList = this.store.typeList$;
@@ -74,10 +77,10 @@ export class SeriesAdd implements OnInit {
   tagNames: string[] = [];
   close() {
     this.view.toggleAddSeriesForm();
-    this.view.toggleOverlay();
     this.wasValidated = false;
     this.seriesForm.reset(defaultSeriesFormValues);
     this.namesValues = [];
+    this.error = '';
   }
   removeTag(tagNameToRemove: string) {
     this.tagNames = this.tagNames.filter(
@@ -99,7 +102,20 @@ export class SeriesAdd implements OnInit {
       ...form,
       tagNames: this.tagNames,
     };
-    this.store.addSeries(objectToSubmit);
-    this.close();
+    this.store
+      .addSeries(objectToSubmit)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.close();
+        },
+        error: (e) => {
+          switch (e.status) {
+            case 409:
+              this.error = 'this name already exists';
+              break;
+          }
+        },
+      });
   }
 }

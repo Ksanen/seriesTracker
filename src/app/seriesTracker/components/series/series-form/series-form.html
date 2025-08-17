@@ -10,12 +10,15 @@
 >
   <div class="field field--form">
     <label>Name:</label>
-    <input
-      class="form-control field__data"
-      type="text"
-      formControlName="name"
-      required
-    />
+    <div class="error">
+      <input
+        class="form-control field__data"
+        type="text"
+        formControlName="name"
+        required
+      />
+      <p class="error">{{ error }}</p>
+    </div>
   </div>
   <series-names
     [seriesNames]="namesValues"

@@ -6,8 +6,10 @@
     class="form-control"
     placeholder="wpisz nazwę..."
   />
+
   <input type="button" class="btn btn-success" value="add" (click)="addTag()" />
 </div>
+<p class="error">{{ error }}</p>
 <div class="section">
   @for(tag of possibleTags;track tag.name){
   <div class="section__tag">

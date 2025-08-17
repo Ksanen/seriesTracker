@@ -25,3 +25,8 @@
   display: flex;
   gap: 5px;
 }
+.error {
+  color: rgb(228, 102, 102);
+  text-align: center;
+  font-weight: bold;
+}

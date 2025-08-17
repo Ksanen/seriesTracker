@@ -11,7 +11,6 @@ export class SeriesViewService {
     showAddSeriesForm: false,
     showAside: false,
     showDeleteSeriesConfirmation: false,
-    showDatabaseError: false,
   });
   private get currentOptions(): AppOptions {
     return this._options$.getValue();
@@ -27,6 +26,7 @@ export class SeriesViewService {
   }
   toggleAddSeriesForm() {
     this.toggleOption('showAddSeriesForm');
+    this.toggleOverlay();
   }
   toggleAside() {
     this.toggleOption('showAside');
@@ -36,12 +36,5 @@ export class SeriesViewService {
   }
   toggleShowDeleteSeriesConfirmation() {
     this.toggleOption('showDeleteSeriesConfirmation');
-  }
-  showDatabaseError() {
-    const updatedOptions: AppOptions = {
-      ...this.currentOptions,
-      showDatabaseError: true,
-    };
-    this._options$.next(updatedOptions);
   }
 }

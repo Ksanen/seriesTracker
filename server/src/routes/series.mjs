@@ -49,11 +49,7 @@ router.post("/", checkSchema(seriesSchema), async (req, res) => {
     }
     const lastSeries = await SeriesModel.create(req.body);
     await addTagsConnections(lastSeries.id, lastSeries.tagNames);
-    return res.status(200).send({
-      success: true,
-      series: lastSeries,
-      msg: "successful addition of the series",
-    });
+    return res.status(201).send(lastSeries);
   } catch (e) {
     console.log(e);
     return res

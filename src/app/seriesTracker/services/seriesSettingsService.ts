@@ -7,7 +7,8 @@ import { SeriesViewService } from './seriesViewService';
 import defaultViewSettings from '../../shared/utils/defaultValues/defaultViewSettings';
 import defaultFilterSettings from '../../shared/utils/defaultValues/defaultFilterSettings';
 import { environment } from '../../../environments/environment';
-import handleError from '../../shared/utils/defaultValues/handleError';
+import handleError from '../../shared/utils/handleError';
+import { SeriesStoreService } from './seriesStoreService';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,7 +22,7 @@ export class SeriesSettingsService {
   );
   viewSettings$ = this._viewSettings$.asObservable();
   filterSettings$ = this._filterSettings$.asObservable();
-  constructor(private http: HttpClient, private view: SeriesViewService) {
+  constructor(private http: HttpClient, private store: SeriesStoreService) {
     this.getViewSettings();
   }
   getViewSettings() {
@@ -32,7 +33,7 @@ export class SeriesSettingsService {
           this._viewSettings$.next(settings);
         },
         error: (error) => {
-          handleError(error);
+          this.store.setError(handleError(error));
           console.log('getting view settings failed');
         },
       });
@@ -45,7 +46,7 @@ export class SeriesSettingsService {
           this._viewSettings$.next(viewSettings);
         },
         error: (error) => {
-          handleError(error);
+          this.store.setError(handleError(error));
           console.log('saving failed', error);
         },
       });

@@ -85,6 +85,9 @@ input[type="number"] {
 label {
   width: 100px;
 }
+.error {
+  color: red;
+}
 @media only screen and (max-width: 600px) {
   .form__field--default {
     flex-direction: column;

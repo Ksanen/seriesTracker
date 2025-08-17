@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { SeriesInterface, SeriesToSend } from '../../shared/interfaces/series';
 import { SeriesApiService } from './seriesApiService';
 import Tag from '../../shared/interfaces/tag';
 import defaultGenres from '../../shared/utils/defaultValues/defaultGenre';
 import defaultTypes from '../../shared/utils/defaultValues/defaultTypes';
 import defaultAnimations from '../../shared/utils/defaultValues/defaultAnimations';
-import handleError from '../../shared/utils/defaultValues/handleError';
+import handleError from '../../shared/utils/handleError';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,13 +16,14 @@ export class SeriesStoreService {
   private _typeList$ = new BehaviorSubject<string[]>(defaultTypes);
   private _animationList$ = new BehaviorSubject<string[]>(defaultAnimations);
   private _possibleTags$ = new BehaviorSubject<Tag[]>([]);
+  private _error$ = new BehaviorSubject<string>('');
   private idOfSeriesToDelete: string = '';
   seriesList$ = this._seriesList$.asObservable();
   genreList$ = this._genreList$.asObservable();
   typeList$ = this._typeList$.asObservable();
   animationList$ = this._animationList$.asObservable();
   possibleTags = this._possibleTags$.asObservable();
-
+  error$ = this._error$.asObservable();
   constructor(private seriesApiService: SeriesApiService) {
     this.getAllSeries();
     this.getTags();
@@ -32,12 +33,18 @@ export class SeriesStoreService {
       next: (tags) => {
         this._possibleTags$.next(tags);
       },
+      error: (error) => {
+        this.setError(handleError(error));
+      },
     });
   }
   getAllSeries() {
     this.seriesApiService.getAllSeries().subscribe({
       next: (series) => {
         this._seriesList$.next(series);
+      },
+      error: (error) => {
+        this.setError(handleError(error));
       },
     });
   }
@@ -54,37 +61,40 @@ export class SeriesStoreService {
         this._seriesList$.next(currentList);
         this.getTags();
       },
-      error: (err) => console.log(err),
+      error: (error) => {
+        this.setError(handleError(error));
+      },
     });
   }
   addSeries(Series: SeriesToSend) {
-    this.seriesApiService.add(Series).subscribe({
-      next: (response) => {
-        if (response.success) {
-          let currentList = this._seriesList$.getValue();
-          currentList.push(response.series);
-          this._seriesList$.next(currentList);
-          this.getTags();
-        } else {
-          console.log('error1', response);
-        }
-      },
-      error: (e) => {
-        handleError(e);
-      },
-    });
+    return this.seriesApiService.add(Series).pipe(
+      tap((series) => {
+        let currentList = this._seriesList$.getValue();
+        currentList.push(series);
+        this._seriesList$.next(currentList);
+        this.getTags();
+      }),
+      catchError((error) => {
+        this.setError(handleError(error));
+        return throwError(() => error);
+      })
+    );
   }
   addTag(tagName: string) {
-    this.seriesApiService.addTag(tagName).subscribe({
-      next: () => {
+    return this.seriesApiService.addTag(tagName).pipe(
+      tap(() => {
         const tags = this._possibleTags$.getValue();
         tags.push({
           name: tagName,
           seriesAttached: [],
         });
         this._possibleTags$.next(tags);
-      },
-    });
+      }),
+      catchError((error) => {
+        this.setError(handleError(error));
+        return throwError(() => error);
+      })
+    );
   }
   deleteTag(tagName: string) {
     this.seriesApiService.deleteTag(tagName).subscribe({
@@ -114,9 +124,20 @@ export class SeriesStoreService {
         });
         this._seriesList$.next(currentList);
       },
-      error: (e) => {
-        console.log('error: ', e);
+      error: (error) => {
+        this.setError(handleError(error));
       },
     });
+  }
+  updateSeries(id: string, series: SeriesToSend) {
+    return this.seriesApiService.update(id, series).pipe(
+      catchError((error) => {
+        this.setError(handleError(error));
+        return throwError(() => error);
+      })
+    );
+  }
+  setError(error: string) {
+    this._error$.next(error);
   }
 }

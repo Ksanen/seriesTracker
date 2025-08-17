@@ -35,7 +35,7 @@ router.post("/", body("tagName").isString().notEmpty(), async (req, res) => {
       name: req.body.tagName,
       seriesAttached: [],
     });
-    return res.status(200).send({
+    return res.status(201).send({
       success: true,
       msg: "successful creation of tag",
     });

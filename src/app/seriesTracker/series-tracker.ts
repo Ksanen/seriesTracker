@@ -14,10 +14,10 @@ import { SeriesFilter } from './components/series-filter/series-filter';
 import AppOptions from './../shared/interfaces/appOptions';
 import { SeriesDelete } from './popups/series-delete/series-delete';
 import { SeriesViewService } from './services/seriesViewService';
-import { SeriesDatabaseError } from './components/series-database-error/series-database-error';
 import { SeriesTagSection } from './components/series-tag-section/series-tag-section';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SeriesError } from './components/series-error/series-error';
 @Component({
   selector: 'series-tracker',
   imports: [
@@ -28,8 +28,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     SeriesViewSettings,
     SeriesFilter,
     SeriesDelete,
-    SeriesDatabaseError,
     SeriesTagSection,
+    SeriesError,
   ],
   standalone: true,
   templateUrl: './series-tracker.html',
@@ -49,7 +49,6 @@ export class SeriesTracker implements OnInit {
   }
   toggleAddSeriesIsOpen() {
     this.view.toggleAddSeriesForm();
-    this.view.toggleOverlay();
   }
   toggleAside() {
     this.view.toggleAside();

@@ -20,8 +20,8 @@ export class SeriesApiService {
   deleteSeries(seriesId: string) {
     return this.http.delete(`${this.apiUrl}/api/series/${seriesId}`);
   }
-  add(Series: SeriesToSend): Observable<ServerResponse> {
-    return this.http.post<ServerResponse>(`${this.apiUrl}/api/series`, Series);
+  add(Series: SeriesToSend): Observable<SeriesInterface> {
+    return this.http.post<SeriesInterface>(`${this.apiUrl}/api/series`, Series);
   }
   update(id: string, Series: SeriesToSend): Observable<ServerResponse> {
     return this.http.patch<ServerResponse>(

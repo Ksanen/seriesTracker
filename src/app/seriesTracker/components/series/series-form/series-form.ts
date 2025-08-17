@@ -52,6 +52,7 @@ export class SeriesForm implements OnInit {
   typeList!: Observable<string[]>;
   animationList!: Observable<string[]>;
   destroyRef = inject(DestroyRef);
+  error: string = '';
   get watchTimeForm(): FormGroup {
     return this.seriesForm.get('watchTime') as FormGroup;
   }
@@ -79,7 +80,6 @@ export class SeriesForm implements OnInit {
   }
   constructor(
     private fb: FormBuilder,
-    private seriesService: SeriesApiService,
     private cd: ChangeDetectorRef,
     private store: SeriesStoreService,
     private view: SeriesViewService,
@@ -99,21 +99,29 @@ export class SeriesForm implements OnInit {
       ...form,
       tagNames: this.tagNames,
     };
-    this.seriesService
-      .update(this.series._id, series)
+    this.store
+      .updateSeries(this.series._id, series)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           Object.assign(this.series, series);
-          this.closeForm.emit();
-          this.store.getTags();
-          this.cd.detectChanges();
-          this.wasValidated = false;
+          this.close();
         },
         error: (err) => {
-          console.log(err);
+          switch (err.status) {
+            case 409:
+              this.error = 'this name already exists';
+              break;
+          }
         },
       });
+  }
+  close() {
+    this.closeForm.emit();
+    this.store.getTags();
+    this.cd.detectChanges();
+    this.wasValidated = false;
+    this.error = '';
   }
   delete() {
     this.store.setIdOfSeriesToDelete(this.series._id);

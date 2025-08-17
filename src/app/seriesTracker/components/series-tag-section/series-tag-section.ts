@@ -26,6 +26,7 @@ export class SeriesTagSection implements OnInit {
     private cd: ChangeDetectorRef
   ) {}
   possibleTags!: Tag[];
+  error: string = '';
   ngOnInit(): void {
     this.store.possibleTags
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -37,10 +38,25 @@ export class SeriesTagSection implements OnInit {
       });
   }
   addTag() {
-    this.store.addTag(this.tagName);
+    this.store.addTag(this.tagName).subscribe({
+      next: () => {
+        this.error = '';
+      },
+      error: (e) => {
+        switch (e.status) {
+          case 409:
+            this.error = 'this tag already exists';
+            break;
+          case 400:
+            this.error = 'invalid tag';
+            break;
+        }
+      },
+    });
     this.tagName = '';
   }
   delete(tagName: string) {
+    this.error = '';
     this.store.deleteTag(tagName);
   }
 }
