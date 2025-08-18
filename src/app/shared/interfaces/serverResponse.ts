@@ -1,8 +1,5 @@
-import { SeriesInterface } from './series';
-
 interface ServerResponse {
   success: boolean;
-  message: string;
-  series: SeriesInterface;
+  msg: string;
 }
 export default ServerResponse;

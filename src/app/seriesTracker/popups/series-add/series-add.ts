@@ -1,4 +1,11 @@
-import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject,
+  input,
+  OnInit,
+} from '@angular/core';
 import { Tag } from '../../components/tag/tag';
 import {
   FormBuilder,
@@ -56,7 +63,8 @@ export class SeriesAdd implements OnInit {
     private fb: FormBuilder,
     private store: SeriesStoreService,
     private view: SeriesViewService,
-    private namesService: NamesService
+    private namesService: NamesService,
+    private cd: ChangeDetectorRef
   ) {
     this.seriesForm = this.fb.group({
       name: ['', Validators.required],
@@ -115,6 +123,7 @@ export class SeriesAdd implements OnInit {
               this.error = 'this name already exists';
               break;
           }
+          this.cd.detectChanges();
         },
       });
   }

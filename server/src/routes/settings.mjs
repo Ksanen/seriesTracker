@@ -19,7 +19,7 @@ router.get("/view", checkDataBaseConnection, async (req, res) => {
     return res.status(200).json(settings);
   } catch (e) {
     console.log(e);
-    return res.status(500).json({ message: "internal server error" });
+    return res.status(500).json({ msg: "internal server error" });
   }
 });
 router.post(
@@ -32,7 +32,7 @@ router.post(
       return res.status(200).json({ success: true, msg: "successful update" });
     } catch (e) {
       console.log("error: ", e);
-      return res.status(500).json({ message: "internal server error" });
+      return res.status(500).json({ msg: "internal server error" });
     }
   }
 );

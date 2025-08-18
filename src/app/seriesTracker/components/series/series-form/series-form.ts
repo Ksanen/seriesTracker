@@ -59,12 +59,12 @@ export class SeriesForm implements OnInit {
   ngOnInit(): void {
     this.seriesForm = this.fb.group({
       name: [this.series.names[0], Validators.required],
-      type: this.series.type,
-      genre: this.series.genre,
-      animation: this.series.animation,
-      season: this.series.season,
-      episode: this.series.episode,
-      watchTimeActive: this.series.watchTimeActive,
+      type: new FormControl(this.series.type),
+      genre: new FormControl(this.series.genre),
+      animation: new FormControl(this.series.animation),
+      season: new FormControl(this.series.season),
+      episode: new FormControl(this.series.episode),
+      watchTimeActive: new FormControl(this.series.watchTimeActive),
       watchTime: new FormGroup({
         hours: new FormControl(this.series.watchTime.hours),
         minutes: new FormControl(this.series.watchTime.minutes),
@@ -113,13 +113,13 @@ export class SeriesForm implements OnInit {
               this.error = 'this name already exists';
               break;
           }
+          this.cd.detectChanges();
         },
       });
   }
   close() {
     this.closeForm.emit();
     this.store.getTags();
-    this.cd.detectChanges();
     this.wasValidated = false;
     this.error = '';
   }

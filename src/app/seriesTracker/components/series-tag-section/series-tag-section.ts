@@ -51,6 +51,7 @@ export class SeriesTagSection implements OnInit {
             this.error = 'invalid tag';
             break;
         }
+        this.cd.detectChanges();
       },
     });
     this.tagName = '';

@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import AppOptions from '../../shared/interfaces/appOptions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SeriesViewService {
+  private _error$ = new BehaviorSubject<string>('');
+  error$ = this._error$.asObservable();
+  globalStatusErrors: number[] = [404, 500, 503];
   private _options$ = new BehaviorSubject({
     showOverlay: false,
     showAddSeriesForm: false,
@@ -36,5 +39,17 @@ export class SeriesViewService {
   }
   toggleShowDeleteSeriesConfirmation() {
     this.toggleOption('showDeleteSeriesConfirmation');
+  }
+  setError(error: string) {
+    this._error$.next(error);
+  }
+  handleError(error: any) {
+    /* sprawdza czy status błędu jest statusem dla którego komunikat zostanie wyświetlony na samej górze aplikacji z pomocą komponentu 'series-error' */
+    if (error.status === 0) {
+      this.setError('failed to get resources from server');
+    } else if (this.globalStatusErrors.includes(error.status)) {
+      this.setError(error.msg);
+    }
+    return throwError(() => error);
   }
 }

@@ -19,9 +19,7 @@ router.delete("/:id", async (req, res) => {
     const id = req.params.id;
     const series = await SeriesModel.findById(id);
     if (!series) {
-      return res
-        .json(404)
-        .json({ success: false, message: "series not found" });
+      return res.json(404).json({ success: false, msg: "series not found" });
     }
     await removeTagsConnections(id, series.tagNames);
     await SeriesModel.deleteOne({ _id: id });

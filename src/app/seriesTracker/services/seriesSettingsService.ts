@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import seriesFilterSettings from '../../shared/interfaces/seriesSettings/seriesFilterSettings';
 import seriesViewSettings from '../../shared/interfaces/seriesSettings/seriesViewSettings';
-import { SeriesViewService } from './seriesViewService';
 import defaultViewSettings from '../../shared/utils/defaultValues/defaultViewSettings';
 import defaultFilterSettings from '../../shared/utils/defaultValues/defaultFilterSettings';
 import { environment } from '../../../environments/environment';
-import handleError from '../../shared/utils/handleError';
-import { SeriesStoreService } from './seriesStoreService';
+import { SeriesViewService } from './seriesViewService';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,18 +20,18 @@ export class SeriesSettingsService {
   );
   viewSettings$ = this._viewSettings$.asObservable();
   filterSettings$ = this._filterSettings$.asObservable();
-  constructor(private http: HttpClient, private store: SeriesStoreService) {
+  constructor(private http: HttpClient, private view: SeriesViewService) {
     this.getViewSettings();
   }
   getViewSettings() {
     this.http
       .get<seriesViewSettings>(`${this.apiUrl}/api/series/settings/view`)
+      .pipe(catchError((error) => this.view.handleError(error)))
       .subscribe({
         next: (settings) => {
           this._viewSettings$.next(settings);
         },
-        error: (error) => {
-          this.store.setError(handleError(error));
+        error: () => {
           console.log('getting view settings failed');
         },
       });
@@ -41,13 +39,13 @@ export class SeriesSettingsService {
   saveViewSettings(viewSettings: seriesViewSettings) {
     this.http
       .post(`${this.apiUrl}/api/series/settings/view`, viewSettings)
+      .pipe(catchError((error) => this.view.handleError(error)))
       .subscribe({
         next: () => {
           this._viewSettings$.next(viewSettings);
         },
-        error: (error) => {
-          this.store.setError(handleError(error));
-          console.log('saving failed', error);
+        error: () => {
+          console.log('saving view settings failed');
         },
       });
   }

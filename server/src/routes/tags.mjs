@@ -10,7 +10,7 @@ router.get("/", checkDataBaseConnection, async (req, res) => {
     res.status(200).json(tags);
   } catch (e) {
     console.log("error: ", e);
-    res.status(500).json({ success: false, message: "internal server error" });
+    res.status(500).json({ success: false, msg: "internal server error" });
   }
 });
 router.post("/", body("tagName").isString().notEmpty(), async (req, res) => {
