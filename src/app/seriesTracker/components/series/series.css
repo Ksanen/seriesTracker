@@ -54,6 +54,9 @@ input[type="checkbox"] {
   height: 20px;
   width: 50px;
 }
+input[type="number"] {
+  width: 100px;
+}
 label {
   width: 100px;
 }

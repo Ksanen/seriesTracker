@@ -47,22 +47,6 @@
       }
     </select>
   </div>
-  <div class="form__field form__field--right">
-    <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
-  </div>
-
-  <div class="form__field">
-    <div>tags:</div>
-    <div class="form__field__tags">
-      @for(tagName of tagNames;track tagName){
-      <tag
-        [changeMode]="true"
-        [tagName]="tagName"
-        (tagRemoved)="removeTag($event)"
-      ></tag>
-      }
-    </div>
-  </div>
   <div class="form__field">
     <label>Season: </label
     ><input
@@ -100,7 +84,25 @@
     [form]="watchTimeGroup"
     [showWatchTime]="seriesForm.get('watchTimeActive')?.value"
   ></series-watchtime>
+  <div class="form__field form__field--right">
+    <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
+  </div>
 
+  <div class="form__field">
+    @if(tagNames.length>0){
+    <div>tags:</div>
+    }
+
+    <div class="form__field__tags">
+      @for(tagName of tagNames;track tagName){
+      <tag
+        [changeMode]="true"
+        [tagName]="tagName"
+        (tagRemoved)="removeTag($event)"
+      ></tag>
+      }
+    </div>
+  </div>
   <div class="form__buttons">
     <input
       type="button"

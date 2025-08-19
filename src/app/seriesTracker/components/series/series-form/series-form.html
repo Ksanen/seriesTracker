@@ -25,43 +25,6 @@
     (namesValues)="namesValues = $event"
   ></series-names>
   <div class="field field--form">
-    <label>Season:</label>
-    <input
-      class="form-control field__data"
-      type="number"
-      min="0"
-      formControlName="season"
-    />
-  </div>
-  <div class="field field--form">
-    <label>Episode:</label>
-    <input
-      class="form-control field__data"
-      type="number"
-      min="0"
-      formControlName="episode"
-    />
-  </div>
-  <div class="field field--form">
-    <label>Watched:</label>
-    <select class="form-select field__data" formControlName="watched">
-      <option value="true">true</option>
-      <option value="false">false</option>
-    </select>
-  </div>
-  <div class="field field--form form-check form-switch">
-    <label>WatchTime:</label>
-    <input
-      type="checkbox"
-      class="form-check-input field__data"
-      formControlName="watchTimeActive"
-    />
-  </div>
-  <series-watchtime
-    [form]="watchTimeForm"
-    [showWatchTime]="seriesForm.get('watchTimeActive')?.value"
-  ></series-watchtime>
-  <div class="field field--form">
     Type
     <select class="form-select field__data" formControlName="type">
       <option value="">Choose type</option>
@@ -88,6 +51,45 @@
       }
     </select>
   </div>
+  <div class="field field--form">
+    <label>Season:</label>
+    <input
+      class="form-control field__data"
+      type="number"
+      min="0"
+      formControlName="season"
+    />
+  </div>
+  <div class="field field--form">
+    <label>Episode:</label>
+    <input
+      class="form-control field__data"
+      type="number"
+      min="0"
+      formControlName="episode"
+    />
+  </div>
+
+  <div class="field field--form">
+    <label>Watched:</label>
+    <select class="form-select field__data" formControlName="watched">
+      <option value="true">true</option>
+      <option value="false">false</option>
+    </select>
+  </div>
+  <div class="field field--form form-check form-switch">
+    <label>WatchTime:</label>
+    <input
+      type="checkbox"
+      class="form-check-input field__data"
+      formControlName="watchTimeActive"
+    />
+  </div>
+  <series-watchtime
+    [form]="watchTimeForm"
+    [showWatchTime]="seriesForm.get('watchTimeActive')?.value"
+  ></series-watchtime>
+
   <div class="field field--form">
     <div>tags:</div>
     <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>

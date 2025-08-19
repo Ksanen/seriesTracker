@@ -1,23 +1,6 @@
 <form class="filter" [formGroup]="seriesFilterForm" (ngSubmit)="onSubmit()">
   <h1 class="title">Filter</h1>
-  <div class="filter__option">
-    <p>season</p>
-    <input
-      placeholder="season number..."
-      class="form-control"
-      type="number"
-      formControlName="season"
-    />
-  </div>
-  <div class="filter__option">
-    <p>episode</p>
-    <input
-      placeholder="episode number..."
-      class="form-control"
-      type="number"
-      formControlName="episode"
-    />
-  </div>
+
   <div class="filter__option">
     <p>Type</p>
     <select formControlName="type" class="form-select">
@@ -45,6 +28,15 @@
       }
     </select>
   </div>
+  <div class="filter__option">
+    <p>season</p>
+    <input class="form-control" type="number" formControlName="season" />
+  </div>
+  <div class="filter__option">
+    <p>episode</p>
+    <input class="form-control" type="number" formControlName="episode" />
+  </div>
+
   <div class="filter__option">
     <p>watched</p>
     <select formControlName="watched" class="form-select">

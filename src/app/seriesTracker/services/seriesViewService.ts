@@ -43,13 +43,13 @@ export class SeriesViewService {
   setError(error: string) {
     this._error$.next(error);
   }
-  handleError(error: any) {
+  handleError(response: any) {
     /* sprawdza czy status błędu jest statusem dla którego komunikat zostanie wyświetlony na samej górze aplikacji z pomocą komponentu 'series-error' */
-    if (error.status === 0) {
+    if (response.status === 0) {
       this.setError('failed to get resources from server');
-    } else if (this.globalStatusErrors.includes(error.status)) {
-      this.setError(error.msg);
+    } else if (this.globalStatusErrors.includes(response.status)) {
+      this.setError(response.error.msg);
     }
-    return throwError(() => error);
+    return throwError(() => response);
   }
 }
