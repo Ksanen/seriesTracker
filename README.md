@@ -57,4 +57,8 @@ to musisz zmienić port w plikach wyświetlanych na zrzucie
 
 5. Uruchom projekt<br>
 <code>ng run all</code>
-6. Uruchom w przeglądarce wskazany po uruchomieniu link
+6. Uruchom w przeglądarce wskazany po uruchomieniu link<br><br>
+
+Dodatkowe komendy:<br>
+<code>git pull</code> - pobieranie najnowszych zmian
+
