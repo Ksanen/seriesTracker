@@ -43,13 +43,13 @@
   width: 0;
   overflow: auto;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .aside__content {
   padding: 1rem;
 }
 .aside--open {
   width: 400px;
-  flex-shrink: 0;
   transition: width 400ms ease;
 }
 @media only screen and (min-width: 1000px) {
@@ -64,7 +64,7 @@
     font-size: 50px;
   }
 }
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 800px) {
   .aside {
     position: absolute;
     top: 0;
