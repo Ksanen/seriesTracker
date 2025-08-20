@@ -38,7 +38,7 @@ Jeśli to jest film to możesz ustawić czas na którym skończyłeś oglądanie
 
 
 ## Uruchamianie
-
+Upewnij się, że masz zainstalowanego Node.js<br>
 1. Sklonuj repozytorium <br>
 <code>git clone https://github.com/Ksanen/seriesTracker.git</code>
 2. wejdź w projekt<br>
@@ -57,3 +57,4 @@ to musisz zmienić port w plikach wyświetlanych na zrzucie
 
 5. Uruchom projekt<br>
 <code>ng run all</code>
+6. Uruchom w przeglądarce wskazany po uruchomieniu link
