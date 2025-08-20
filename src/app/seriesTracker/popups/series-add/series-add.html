@@ -84,9 +84,11 @@
     [form]="watchTimeGroup"
     [showWatchTime]="seriesForm.get('watchTimeActive')?.value"
   ></series-watchtime>
+  @if(show()){
   <div class="form__field form__field--right">
     <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
   </div>
+  }
 
   <div class="form__field">
     @if(tagNames.length>0){

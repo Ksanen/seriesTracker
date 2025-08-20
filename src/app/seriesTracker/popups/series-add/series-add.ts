@@ -89,6 +89,7 @@ export class SeriesAdd implements OnInit {
     this.seriesForm.reset(defaultSeriesFormValues);
     this.namesValues = [];
     this.error = '';
+    this.tagNames = [];
   }
   removeTag(tagNameToRemove: string) {
     this.tagNames = this.tagNames.filter(
