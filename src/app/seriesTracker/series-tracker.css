@@ -32,47 +32,7 @@
 }
 .content__list {
   flex-grow: 1;
-
   overflow-y: auto;
-}
-
-.aside {
-  background-color: #34495e;
-  color: white;
-  transition: width 400ms ease;
-  width: 0;
-  overflow: auto;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.aside__content {
-  padding: 1rem;
-}
-.aside--open {
-  width: 400px;
-  transition: width 400ms ease;
-}
-@media only screen and (min-width: 1000px) {
-  .aside {
-    position: static;
-    transform: translateX(0);
-    transition: all 0ms ease;
-    width: 400px;
-  }
-  .hide-on-desktop {
-    display: none;
-    font-size: 50px;
-  }
-}
-@media only screen and (max-width: 800px) {
-  .aside {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-  .aside--open {
-    width: 100%;
-  }
 }
 @media only screen and (max-width: 400px) {
   .header {

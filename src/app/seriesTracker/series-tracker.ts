@@ -18,6 +18,9 @@ import { SeriesTagSection } from './components/series-tag-section/series-tag-sec
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SeriesError } from './components/series-error/series-error';
+import { Aside } from '../shared/components/aside/aside';
+import { SeriesAddBtn } from './components/series-add-btn/series-add-btn';
+import { SeriesShowAsideBtn } from './components/series-show-aside-btn/series-show-aside-btn';
 @Component({
   selector: 'series-tracker',
   imports: [
@@ -30,6 +33,9 @@ import { SeriesError } from './components/series-error/series-error';
     SeriesDelete,
     SeriesTagSection,
     SeriesError,
+    Aside,
+    SeriesAddBtn,
+    SeriesShowAsideBtn,
   ],
   standalone: true,
   templateUrl: './series-tracker.html',
@@ -46,11 +52,5 @@ export class SeriesTracker implements OnInit {
       .subscribe((options) => {
         this.options = options;
       });
-  }
-  toggleAddSeriesIsOpen() {
-    this.view.toggleAddSeriesForm();
-  }
-  toggleAside() {
-    this.view.toggleAside();
   }
 }

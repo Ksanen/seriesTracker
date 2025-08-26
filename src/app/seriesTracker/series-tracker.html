@@ -13,28 +13,19 @@
       class="header__search"
       (nameChange)="name.set($event)"
     ></series-search>
-    <button class="btn btn-primary" (click)="toggleAddSeriesIsOpen()">
-      add Series
-    </button>
-    <button class="btn btn-dark hide-on-desktop" (click)="toggleAside()">
-      @if(options.showAside){ Close settings }@else { Open settings }
-    </button>
+    <series-add-btn></series-add-btn>
+    <series-show-aside-btn
+      [showAside]="options.showAside"
+    ></series-show-aside-btn>
   </header>
   <div class="content">
     <main class="content__list">
       <series-list [name]="name()"></series-list>
     </main>
-    <aside
-      [ngClass]="{
-        aside: true,
-        'aside--open': options.showAside
-      }"
-    >
-      <div class="aside__content">
-        <series-filter></series-filter>
-        <series-view-settings></series-view-settings>
-        <seriesTagSection></seriesTagSection>
-      </div>
-    </aside>
+    <app-aside [show]="options.showAside">
+      <series-filter></series-filter>
+      <series-view-settings></series-view-settings>
+      <seriesTagSection></seriesTagSection>
+    </app-aside>
   </div>
 </div>

@@ -1,0 +1,10 @@
+<aside
+  [ngClass]="{
+    aside: true,
+    'aside--open': show()
+  }"
+>
+  <div class="aside__content">
+    <ng-content></ng-content>
+  </div>
+</aside>
