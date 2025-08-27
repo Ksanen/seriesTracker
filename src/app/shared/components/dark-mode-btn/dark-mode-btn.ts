@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 })
 export class DarkModeBtn {
   appViewService = inject(AppViewService);
-  active = false;
   currentScheme = this.appViewService.currentScheme;
   changeMode() {
     this.appViewService.toggleScheme();
