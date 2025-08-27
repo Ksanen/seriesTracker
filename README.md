@@ -17,16 +17,19 @@ Jeśli to jest film to możesz ustawić czas na którym skończyłeś oglądanie
 -mongodb <br>
 
 ## Wygląd
-<img width="920" height="908" alt="screen" src="https://github.com/user-attachments/assets/ddadb0be-64e1-41fc-b688-49cffb936510" />
+<img width="958" height="907" alt="appli" src="https://github.com/user-attachments/assets/1371d780-7758-430c-ab38-fc4d9801e46b" />
+
 
 ### dodawanie serii
-<img width="508" height="562" alt="add" src="https://github.com/user-attachments/assets/247c16ff-0bb4-4d3c-b6eb-a156552f5359" />
+<img width="490" height="495" alt="dodawanie" src="https://github.com/user-attachments/assets/23b3b4f0-88f3-4f85-85af-b9062b1b0ad6" />
+
 
 ### Możesz dodać wiele nazw, dzięki czemu jak będziesz wyszukiwać serię to możesz wpisać drugą nazwę w wyszukiwarce
 <img width="603" height="272" alt="search" src="https://github.com/user-attachments/assets/96288e1f-cbb0-47e5-85a3-f615f2ce284f" />
 
 ### Edytowanie
-<img width="594" height="611" alt="edit" src="https://github.com/user-attachments/assets/40a1a0a8-ca88-4aa8-bf16-a59d5bd7cef7" />
+<img width="632" height="594" alt="edit1" src="https://github.com/user-attachments/assets/cba69489-52d7-4f42-9c4d-8f301219be21" />
+
 
 ### Ekrany mobilne
 <img width="306" height="655" alt="mobile" src="https://github.com/user-attachments/assets/ecea87e4-636d-4a6b-a014-ce0c730e831f" />
