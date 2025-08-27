@@ -1,6 +1,3 @@
-input {
-  cursor: pointer;
-}
 .darkMode {
   display: flex;
   background-color: var(--darkModeBg);
@@ -35,7 +32,6 @@ input {
   right: -40px;
   z-index: 20;
 }
-
 .first.active + * + * {
   left: 26px;
   transition: all 200ms ease;
