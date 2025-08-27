@@ -26,7 +26,7 @@
 .content {
   display: flex;
   flex-grow: 1;
-  background-color: rgb(169, 207, 165);
+  background-color: var(--seriesbg);
   position: relative;
   height: 100vh;
 }
