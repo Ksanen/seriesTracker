@@ -60,8 +60,14 @@ export class NamesService {
     names = names.filter((name) => name.id !== id);
     return names;
   }
+  removeWhiteSpaces(array: string[]) {
+    for (let i = 0; i < array.length; i++) {
+      array[i] = array[i].trim();
+    }
+    return array;
+  }
   removeUnnecessaryNames(names: string[]) {
-    const namesSet = new Set(names);
+    const namesSet = new Set(this.removeWhiteSpaces(names));
     namesSet.delete('');
     return [...namesSet];
   }

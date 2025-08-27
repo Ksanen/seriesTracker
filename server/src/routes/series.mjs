@@ -9,6 +9,7 @@ import {
   removeTagsConnections,
   updateConnections,
 } from "../utils/tagsConnections.mjs";
+import removeWhiteSpaces from "../utils/removeWhiteSpaces.mjs";
 const router = Router();
 router.get("/", checkDataBaseConnection, async (req, res) => {
   const series = await SeriesModel.find({}, { __v: 0 });
@@ -33,6 +34,7 @@ router.delete("/:id", async (req, res) => {
 router.post("/", checkSchema(seriesSchema), async (req, res) => {
   try {
     const result = validationResult(req);
+    req.body.names = removeWhiteSpaces(req.body.names);
     if (!result.isEmpty()) {
       return res.status(400).send({
         success: false,
@@ -58,6 +60,7 @@ router.post("/", checkSchema(seriesSchema), async (req, res) => {
 router.patch("/:id", checkSchema(seriesSchema), async (req, res) => {
   try {
     const result = validationResult(req);
+    req.body.names = removeWhiteSpaces(req.body.names);
     const name = req.body.names[0];
     const id = req.params.id;
     if (!result.isEmpty()) {
