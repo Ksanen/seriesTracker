@@ -11,7 +11,7 @@ import defaultWatchTime from '../../../shared/utils/defaultValues/defaultWatchTi
 })
 export class SeriesWatchtime {
   showWatchTime = input<boolean>(false);
-  form = input<FormGroup>(new FormGroup({}));
+  form = input.required<FormGroup>();
   constructor() {
     effect(() => {
       if (this.showWatchTime() === false) {

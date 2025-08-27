@@ -5,6 +5,7 @@
   padding: 1rem;
   flex-wrap: wrap;
   gap: 20px;
+  color: var(--seriesText);
 }
 .series__data {
   display: flex;
@@ -39,10 +40,12 @@ button {
 }
 
 .even {
-  background-color: #2a2a2a;
+  background-color: var(--even);
+  transition: background-color 200ms ease;
 }
 .odd {
-  background-color: #1f1f1f;
+  background-color: var(--odd);
+  transition: background-color 200ms ease;
 }
 
 .series__tags {

@@ -1,0 +1,20 @@
+.light-scheme {
+  :host {
+    --even: #f2f2f2;
+    --odd: #ffffff;
+    --seriesText: black;
+    --aside: #327dbe;
+    --indicator: black;
+    --darkModeBg: white;
+  }
+}
+.dark-scheme {
+  :host {
+    --even: #2a2a2a;
+    --odd: #1f1f1f;
+    --seriesText: white;
+    --aside: #34495e;
+    --indicator: white;
+    --darkModeBg: black;
+  }
+}

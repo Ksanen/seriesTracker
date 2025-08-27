@@ -21,6 +21,7 @@ import { SeriesError } from './components/series-error/series-error';
 import { Aside } from '../shared/components/aside/aside';
 import { SeriesAddBtn } from './components/series-add-btn/series-add-btn';
 import { SeriesShowAsideBtn } from './components/series-show-aside-btn/series-show-aside-btn';
+import { DarkModeBtn } from '../shared/components/dark-mode-btn/dark-mode-btn';
 @Component({
   selector: 'series-tracker',
   imports: [
@@ -36,6 +37,7 @@ import { SeriesShowAsideBtn } from './components/series-show-aside-btn/series-sh
     Aside,
     SeriesAddBtn,
     SeriesShowAsideBtn,
+    DarkModeBtn,
   ],
   standalone: true,
   templateUrl: './series-tracker.html',

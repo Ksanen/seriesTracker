@@ -1,0 +1,62 @@
+input {
+  cursor: pointer;
+}
+.darkMode {
+  display: flex;
+  background-color: var(--darkModeBg);
+  width: 80px;
+  height: 30px;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+.darkMode::after {
+  content: "system";
+  position: absolute;
+  top: -24px;
+  right: 14px;
+}
+.mode {
+  appearance: none;
+  height: 100%;
+  width: 50%;
+  pointer-events: none;
+}
+.first::before {
+  content: "light";
+  position: absolute;
+  left: -40px;
+  z-index: 20;
+}
+.first::after {
+  content: "dark";
+  position: absolute;
+  right: -40px;
+  z-index: 20;
+}
+
+.first.active + * + * {
+  left: 26px;
+  transition: all 200ms ease;
+}
+.first:not(.active) + .second {
+  pointer-events: none;
+}
+.second.active + * {
+  left: 50px !important;
+  transition: all 200ms ease;
+}
+.indicator {
+  left: 0;
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 2px;
+  background-color: var(--indicator);
+  border-radius: 12px;
+  pointer-events: none;
+  transition: all 200m ease;
+}

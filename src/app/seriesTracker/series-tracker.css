@@ -34,6 +34,12 @@
   flex-grow: 1;
   overflow-y: auto;
 }
+.darkMode {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-right: 40px;
+}
 @media only screen and (max-width: 400px) {
   .header {
     flex-direction: column;

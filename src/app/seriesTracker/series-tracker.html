@@ -23,6 +23,11 @@
       <series-list [name]="name()"></series-list>
     </main>
     <app-aside [show]="options.showAside">
+      <div class="darkMode">
+        <p>Dark Mode</p>
+        <dark-mode-btn></dark-mode-btn>
+      </div>
+
       <series-filter></series-filter>
       <series-view-settings></series-view-settings>
       <seriesTagSection></seriesTagSection>

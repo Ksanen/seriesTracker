@@ -1,0 +1,15 @@
+<div class="darkMode" (click)="changeMode()">
+  <div
+    class="first mode"
+    [ngClass]="{
+      active: currentScheme() > 0
+    }"
+  ></div>
+  <div
+    class="second mode"
+    [ngClass]="{
+      active: currentScheme() > 1
+    }"
+  ></div>
+  <div class="indicator"></div>
+</div>
