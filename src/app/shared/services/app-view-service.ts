@@ -25,10 +25,11 @@ export class AppViewService {
       });
   }
   initScheme() {
-    const saved = localStorage.getItem('seriesScheme');
-    const scheme = saved || this.getSystemPreferredScheme();
+    const savedScheme = localStorage.getItem('seriesScheme');
+    if (savedScheme) {
+      this.setCurrentScheme(savedScheme);
+    }
     this.listenToSystemSchemeChanges();
-    this.setCurrentScheme(scheme);
     this.applyScheme();
   }
   applyScheme() {
