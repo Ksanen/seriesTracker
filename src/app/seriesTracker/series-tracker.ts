@@ -8,11 +8,10 @@ import {
 } from '@angular/core';
 import { SeriesSearch } from './components/series-search/series-search';
 import { SeriesList } from './components/series-list/series-list';
-import { SeriesAdd } from './popups/series-add/series-add';
 import { SeriesViewSettings } from './components/series-view-settings/series-view-settings';
 import { SeriesFilter } from './components/series-filter/series-filter';
 import AppOptions from './../shared/interfaces/appOptions';
-import { SeriesDelete } from './popups/series-delete/series-delete';
+import { SeriesDelete } from './components/series-delete/series-delete';
 import { SeriesViewService } from './services/seriesViewService';
 import { SeriesTagSection } from './components/series-tag-section/series-tag-section';
 import { CommonModule } from '@angular/common';
@@ -22,6 +21,7 @@ import { Aside } from '../shared/components/aside/aside';
 import { SeriesAddBtn } from './components/series-add-btn/series-add-btn';
 import { SeriesShowAsideBtn } from './components/series-show-aside-btn/series-show-aside-btn';
 import { DarkModeBtn } from '../shared/components/dark-mode-btn/dark-mode-btn';
+import { SeriesAdd } from './components/series-add/series-add';
 @Component({
   selector: 'series-tracker',
   imports: [
