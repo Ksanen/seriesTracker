@@ -1,6 +1,6 @@
 .series-tracker {
-  max-height: 100vh;
-  max-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -28,7 +28,7 @@
   flex-grow: 1;
   background-color: var(--seriesbg);
   position: relative;
-  height: 100vh;
+  overflow: hidden;
 }
 .content__list {
   flex-grow: 1;
