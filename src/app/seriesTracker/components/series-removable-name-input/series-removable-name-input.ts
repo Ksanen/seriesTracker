@@ -11,9 +11,6 @@ export class SeriesRemovableNameInput {
   name = model('');
   id = input.required<number>();
   removeName = output<number>();
-  setName(event: any) {
-    this.name.set(event.target.value);
-  }
   remove() {
     this.removeName.emit(this.id());
   }

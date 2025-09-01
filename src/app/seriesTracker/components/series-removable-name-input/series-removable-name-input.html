@@ -1,11 +1,5 @@
 <div class="container">
-  <input
-    type="text"
-    class="form-control"
-    [value]="name()"
-    (input)="setName($event)"
-    required
-  />
+  <input type="text" class="form-control" [(ngModel)]="name" required />
   <input
     type="button"
     class="btn btn-danger"
