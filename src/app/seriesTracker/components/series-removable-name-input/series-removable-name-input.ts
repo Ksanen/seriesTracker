@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, model, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -8,14 +8,13 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './series-removable-name-input.css',
 })
 export class SeriesRemovableNameInput {
-  @Input() name: string = '';
-  @Input() id!: number;
-  @Output() removeName = new EventEmitter();
-  @Output() nameChange = new EventEmitter<string>();
-  updateName() {
-    this.nameChange.emit(this.name);
+  name = model('');
+  id = input.required<number>();
+  removeName = output<number>();
+  setName(event: any) {
+    this.name.set(event.target.value);
   }
   remove() {
-    this.removeName.emit(this.id);
+    this.removeName.emit(this.id());
   }
 }

@@ -1,6 +1,6 @@
 <div class="tag">
-  {{ tagName }}
-  @if(changeMode){
+  {{ tagName() }}
+  @if(changeMode()){
   <svg
     (click)="remove()"
     class="remove"

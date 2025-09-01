@@ -16,7 +16,6 @@ import { SeriesSettingsService } from '../../services/seriesSettingsService';
 import seriesFilterSettings from '../../../shared/interfaces/seriesSettings/seriesFilterSettings';
 import defaultFilterSettings from '../../../shared/utils/defaultValues/defaultFilterSettings';
 import filterSeries from '../../../shared/utils/fitlerSeries';
-import { interval } from 'rxjs';
 import { Loading } from '../../../shared/components/loading/loading';
 @Component({
   selector: 'series-list',

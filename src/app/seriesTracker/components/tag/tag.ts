@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-
+import { Component, input, output } from '@angular/core';
 @Component({
   selector: 'tag',
   imports: [],
@@ -8,10 +7,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './tag.css',
 })
 export class Tag {
-  @Output() tagRemoved = new EventEmitter<string>();
-  @Input() tagName!: string;
-  @Input() changeMode: boolean = false;
+  tagRemoved = output<string>();
+  tagName = input.required<string>();
+  changeMode = input<boolean>(false);
   remove() {
-    this.tagRemoved.emit(this.tagName);
+    this.tagRemoved.emit(this.tagName());
   }
 }

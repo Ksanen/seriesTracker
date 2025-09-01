@@ -1,10 +1,9 @@
 import {
   Component,
   effect,
-  EventEmitter,
   input,
   OnInit,
-  Output,
+  output,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -20,7 +19,7 @@ import RemovableName from '../../../shared/interfaces/removableName';
   styleUrl: './series-names.css',
 })
 export class SeriesNames implements OnInit {
-  @Output() namesValues = new EventEmitter<string[]>();
+  namesValues = output<string[]>();
   seriesNames = input<string[]>([]);
   names: WritableSignal<RemovableName[]> = signal([]);
   constructor(private namesService: NamesService) {

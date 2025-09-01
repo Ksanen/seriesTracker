@@ -2,8 +2,8 @@
   <input
     type="text"
     class="form-control"
-    [(ngModel)]="name"
-    (ngModelChange)="updateName()"
+    [value]="name()"
+    (input)="setName($event)"
     required
   />
   <input

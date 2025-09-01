@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, output, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'series-search',
@@ -14,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './series-search.css',
 })
 export class SeriesSearch {
-  @Output() nameChange = new EventEmitter<any>();
+  nameChange = output<string>();
   name: WritableSignal<string> = signal('');
   newName: string = '';
   changeName() {
