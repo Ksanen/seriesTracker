@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { Series } from '../series/series';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -15,7 +15,6 @@ import { Loading } from '../../../shared/components/loading/loading';
 })
 export class SeriesList {
   name = input<string>('');
-  destroyRef = inject(DestroyRef);
   store = inject(SeriesStoreService);
   seriesSettings = inject(SeriesSettingsService);
   seriesList = toSignal(this.store.seriesList$, { initialValue: [] });

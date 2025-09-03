@@ -1,6 +1,5 @@
 import {
   Component,
-  DestroyRef,
   EventEmitter,
   inject,
   input,
@@ -27,7 +26,6 @@ export class Series {
   even = input.required<boolean>();
   @Input() series!: SeriesInterface;
   @Output() deleteSeries = new EventEmitter<string>();
-  destroyRef = inject(DestroyRef);
   isEditMode: boolean = false;
   seriesSettings = inject(SeriesSettingsService);
   viewSettings = toSignal(this.seriesSettings.viewSettings$, {

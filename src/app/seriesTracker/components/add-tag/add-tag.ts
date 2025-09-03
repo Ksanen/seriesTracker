@@ -1,17 +1,7 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  EventEmitter,
-  inject,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SeriesStoreService } from '../../services/seriesStoreService';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import Tag from '../../../shared/interfaces/tag';
+import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'add-tag',
   imports: [FormsModule],
@@ -19,24 +9,12 @@ import Tag from '../../../shared/interfaces/tag';
   templateUrl: './add-tag.html',
   styleUrl: './add-tag.css',
 })
-export class AddTag implements OnInit {
+export class AddTag {
   tagName: string = '';
   @Input() tagNames: string[] = [];
   @Output() addNewTag = new EventEmitter<string[]>();
-  destroyRef = inject(DestroyRef);
-  possibleTags!: Tag[];
-  constructor(
-    private store: SeriesStoreService,
-    private cd: ChangeDetectorRef
-  ) {}
-  ngOnInit(): void {
-    this.store.possibleTags
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((tags) => {
-        this.possibleTags = tags;
-        this.cd.detectChanges();
-      });
-  }
+  store = inject(SeriesStoreService);
+  possibleTags = toSignal(this.store.possibleTags, { initialValue: [] });
   addTag() {
     if (this.tagName === '') return;
     this.tagNames.push(this.tagName);

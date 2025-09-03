@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, tap } from 'rxjs';
 import { SeriesInterface, SeriesToSend } from '../../shared/interfaces/series';
 import { SeriesApiService } from './seriesApiService';
 import Tag from '../../shared/interfaces/tag';
@@ -7,6 +7,7 @@ import defaultGenres from '../../shared/utils/defaultValues/defaultGenre';
 import defaultTypes from '../../shared/utils/defaultValues/defaultTypes';
 import defaultAnimations from '../../shared/utils/defaultValues/defaultAnimations';
 import { SeriesViewService } from './seriesViewService';
+import { toSignal } from '@angular/core/rxjs-interop';
 @Injectable({
   providedIn: 'root',
 })
@@ -71,7 +72,7 @@ export class SeriesStoreService {
     return this.seriesApiService.add(Series).pipe(
       tap((series) => {
         let currentList = this._seriesList$.getValue();
-        currentList.push(series);
+        currentList = [...currentList, series];
         this._seriesList$.next(currentList);
         this.getTags();
       }),
@@ -81,11 +82,14 @@ export class SeriesStoreService {
   addTag(tagName: string) {
     return this.seriesApiService.addTag(tagName).pipe(
       tap(() => {
-        const tags = this._possibleTags$.getValue();
-        tags.push({
-          name: tagName,
-          seriesAttached: [],
-        });
+        let tags = this._possibleTags$.getValue();
+        tags = [
+          ...tags,
+          {
+            name: tagName,
+            seriesAttached: [],
+          },
+        ];
         this._possibleTags$.next(tags);
       }),
       catchError((error) => this.view.handleError(error))
