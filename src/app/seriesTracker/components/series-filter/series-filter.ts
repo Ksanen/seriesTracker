@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { SeriesSettingsService } from '../../services/seriesSettingsService';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { AddTag } from '../add-tag/add-tag';
 import { Tag } from '../tag/tag';
 import defaultFilterSettings from '../../../shared/utils/defaultValues/defaultFilterSettings';
@@ -29,27 +29,21 @@ export class SeriesFilter implements OnInit {
   genreList!: Observable<string[]>;
   typeList!: Observable<string[]>;
   animationList!: Observable<string[]>;
-  constructor(
-    private SeriesSettings: SeriesSettingsService,
-    private fb: FormBuilder,
-    private cd: ChangeDetectorRef,
-    private store: SeriesStoreService
-  ) {}
+  seriesSettings = inject(SeriesSettingsService);
+  settings = toSignal(this.seriesSettings.filterSettings$, {
+    initialValue: defaultFilterSettings,
+  });
+  constructor(private fb: FormBuilder, private store: SeriesStoreService) {}
   ngOnInit(): void {
-    this.SeriesSettings.filterSettings$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((settings) => {
-        this.seriesFilterForm = this.fb.group({
-          season: settings.season,
-          episode: settings.episode,
-          watched: settings.watched,
-          type: settings.type,
-          genre: settings.genre,
-          animation: settings.animation,
-        });
-        this.tagNames = [...settings.tags];
-        this.cd.detectChanges();
-      });
+    this.seriesFilterForm = this.fb.group({
+      season: this.settings().season,
+      episode: this.settings().episode,
+      watched: this.settings().watched,
+      type: this.settings().type,
+      genre: this.settings().genre,
+      animation: this.settings().animation,
+    });
+    this.tagNames = [...this.settings().tags];
     this.genreList = this.store.genreList$;
     this.typeList = this.store.typeList$;
     this.animationList = this.store.animationList$;
@@ -62,7 +56,7 @@ export class SeriesFilter implements OnInit {
   updateFilterSettings() {
     const value = this.seriesFilterForm.value;
     value.tags = this.tagNames;
-    this.SeriesSettings.updateFilterSettings(value);
+    this.seriesSettings.updateFilterSettings(value);
   }
   onSubmit() {
     this.updateFilterSettings();
