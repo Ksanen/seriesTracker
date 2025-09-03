@@ -50,12 +50,9 @@ export class SeriesFilter implements OnInit {
     );
   }
   updateFilterSettings() {
-    const value = this.seriesFilterForm.value;
-    value.tags = this.tagNames;
-    this.seriesSettings.updateFilterSettings(value);
-  }
-  onSubmit() {
-    this.updateFilterSettings();
+    const newFilterSettings = this.seriesFilterForm.value;
+    newFilterSettings.tags = this.tagNames;
+    this.seriesSettings.updateFilterSettings(newFilterSettings);
   }
   clearSettings() {
     this.seriesFilterForm.reset(defaultFilterSettings);
