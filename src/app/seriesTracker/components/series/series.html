@@ -15,17 +15,17 @@
   <div class="series__data">
     @if(viewSettings.name){
     <p class="">Name: {{ series.names[0] }}</p>
-    } @if(viewSettings.season){
+    } @if(viewSettings().season){
     <p class="">
       Season: @if(series.season===null){ none } @else { {{ series.season }} }
     </p>
-    } @if(viewSettings.episode){
+    } @if(viewSettings().episode){
     <p class="">
       Episode: @if(series.episode===null){ none } @else { {{ series.episode }} }
     </p>
-    } @if(viewSettings.watched){
+    } @if(viewSettings().watched){
     <p class="">Watched: {{ series.watched }}</p>
-    } @if(viewSettings.watchtime){
+    } @if(viewSettings().watchtime){
 
     <p class="">
       @if(watchTimeActive){ WatchTime:
@@ -34,16 +34,16 @@
       {{ series.watchTime.seconds | number : "2.0" }}
       } @else { WatchTime: none }
     </p>
-    } @if(viewSettings.type){
+    } @if(viewSettings().type){
     <p>Type: @if(series.type.length===0){none}@else{ {{ series.type }}}</p>
-    } @if(viewSettings.genre){
+    } @if(viewSettings().genre){
     <p>Genre: @if(series.genre.length===0){none}@else{ {{ series.genre }}}</p>
-    } @if(viewSettings.animation){
+    } @if(viewSettings().animation){
     <p>
       Animation: @if(series.animation.length===0){none}@else{
       {{ series.animation }}}
     </p>
-    } @if(viewSettings.tags){
+    } @if(viewSettings().tags){
     <div>
       <div class="series__tags">
         <div>tags:</div>
