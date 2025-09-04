@@ -1,0 +1,29 @@
+:host {
+  flex-grow: 1;
+  overflow-y: auto;
+  position: relative;
+  scroll-behavior: smooth;
+}
+.top {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 50px;
+  width: 50px;
+  background-color: rgb(163, 63, 63);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.top:hover {
+  background-color: rgb(196, 107, 107);
+}
+.top__arrow {
+  height: 0;
+  width: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid black;
+}

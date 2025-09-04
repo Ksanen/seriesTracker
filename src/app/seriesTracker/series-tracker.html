@@ -19,15 +19,12 @@
     ></series-show-aside-btn>
   </header>
   <div class="content">
-    <main class="content__list">
-      <series-list [name]="name()"></series-list>
-    </main>
+    <series-content-list [name]="name()"></series-content-list>
     <app-aside [show]="options.showAside">
       <div class="darkMode">
         <p>Dark Mode</p>
         <dark-mode-btn></dark-mode-btn>
       </div>
-
       <series-filter></series-filter>
       <series-view-settings></series-view-settings>
       <seriesTagSection></seriesTagSection>

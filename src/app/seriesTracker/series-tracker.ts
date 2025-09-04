@@ -7,7 +7,6 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { SeriesSearch } from './components/series-search/series-search';
-import { SeriesList } from './components/series-list/series-list';
 import { SeriesViewSettings } from './components/series-view-settings/series-view-settings';
 import { SeriesFilter } from './components/series-filter/series-filter';
 import AppOptions from './../shared/interfaces/appOptions';
@@ -22,11 +21,11 @@ import { SeriesAddBtn } from './components/series-add-btn/series-add-btn';
 import { SeriesShowAsideBtn } from './components/series-show-aside-btn/series-show-aside-btn';
 import { DarkModeBtn } from '../shared/components/dark-mode-btn/dark-mode-btn';
 import { SeriesAdd } from './components/series-add/series-add';
+import { SeriesContentList } from './components/series-content-list/series-content-list';
 @Component({
   selector: 'series-tracker',
   imports: [
     SeriesSearch,
-    SeriesList,
     SeriesAdd,
     CommonModule,
     SeriesViewSettings,
@@ -38,6 +37,7 @@ import { SeriesAdd } from './components/series-add/series-add';
     SeriesAddBtn,
     SeriesShowAsideBtn,
     DarkModeBtn,
+    SeriesContentList,
   ],
   standalone: true,
   templateUrl: './series-tracker.html',

@@ -1,3 +1,5 @@
+import watchTime from './watchTime';
+
 interface BaseSeries {
   names: string[];
   type: string;
@@ -6,11 +8,7 @@ interface BaseSeries {
   season: number;
   episode: number;
   watchTimeActive: boolean;
-  watchTime: {
-    hours: number;
-    minutes: number;
-    seconds: number;
-  };
+  watchTime: watchTime;
   watched: boolean;
   tagNames: string[];
 }

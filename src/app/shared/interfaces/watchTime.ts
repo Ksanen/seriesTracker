@@ -1,5 +1,5 @@
 export default interface watchTime {
-  hours: string;
-  minutes: string;
-  seconds: string;
+  hours: number;
+  minutes: number;
+  seconds: number;
 }
