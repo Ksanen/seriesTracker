@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SeriesAddBtn } from './series-add-btn';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('SeriesAddBtn', () => {
   let component: SeriesAddBtn;
@@ -8,9 +9,9 @@ describe('SeriesAddBtn', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SeriesAddBtn]
-    })
-    .compileComponents();
+      imports: [SeriesAddBtn],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SeriesAddBtn);
     component = fixture.componentInstance;

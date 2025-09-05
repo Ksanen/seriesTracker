@@ -56,7 +56,7 @@ export class NamesService {
     }
     return removableNames;
   }
-  removeName(names: RemovableName[], id: number) {
+  removeName(names: RemovableName[], id: number): RemovableName[] {
     names = names.filter((name) => name.id !== id);
     return names;
   }

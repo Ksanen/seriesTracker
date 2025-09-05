@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SeriesTagSection } from './series-tag-section';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('SeriesTagSection', () => {
   let component: SeriesTagSection;
@@ -8,9 +11,13 @@ describe('SeriesTagSection', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SeriesTagSection]
-    })
-    .compileComponents();
+      imports: [SeriesTagSection],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SeriesTagSection);
     component = fixture.componentInstance;

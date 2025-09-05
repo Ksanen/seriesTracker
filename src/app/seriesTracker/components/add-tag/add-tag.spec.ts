@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTag } from './add-tag';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('AddTag', () => {
   let component: AddTag;
@@ -8,9 +11,13 @@ describe('AddTag', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddTag]
-    })
-    .compileComponents();
+      imports: [AddTag],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddTag);
     component = fixture.componentInstance;

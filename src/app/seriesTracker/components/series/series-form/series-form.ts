@@ -41,7 +41,7 @@ import { SeriesWatchtime } from '../../series-watchtime/series-watchtime';
   styleUrl: '../series.css',
 })
 export class SeriesForm implements OnInit {
-  @Input() series!: SeriesInterface;
+  @Input({ required: true }) series!: SeriesInterface;
   even = input.required<boolean>();
   @Output() closeForm = new EventEmitter();
   namesValues: string[] = [];

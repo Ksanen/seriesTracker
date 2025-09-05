@@ -24,7 +24,7 @@ import defaultViewSettings from '../../../shared/utils/defaultValues/defaultView
 })
 export class Series {
   even = input.required<boolean>();
-  @Input() series!: SeriesInterface;
+  series = input.required<SeriesInterface>();
   @Output() deleteSeries = new EventEmitter<string>();
   isEditMode: boolean = false;
   seriesSettings = inject(SeriesSettingsService);
