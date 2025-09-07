@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SeriesViewService } from '../../services/seriesViewService';
 
 @Component({
@@ -8,7 +8,7 @@ import { SeriesViewService } from '../../services/seriesViewService';
   styleUrl: './series-add-btn.css',
 })
 export class SeriesAddBtn {
-  constructor(private view: SeriesViewService) {}
+  view = inject(SeriesViewService);
   toggleAddSeriesIsOpen() {
     this.view.toggleAddSeriesForm();
   }

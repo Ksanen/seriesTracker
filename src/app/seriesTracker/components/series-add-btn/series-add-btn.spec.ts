@@ -21,4 +21,9 @@ describe('SeriesAddBtn', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should call toggleAddSeriesForm', () => {
+    spyOn(component.view, 'toggleAddSeriesForm');
+    component.toggleAddSeriesIsOpen();
+    expect(component.view.toggleAddSeriesForm).toHaveBeenCalled();
+  });
 });

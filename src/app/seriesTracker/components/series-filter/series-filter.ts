@@ -54,9 +54,12 @@ export class SeriesFilter implements OnInit {
     newFilterSettings.tags = this.tagNames;
     this.seriesSettings.updateFilterSettings(newFilterSettings);
   }
-  clearSettings() {
+  resetSeriesFilterForm() {
     this.seriesFilterForm.reset(defaultFilterSettings);
     this.tagNames = [];
+  }
+  reset() {
+    this.resetSeriesFilterForm();
     this.updateFilterSettings();
   }
 }

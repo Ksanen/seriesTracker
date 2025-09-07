@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   HostListener,
+  inject,
   input,
   ViewChild,
 } from '@angular/core';
@@ -16,20 +17,18 @@ import { SeriesList } from '../series-list/series-list';
 })
 export class SeriesContentList {
   name = input.required<string>();
-  showScrollUp: boolean = false;
-  @ViewChild('top') top!: ElementRef;
-  constructor(private hostElement: ElementRef) {}
+  showArrowContainer: boolean = false;
+  @ViewChild('arrowContainer') arrowContainer!: ElementRef;
+  hostElement = inject(ElementRef);
   @HostListener('scroll', [`$event`])
   onScroll(event: Event) {
     const scrollTop = this.hostElement.nativeElement.scrollTop;
-    if (scrollTop === 0) {
-      this.showScrollUp = false;
-      return;
-    }
-    this.showScrollUp = true;
-    const scrollValue = scrollTop + 10;
-    if (!this.top) return;
-    this.top.nativeElement.style.top = `${scrollValue}px`;
+    this.showArrowContainer = scrollTop === 0 ? false : true;
+    this.arrowContainer.nativeElement.style.top =
+      this.calculateTopValue(scrollTop);
+  }
+  calculateTopValue(scrollTop: number) {
+    return `${scrollTop + 10}px`;
   }
   toTop() {
     this.hostElement.nativeElement.scrollTop = 0;

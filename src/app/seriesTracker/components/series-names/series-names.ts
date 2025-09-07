@@ -1,6 +1,7 @@
 import {
   Component,
   effect,
+  inject,
   input,
   OnInit,
   output,
@@ -21,8 +22,9 @@ import RemovableName from '../../../shared/interfaces/removableName';
 export class SeriesNames implements OnInit {
   namesValues = output<string[]>();
   seriesNames = input<string[]>([]);
+  namesService = inject(NamesService);
   names: WritableSignal<RemovableName[]> = signal([]);
-  constructor(private namesService: NamesService) {
+  constructor() {
     effect(() => {
       if (this.seriesNames().length === 0 && this.names().length !== 0) {
         this.names.set([]);

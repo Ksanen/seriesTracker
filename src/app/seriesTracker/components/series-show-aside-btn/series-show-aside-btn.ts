@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { SeriesViewService } from '../../services/seriesViewService';
 
 @Component({
@@ -9,7 +9,7 @@ import { SeriesViewService } from '../../services/seriesViewService';
 })
 export class SeriesShowAsideBtn {
   showAside = input.required<boolean>();
-  constructor(private view: SeriesViewService) {}
+  view = inject(SeriesViewService);
   toggleAside() {
     this.view.toggleAside();
   }

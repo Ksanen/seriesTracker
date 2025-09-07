@@ -21,4 +21,9 @@ describe('DarkModeBtn', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should call toggleScheme method ', () => {
+    spyOn(component.appViewService, 'toggleScheme');
+    component.changeMode();
+    expect(component.appViewService.toggleScheme).toHaveBeenCalled();
+  });
 });

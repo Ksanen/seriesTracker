@@ -27,4 +27,10 @@ describe('SeriesAdd', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should remove Tag', () => {
+    component.tagNames = ['test1', 'test2'];
+    component.removeTag('test1');
+    const result = component.tagNames.filter((tag) => tag === 'test1');
+    expect(result.length).toBe(0);
+  });
 });

@@ -1,8 +1,11 @@
 <main class="content__list">
   <series-list [name]="name()"></series-list>
-  @if(showScrollUp){
-  <div #top class="top" (click)="toTop()">
+  <div
+    #arrowContainer
+    class="top"
+    (click)="toTop()"
+    [hidden]="!showArrowContainer"
+  >
     <div class="top__arrow"></div>
   </div>
-  }
 </main>

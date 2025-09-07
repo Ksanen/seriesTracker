@@ -14,11 +14,18 @@ describe('SeriesRemovableNameInput', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(SeriesRemovableNameInput);
+
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should emit id', () => {
+    spyOn(component.removeName, 'emit');
+    fixture.componentRef.setInput('id', 12);
+    component.remove();
+    expect(component.removeName.emit).toHaveBeenCalledWith(component.id());
   });
 });

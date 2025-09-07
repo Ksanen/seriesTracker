@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 
 export interface WatchTimeForm {
-  hours: FormControl<number>;
-  minutes: FormControl<number>;
-  seconds: FormControl<number>;
+  hours: FormControl<number | null>;
+  minutes: FormControl<number | null>;
+  seconds: FormControl<number | null>;
 }

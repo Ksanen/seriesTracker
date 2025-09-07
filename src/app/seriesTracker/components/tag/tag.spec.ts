@@ -22,4 +22,9 @@ describe('Tag', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should emit tagName', () => {
+    spyOn(component.tagRemoved, 'emit');
+    component.remove();
+    expect(component.tagRemoved.emit).toHaveBeenCalledWith(component.tagName());
+  });
 });

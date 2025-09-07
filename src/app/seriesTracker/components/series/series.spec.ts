@@ -23,6 +23,7 @@ describe('Series', () => {
     component = fixture.componentInstance;
     fixture.componentRef.setInput('even', true);
     fixture.componentRef.setInput('series', {
+      _id: 'test',
       names: ['test1', 'test2'],
       type: 'movie',
       genre: '',
@@ -43,5 +44,11 @@ describe('Series', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should toggle editMode', () => {
+    const startIsEditMode = component.isEditMode;
+    component.toggleEditMode();
+    const endIsEditMode = component.isEditMode;
+    expect(endIsEditMode).toBe(!startIsEditMode);
   });
 });

@@ -21,10 +21,8 @@ import { ChangeDetectorRef } from '@angular/core';
 export class SeriesTagSection implements OnInit {
   destroyRef = inject(DestroyRef);
   tagName: string = '';
-  constructor(
-    private store: SeriesStoreService,
-    private cd: ChangeDetectorRef
-  ) {}
+  store = inject(SeriesStoreService);
+  constructor(private cd: ChangeDetectorRef) {}
   possibleTags!: Tag[];
   error: string = '';
   ngOnInit(): void {

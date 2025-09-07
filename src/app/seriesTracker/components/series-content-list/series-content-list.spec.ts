@@ -29,4 +29,17 @@ describe('SeriesContentList', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('showScrollUp should be set to false when scrollTop is 0', () => {
+    component.hostElement.nativeElement.scrollTop = 0;
+    component.showArrowContainer = true;
+    component.onScroll(new Event('scroll'));
+    expect(component.showArrowContainer).toBe(false);
+  });
+  it('expect arrowContainer to be defined', () => {
+    expect(component.arrowContainer).toBeDefined();
+  });
+  it('expect topValue to be 30', () => {
+    const value = component.calculateTopValue(20);
+    expect(value).toBe('30px');
+  });
 });

@@ -28,4 +28,9 @@ describe('SeriesShowAsideBtn', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should call toggleAside', () => {
+    spyOn(component.view, 'toggleAside');
+    component.toggleAside();
+    expect(component.view.toggleAside).toHaveBeenCalled();
+  });
 });

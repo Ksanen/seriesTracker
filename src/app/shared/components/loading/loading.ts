@@ -20,27 +20,32 @@ export class Loading implements OnInit {
   text = input.required();
   destroyRef = inject(DestroyRef);
   direction = 'right';
-  newValue = '';
-  dots = signal('...');
+  dots = signal('..');
   loadingText = computed(() => {
     return `${this.text()}${this.dots()}`;
   });
   ngOnInit(): void {
     interval(100)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.newValue =
-          this.direction === 'right'
-            ? `${this.newValue}.`
-            : this.dots().slice(0, this.dots().length - 1);
-        this.dots.set(this.newValue);
-        switch (this.dots().length) {
-          case 0:
-            this.direction = 'right';
-            break;
-          case 3:
-            this.direction = 'left';
-        }
-      });
+      .subscribe(() => this.updateLoading());
+  }
+  updateLoading() {
+    let newDotsValue = this.dots();
+    newDotsValue =
+      this.direction === 'right'
+        ? `${newDotsValue}.`
+        : this.dots().slice(0, this.dots().length - 1);
+    this.dots.set(newDotsValue);
+    console.log(this.dots(), newDotsValue, this.direction);
+    this.selectDirection(this.dots().length);
+  }
+  selectDirection(length: number) {
+    switch (length) {
+      case 0:
+        this.direction = 'right';
+        break;
+      case 3:
+        this.direction = 'left';
+    }
   }
 }

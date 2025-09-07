@@ -5,6 +5,7 @@ import { computed, Injectable, signal } from '@angular/core';
 })
 export class AppViewService {
   currentScheme = signal(1);
+  savedScheme = localStorage.getItem('seriesScheme');
   nameOfCurrentScheme = computed(() => {
     switch (this.currentScheme()) {
       case 0:
@@ -25,9 +26,8 @@ export class AppViewService {
       });
   }
   initScheme() {
-    const savedScheme = localStorage.getItem('seriesScheme');
-    if (savedScheme) {
-      this.setCurrentScheme(savedScheme);
+    if (this.savedScheme) {
+      this.setCurrentScheme(this.savedScheme);
     }
     this.listenToSystemSchemeChanges();
     this.applyScheme();
@@ -62,7 +62,7 @@ export class AppViewService {
     }
     this.applyScheme();
   }
-  getSystemPreferredScheme() {
+  getSystemPreferredScheme(): 'dark' | 'light' {
     return window.matchMedia('(prefers-color-scheme:dark)').matches
       ? 'dark'
       : 'light';

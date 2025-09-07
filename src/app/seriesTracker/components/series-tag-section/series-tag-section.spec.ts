@@ -27,4 +27,9 @@ describe('SeriesTagSection', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should call deleteTag method', () => {
+    spyOn(component.store, 'deleteTag');
+    component.delete('test');
+    expect(component.store.deleteTag).toHaveBeenCalled();
+  });
 });
