@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, inject, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -11,14 +11,12 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class AddTag {
   tagName: string = '';
-  @Input() tagNames: string[] = [];
-  @Output() addNewTag = new EventEmitter<string[]>();
+  tagNames = model<string[]>([]);
   store = inject(SeriesStoreService);
   possibleTags = toSignal(this.store.possibleTags, { initialValue: [] });
   addTag() {
     if (this.tagName === '') return;
-    this.tagNames.push(this.tagName);
-    this.tagNames = [...new Set(this.tagNames)];
-    this.addNewTag.emit(this.tagNames);
+    this.tagNames().push(this.tagName);
+    this.tagNames.set([...new Set(this.tagNames())]);
   }
 }

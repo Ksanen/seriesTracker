@@ -14,6 +14,7 @@ function mockMatchMedia(matches: boolean) {
     dispatchEvent: () => false,
   });
 }
+
 describe('AppViewService', () => {
   let service: AppViewService;
 
@@ -22,22 +23,43 @@ describe('AppViewService', () => {
       providers: [provideZonelessChangeDetection()],
     });
     service = TestBed.inject(AppViewService);
+    let store: any = {};
+    const mockLocalStorage = {
+      getItem: (key: string): string | null => {
+        return key in store ? store[key] : null;
+      },
+      setItem: (key: string, value: string) => {
+        store[key] = `${value}`;
+      },
+      removeItem: (key: string) => {
+        delete store[key];
+      },
+      clear: () => {
+        store = {};
+      },
+    };
+    spyOn(Object.getPrototypeOf(localStorage), 'getItem').and.callFake(
+      mockLocalStorage.getItem
+    );
+    spyOn(Object.getPrototypeOf(localStorage), 'setItem').and.callFake(
+      mockLocalStorage.setItem
+    );
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-  it('should set scheme to 0', () => {
+  it('setCurrentScheme should set scheme to 0', () => {
     service.currentScheme.set(1);
     service.setCurrentScheme('light');
     expect(service.currentScheme()).toBe(0);
   });
-  it('should set scheme to 1', () => {
+  it('setCurrentSchemeshould set scheme to 1', () => {
     service.currentScheme.set(0);
     service.setCurrentScheme('system');
     expect(service.currentScheme()).toBe(1);
   });
-  it('should set scheme to 2', () => {
+  it('setCurrentScheme should set scheme to 2', () => {
     service.currentScheme.set(0);
     service.setCurrentScheme('dark');
     expect(service.currentScheme()).toBe(2);
@@ -58,15 +80,15 @@ describe('AppViewService', () => {
     expect(service.currentScheme()).toBe(1);
   });
 
-  it('name of current scheme should be light', () => {
+  it('nameOfCurrentScheme should be light', () => {
     service.currentScheme.set(0);
     expect(service.nameOfCurrentScheme()).toBe('light');
   });
-  it('name of current scheme should be system', () => {
+  it('nameOfCurrentScheme  should be system', () => {
     service.currentScheme.set(1);
     expect(service.nameOfCurrentScheme()).toBe('system');
   });
-  it('name of current scheme should be dark', () => {
+  it('nameOfCurrentScheme should be dark', () => {
     service.currentScheme.set(2);
     expect(service.nameOfCurrentScheme()).toBe('dark');
   });
@@ -100,5 +122,43 @@ describe('AppViewService', () => {
     mockMatchMedia(false);
     expect(service.getSystemPreferredScheme()).toBe('light');
   });
-  it('change event should call applyScheme function', () => {});
+  it('applyScheme should set item `seriesScheme` to `system` in localStorage', () => {
+    service.applyScheme();
+    expect(localStorage.setItem).toHaveBeenCalledWith('seriesScheme', 'system');
+  });
+  it('body should have class light-scheme', () => {
+    service.currentScheme.set(0);
+    document.body.classList.remove('light-scheme', 'dark-scheme');
+    console.log(document.body.classList);
+    service.applyScheme();
+    expect(document.body.classList.contains('light-scheme')).toBe(true);
+  });
+  it('body should have class dark-scheme', () => {
+    service.currentScheme.set(2);
+    document.body.classList.remove('light-scheme', 'dark-scheme');
+    console.log(document.body.classList);
+    service.applyScheme();
+    expect(document.body.classList.contains('dark-scheme')).toBe(true);
+  });
+  it('getSystemPreferredScheme() should be called when currentScheme is system', () => {
+    spyOn(service, 'getSystemPreferredScheme');
+    service.currentScheme.set(1);
+    service.applyScheme();
+    expect(service.getSystemPreferredScheme).toHaveBeenCalled();
+  });
+  it('getSystemPreferredScheme() should not have been called when currentScheme is not a system', () => {
+    spyOn(service, 'getSystemPreferredScheme');
+    service.currentScheme.set(0);
+    service.applyScheme();
+    expect(service.getSystemPreferredScheme).toHaveBeenCalledTimes(0);
+  });
+  it('not necessary classes from body should be removed', () => {
+    service.currentScheme.set(0);
+    document.body.classList.add('light-scheme', 'dark-scheme');
+    service.applyScheme();
+    expect(document.body.classList.contains('dark-scheme')).toBe(false);
+    service.currentScheme.set(2);
+    service.applyScheme();
+    expect(document.body.classList.contains('light-scheme')).toBe(false);
+  });
 });

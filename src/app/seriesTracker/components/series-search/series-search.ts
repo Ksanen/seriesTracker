@@ -1,4 +1,4 @@
-import { Component, output, signal, WritableSignal } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'series-search',
@@ -8,11 +8,5 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './series-search.css',
 })
 export class SeriesSearch {
-  nameChange = output<string>();
-  name: WritableSignal<string> = signal('');
-  newName: string = '';
-  changeName() {
-    this.name.set(this.newName);
-    this.nameChange.emit(this.name());
-  }
+  name = model<string>();
 }

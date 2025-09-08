@@ -45,4 +45,9 @@ describe('SeriesForm', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should remove tag', () => {
+    component.tagNames = ['test1', 'test2', 'test3'];
+    component.removeTag('test2');
+    expect(component.tagNames).toEqual(['test1', 'test3']);
+  });
 });

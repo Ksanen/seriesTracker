@@ -32,16 +32,17 @@ export class SeriesNames implements OnInit {
     });
   }
   ngOnInit(): void {
-    if (this.seriesNames().length === 0) return;
-    this.names.set(
-      this.namesService.createRemovableNamesArray(this.seriesNames())
-    );
+    if (this.seriesNames().length > 1) {
+      const namesExcludingFirst = this.seriesNames().splice(1);
+      this.names.set(
+        this.namesService.createRemovableNamesArray(namesExcludingFirst)
+      );
+    } else {
+      this.names.set([]);
+    }
   }
   addNewName() {
-    const newName = this.namesService.addNewName(this.names());
-    if (!newName) return;
-    this.names().push(newName);
-    this.updateNamesValues();
+    this.names.set(this.namesService.addNewName(this.names()));
   }
   removeName(id: number) {
     this.names.set(this.namesService.removeName(this.names(), id));

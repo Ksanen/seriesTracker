@@ -1,26 +1,25 @@
 <div
   class="overlay"
   [ngClass]="{
-    'overlay--open': options.showOverlay
+    'overlay--open': options().showOverlay
   }"
 ></div>
-<series-add [show]="options.showAddSeriesForm"></series-add>
+<series-add [show]="options().showAddSeriesForm"></series-add>
 <series-error></series-error>
 <div class="series-tracker">
-  <series-delete [show]="options.showDeleteSeriesConfirmation"></series-delete>
+  <series-delete
+    [show]="options().showDeleteSeriesConfirmation"
+  ></series-delete>
   <header class="header">
-    <series-search
-      class="header__search"
-      (nameChange)="name.set($event)"
-    ></series-search>
+    <series-search class="header__search" [(name)]="name"></series-search>
     <series-add-btn></series-add-btn>
     <series-show-aside-btn
-      [showAside]="options.showAside"
+      [showAside]="options().showAside"
     ></series-show-aside-btn>
   </header>
   <div class="content">
     <series-content-list [name]="name()"></series-content-list>
-    <app-aside [show]="options.showAside">
+    <app-aside [show]="options().showAside">
       <div class="darkMode">
         <p>Dark Mode</p>
         <dark-mode-btn></dark-mode-btn>

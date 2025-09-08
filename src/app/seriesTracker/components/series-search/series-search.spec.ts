@@ -21,10 +21,4 @@ describe('SeriesSearch', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should change name', () => {
-    component.name.set('test1');
-    component.newName = 'test2';
-    component.changeName();
-    expect(component.name()).toBe('test2');
-  });
 });

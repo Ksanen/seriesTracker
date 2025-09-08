@@ -1,20 +1,16 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { SeriesStoreService } from '../../services/seriesStoreService';
-import { Observable } from 'rxjs';
+import { Component, inject, OnInit } from '@angular/core';
 import { SeriesViewService } from '../../services/seriesViewService';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'series-error',
-  imports: [AsyncPipe],
+  imports: [],
   standalone: true,
   templateUrl: './series-error.html',
   styleUrl: './series-error.css',
 })
 export class SeriesError implements OnInit {
   ngOnInit(): void {}
-  error$: Observable<string>;
-  constructor(private view: SeriesViewService) {
-    this.error$ = this.view.error$;
-  }
+  view = inject(SeriesViewService);
+  error = toSignal(this.view.error$);
 }

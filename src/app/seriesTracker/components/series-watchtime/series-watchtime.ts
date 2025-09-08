@@ -16,7 +16,7 @@ export class SeriesWatchtime {
   form = input.required<FormGroup<WatchTimeForm>>();
   constructor() {
     effect(() => {
-      if (this.showWatchTime() === false) {
+      if (this.showWatchTime()) {
         this.resetWatchTime();
       }
     });

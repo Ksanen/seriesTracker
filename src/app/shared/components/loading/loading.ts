@@ -36,7 +36,6 @@ export class Loading implements OnInit {
         ? `${newDotsValue}.`
         : this.dots().slice(0, this.dots().length - 1);
     this.dots.set(newDotsValue);
-    console.log(this.dots(), newDotsValue, this.direction);
     this.selectDirection(this.dots().length);
   }
   selectDirection(length: number) {

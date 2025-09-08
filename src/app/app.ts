@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { SeriesTracker } from './seriesTracker/series-tracker';
 import { AppViewService } from './shared/services/app-view-service';
 
@@ -10,7 +10,7 @@ import { AppViewService } from './shared/services/app-view-service';
 })
 export class App implements OnInit {
   protected readonly title = signal('series-list');
-  constructor(private appView: AppViewService) {}
+  appView = inject(AppViewService);
   ngOnInit(): void {
     this.appView.initScheme();
   }

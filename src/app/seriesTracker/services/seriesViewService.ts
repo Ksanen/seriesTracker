@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, throwError } from 'rxjs';
 import AppOptions from '../../shared/interfaces/appOptions';
+import defaultAppViewOptions from '../../shared/utils/defaultValues/defaultAppViewOptions';
 
 @Injectable({
   providedIn: 'root',
@@ -9,12 +10,7 @@ export class SeriesViewService {
   private _error$ = new BehaviorSubject<string>('');
   error$ = this._error$.asObservable();
   globalStatusErrors: number[] = [404, 500, 503];
-  private _options$ = new BehaviorSubject({
-    showOverlay: false,
-    showAddSeriesForm: false,
-    showAside: false,
-    showDeleteSeriesConfirmation: false,
-  });
+  private _options$ = new BehaviorSubject(defaultAppViewOptions);
   private get currentOptions(): AppOptions {
     return this._options$.getValue();
   }

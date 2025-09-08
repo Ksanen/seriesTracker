@@ -6,25 +6,24 @@ import RemovableName from '../../shared/interfaces/removableName';
 })
 export class NamesService {
   addNewName(names: RemovableName[]) {
-    /*
-      jeżeli tablica names jest większa od 0 i ostatni element jest pusty,
-      to dodanie nowego imienia nie jest możliwe. Zapobiegnie to dodaniu wielu pustych imion.
-      Funkcja następnie wybiera unikalne id i dodaje nowe nowę imię z pustą wartością
-    */
     if (names.length > 0 && names[names.length - 1].value === '') {
-      return;
+      return names;
     }
     const idOfNames = names.map((name) => name.id);
+    const newName: RemovableName = {
+      id: this.createUniqueId(idOfNames),
+      value: '',
+    };
+    names.push(newName);
+    return names;
+  }
+  createUniqueId(idOfNames: number[]) {
     let id = Math.floor(Math.random() * 1000);
     while (idOfNames.includes(id)) {
       console.log(id);
       id = Math.floor(Math.random() * 1000);
     }
-    const newName: RemovableName = {
-      id: id,
-      value: '',
-    };
-    return newName;
+    return id;
   }
   createRemovableNamesArray(names: string[]) {
     /*
@@ -34,7 +33,7 @@ export class NamesService {
 
     */
     let removableNames: RemovableName[] = [];
-    for (let i = 1; i < names.length; i++) {
+    for (let i = 0; i < names.length; i++) {
       const idOfNames = removableNames.map((name) => name.id);
       let id = Math.floor(Math.random() * 1000);
       /*

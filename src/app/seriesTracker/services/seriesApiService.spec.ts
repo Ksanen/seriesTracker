@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { environment } from '../../../environments/environment';
 import { SeriesApiService } from './seriesApiService';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -8,6 +8,7 @@ import {
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { SeriesInterface } from '../../shared/interfaces/series';
+import Tag from '../../shared/interfaces/tag';
 
 describe('SeriesApiService', () => {
   let service: SeriesApiService;
@@ -69,5 +70,19 @@ describe('SeriesApiService', () => {
     );
     expect(httpRequest.request.method).toBe('GET');
     httpRequest.flush(mockSeries);
+  });
+  it('should gets tags', () => {
+    const mockData: Tag[] = [
+      {
+        name: 'test1',
+        seriesAttached: ['68af63244898fd4abd8de3f7'],
+      },
+    ];
+    service.getTags().subscribe((data) => {
+      expect(data).toEqual(mockData);
+    });
+    const req = httpController.expectOne(`${environment.apiUrl}/api/tags`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockData);
   });
 });

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { SeriesViewService } from '../../services/seriesViewService';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 @Component({
@@ -9,13 +9,10 @@ import { SeriesStoreService } from '../../services/seriesStoreService';
   templateUrl: './series-delete.html',
   styleUrl: './series-delete.css',
 })
-export class SeriesDelete implements OnInit {
+export class SeriesDelete {
   show = input<boolean>(false);
-  constructor(
-    private store: SeriesStoreService,
-    private view: SeriesViewService
-  ) {}
-  ngOnInit(): void {}
+  store = inject(SeriesStoreService);
+  view = inject(SeriesViewService);
   delete() {
     this.store.deleteSeries();
     this.hideConfirmationPopUp();
