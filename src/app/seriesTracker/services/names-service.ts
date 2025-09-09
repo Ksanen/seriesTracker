@@ -5,7 +5,7 @@ import RemovableName from '../../shared/interfaces/removableName';
   providedIn: 'root',
 })
 export class NamesService {
-  addNewName(names: RemovableName[]) {
+  createNewRemovableName(names: RemovableName[]) {
     if (names.length > 0 && names[names.length - 1].value === '') {
       return names;
     }

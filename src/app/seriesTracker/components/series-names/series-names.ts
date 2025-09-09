@@ -42,7 +42,7 @@ export class SeriesNames implements OnInit {
     }
   }
   addNewName() {
-    this.names.set(this.namesService.addNewName(this.names()));
+    this.names.set(this.namesService.createNewRemovableName(this.names()));
   }
   removeName(id: number) {
     this.names.set(this.namesService.removeName(this.names(), id));

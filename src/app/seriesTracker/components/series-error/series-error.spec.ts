@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SeriesError } from './series-error';
-import { provideZonelessChangeDetection } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 
 describe('SeriesError', () => {
   let component: SeriesError;
@@ -20,5 +20,12 @@ describe('SeriesError', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should show error in template after error was updated', () => {
+    const p: HTMLElement = fixture.nativeElement.querySelector('.error');
+    expect(p.textContent).toEqual('');
+    component.view.setError('error');
+    fixture.detectChanges();
+    expect(p.textContent).toEqual('error');
   });
 });

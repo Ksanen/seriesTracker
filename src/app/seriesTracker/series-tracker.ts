@@ -1,6 +1,5 @@
 import {
   Component,
-  DestroyRef,
   inject,
   Signal,
   signal,
@@ -46,7 +45,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class SeriesTracker {
   name: WritableSignal<string> = signal('');
-  destroyRef = inject(DestroyRef);
   view = inject(SeriesViewService);
   options: Signal<AppOptions> = toSignal(this.view.options$, {
     initialValue: defaultAppViewOptions,

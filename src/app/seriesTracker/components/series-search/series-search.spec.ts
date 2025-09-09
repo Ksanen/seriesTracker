@@ -21,4 +21,11 @@ describe('SeriesSearch', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should update name after text was written', () => {
+    const input: HTMLInputElement =
+      fixture.nativeElement.querySelector('.search');
+    input.value = 'test';
+    input.dispatchEvent(new Event('input'));
+    expect(component.name()).toEqual('test');
+  });
 });

@@ -61,7 +61,7 @@ describe('NamesService', () => {
         value: 'jan',
       },
     ];
-    const newNames = service.addNewName(names);
+    const newNames = service.createNewRemovableName(names);
     expect(newNames.length).toBe(2);
   });
   it('new name should be empty', () => {
@@ -71,7 +71,7 @@ describe('NamesService', () => {
         value: 'jan',
       },
     ];
-    const newNames = service.addNewName(names);
+    const newNames = service.createNewRemovableName(names);
     expect(newNames[1].value).toBe('');
   });
   it('new name should not be added when previous name is empty', () => {
@@ -81,7 +81,7 @@ describe('NamesService', () => {
         value: '',
       },
     ];
-    const newNames = service.addNewName(names);
+    const newNames = service.createNewRemovableName(names);
     expect(newNames.length).toBe(1);
   });
 });

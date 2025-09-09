@@ -5,13 +5,52 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { SeriesInterface } from '../../../shared/interfaces/series';
-import { BehaviorSubject } from 'rxjs';
 
+const series: SeriesInterface[] = [
+  {
+    _id: '1',
+    names: [],
+    type: '',
+    genre: '',
+    animation: '',
+    season: null,
+    episode: null,
+    watchTimeActive: true,
+    watchTime: { hours: 0, minutes: 0, seconds: 20 },
+    watched: true,
+    tagNames: ['crime', 'drugs'],
+  },
+  {
+    _id: '2',
+    names: ['Jan'],
+    type: '',
+    genre: '',
+    animation: '',
+    season: null,
+    episode: null,
+    watchTimeActive: true,
+    watchTime: { hours: 0, minutes: 0, seconds: 20 },
+    watched: true,
+    tagNames: ['crime', 'drugs'],
+  },
+  {
+    _id: '3',
+    names: ['Jan'],
+    type: 'movie',
+    genre: '',
+    animation: '',
+    season: null,
+    episode: null,
+    watchTimeActive: true,
+    watchTime: { hours: 0, minutes: 0, seconds: 20 },
+    watched: true,
+    tagNames: ['crime', 'drugs'],
+  },
+];
 describe('SeriesList', () => {
   let component: SeriesList;
   let fixture: ComponentFixture<SeriesList>;
-  const seriesList$ = new BehaviorSubject<SeriesInterface[]>([]);
-  const seriesList = seriesList$.asObservable();
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SeriesList],
