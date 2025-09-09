@@ -86,7 +86,7 @@
   ></series-watchtime>
   @if(show()){
   <div class="form__field form__field--right">
-    <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
+    <add-tag [(tagNames)]="tagNames"></add-tag>
   </div>
   }
 

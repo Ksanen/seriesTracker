@@ -4,8 +4,8 @@ import { SeriesStoreService } from '../../services/seriesStoreService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SeriesSettingsService } from '../../services/seriesSettingsService';
 import defaultFilterSettings from '../../../shared/utils/defaultValues/defaultFilterSettings';
-import filterSeries from '../../../shared/utils/fitlerSeries';
 import { Loading } from '../../../shared/components/loading/loading';
+import { SeriesHelperService } from '../../services/series-helper-service';
 @Component({
   selector: 'series-list',
   imports: [Series, Loading],
@@ -17,6 +17,7 @@ export class SeriesList {
   name = input<string>('');
   store = inject(SeriesStoreService);
   seriesSettings = inject(SeriesSettingsService);
+  seriesHelper = inject(SeriesHelperService);
   seriesList = toSignal(this.store.seriesList$, { initialValue: [] });
   filterSettings = toSignal(this.seriesSettings.filterSettings$, {
     initialValue: defaultFilterSettings,
@@ -25,7 +26,7 @@ export class SeriesList {
     const nameValue = this.name().toLowerCase();
     const settings = this.filterSettings();
     return this.seriesList().filter((series) =>
-      filterSeries(series, settings, nameValue)
+      this.seriesHelper.filterSeries(series, settings, nameValue)
     );
   });
 }

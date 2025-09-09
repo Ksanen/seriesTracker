@@ -92,7 +92,7 @@
 
   <div class="field field--form">
     <div>tags:</div>
-    <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
+    <add-tag [(tagNames)]="tagNames"></add-tag>
   </div>
   <div class="series__tags">
     @for(tagName of tagNames; track tagName){

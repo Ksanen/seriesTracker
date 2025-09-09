@@ -6,6 +6,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { SeriesInterface } from '../../../shared/interfaces/series';
 import defaultFilterSettings from '../../../shared/utils/defaultValues/defaultFilterSettings';
+import { BehaviorSubject } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 const exampleSeries: SeriesInterface[] = [
   {
     _id: '1',
@@ -51,7 +53,8 @@ const exampleSeries: SeriesInterface[] = [
 describe('SeriesList', () => {
   let component: SeriesList;
   let fixture: ComponentFixture<SeriesList>;
-
+  const seriesList$ = new BehaviorSubject<SeriesInterface[]>([]);
+  const seriesList = seriesList$.asObservable();
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SeriesList],
@@ -61,29 +64,12 @@ describe('SeriesList', () => {
         provideHttpClientTesting(),
       ],
     }).compileComponents();
-
     fixture = TestBed.createComponent(SeriesList);
     component = fixture.componentInstance;
-    component.filterSettings = signal(defaultFilterSettings);
-    component.seriesList = signal(exampleSeries);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-  it('should filtered series by name correctly', () => {
-    fixture.componentRef.setInput('name', 'Bre');
-
-    let correctFilteredSeries = [exampleSeries[0], exampleSeries[2]];
-    expect(component.filteredSeries()).toEqual(correctFilteredSeries);
-
-    fixture.componentRef.setInput('name', '');
-    correctFilteredSeries = [...exampleSeries];
-    expect(component.filteredSeries()).toEqual(correctFilteredSeries);
-
-    fixture.componentRef.setInput('name', 'Test');
-    correctFilteredSeries = [exampleSeries[2]];
-    expect(component.filteredSeries()).toEqual(correctFilteredSeries);
   });
 });

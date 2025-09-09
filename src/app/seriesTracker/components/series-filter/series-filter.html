@@ -51,7 +51,7 @@
   </div>
   <div class="filter__option">
     <p>tags</p>
-    <add-tag [tagNames]="tagNames" (addNewTag)="tagNames = $event"></add-tag>
+    <add-tag [(tagNames)]="tagNames"></add-tag>
   </div>
   <div class="tags-container">
     @for(tagName of tagNames;track tagName){
