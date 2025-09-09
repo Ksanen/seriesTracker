@@ -5,8 +5,8 @@ interface BaseSeries {
   type: string;
   genre: string;
   animation: string;
-  season: number;
-  episode: number;
+  season: number | null;
+  episode: number | null;
   watchTimeActive: boolean;
   watchTime: watchTime;
   watched: boolean;

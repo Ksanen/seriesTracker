@@ -11,7 +11,12 @@ export class SeriesHelperService {
     settings: seriesFilterSettings,
     nameValue: string
   ) => {
-    if (!series.names.some((name) => name.toLowerCase().includes(nameValue))) {
+    if (
+      nameValue != '' &&
+      !series.names.some((name) =>
+        name.toLowerCase().includes(nameValue.toLowerCase())
+      )
+    ) {
       return false;
     }
     if (settings.type !== '' && series.type !== settings.type) return false;
