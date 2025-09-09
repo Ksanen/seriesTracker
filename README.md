@@ -51,7 +51,7 @@ Make sure you have installed Node.js<br>
 4. create file .env i and add variable with URL to mongoDB<br>
 <img width="698" height="215" alt="baza" src="https://github.com/user-attachments/assets/26b03453-648a-402b-b3f9-6d1a6817eb09" /><br>
 Default port for the server is 3000<br>
-   however you can add diffent port,fort instance PORT=3200<br>
+   however you can add different port,for instance PORT=3200<br>
 
 If you decide to change Port you have to change port in another files (screenshots) <br>
 <img width="1175" height="305" alt="do" src="https://github.com/user-attachments/assets/4046c002-2ad8-4684-b37a-19d3745df100" /><br>
