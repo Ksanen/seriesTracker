@@ -20,10 +20,7 @@
       <p class="error">{{ error }}</p>
     </div>
   </div>
-  <series-names
-    [seriesNames]="namesValues"
-    (namesValues)="namesValues = $event"
-  ></series-names>
+  <series-names [(namesExcludingFirst)]="namesExcludingFirst"></series-names>
   <div class="field field--form">
     Type
     <select class="form-select field__data" formControlName="type">

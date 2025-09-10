@@ -15,10 +15,7 @@
       <div class="error">{{ error }}</div>
     </div>
   </div>
-  <series-names
-    [seriesNames]="namesValues"
-    (namesValues)="namesValues = $event"
-  ></series-names>
+  <series-names [(namesExcludingFirst)]="namesExcludingFirst"></series-names>
 
   <div class="form__field form__field--default">
     <label>Type</label>

@@ -3,6 +3,7 @@ import {
   effect,
   inject,
   input,
+  model,
   OnInit,
   output,
   signal,
@@ -20,26 +21,23 @@ import RemovableName from '../../../shared/interfaces/removableName';
   styleUrl: './series-names.css',
 })
 export class SeriesNames implements OnInit {
-  namesValues = output<string[]>();
-  seriesNames = input<string[]>([]);
+  namesExcludingFirst = model<string[]>([]);
   namesService = inject(NamesService);
   names: WritableSignal<RemovableName[]> = signal([]);
   constructor() {
     effect(() => {
-      if (this.seriesNames().length === 0 && this.names().length !== 0) {
+      if (
+        this.namesExcludingFirst().length === 0 &&
+        this.names().length !== 0
+      ) {
         this.names.set([]);
       }
     });
   }
   ngOnInit(): void {
-    if (this.seriesNames().length > 1) {
-      const namesExcludingFirst = this.seriesNames().splice(1);
-      this.names.set(
-        this.namesService.createRemovableNamesArray(namesExcludingFirst)
-      );
-    } else {
-      this.names.set([]);
-    }
+    this.names.set(
+      this.namesService.createRemovableNamesArray(this.namesExcludingFirst())
+    );
   }
   addNewName() {
     this.names.set(this.namesService.createNewRemovableName(this.names()));
@@ -48,7 +46,7 @@ export class SeriesNames implements OnInit {
     this.names.set(this.namesService.removeName(this.names(), id));
   }
   updateNamesValues() {
-    let namesValues = this.names().map((name) => name.value);
-    this.namesValues.emit(namesValues);
+    const values = this.namesService.getRemovableNamesValues(this.names());
+    this.namesExcludingFirst.set(values);
   }
 }

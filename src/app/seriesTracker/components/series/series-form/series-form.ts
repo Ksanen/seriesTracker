@@ -26,6 +26,7 @@ import { NamesService } from '../../../services/names-service';
 import { Observable } from 'rxjs';
 import { SeriesNames } from '../../series-names/series-names';
 import { SeriesWatchtime } from '../../series-watchtime/series-watchtime';
+import { SeriesHelperService } from '../../../services/series-helper-service';
 @Component({
   selector: 'series-form',
   imports: [
@@ -44,7 +45,7 @@ export class SeriesForm implements OnInit {
   @Input({ required: true }) series!: SeriesInterface;
   even = input.required<boolean>();
   @Output() closeForm = new EventEmitter();
-  namesValues: string[] = [];
+  namesExcludingFirst: string[] = [];
   tagNames: string[] = [];
   seriesForm!: FormGroup;
   wasValidated: boolean = false;
@@ -72,7 +73,8 @@ export class SeriesForm implements OnInit {
       }),
       watched: this.series.watched,
     });
-    this.namesValues = this.series.names;
+    const names = structuredClone(this.series.names);
+    this.namesExcludingFirst = names.splice(1);
     this.tagNames = [...this.series.tagNames];
     this.genreList = this.store.genreList$;
     this.typeList = this.store.typeList$;
@@ -83,19 +85,18 @@ export class SeriesForm implements OnInit {
     private cd: ChangeDetectorRef,
     private store: SeriesStoreService,
     private view: SeriesViewService,
-    private namesService: NamesService
+    private namesService: NamesService,
+    private helper: SeriesHelperService
   ) {}
   onSaveSeries() {
-    if (this.seriesForm.invalid) {
-      console.log('invalid');
-      this.wasValidated = true;
-      return;
-    }
+    this.wasValidated = true;
+    if (this.helper.isFormValid(this.seriesForm) === false) return;
     const form = this.seriesForm.value;
-    let namesToSend: string[] = [form.name, ...this.namesValues];
-    namesToSend = this.namesService.removeUnnecessaryNames(namesToSend);
     const series: SeriesToSend = {
-      names: namesToSend,
+      names: this.namesService.createNamesToSubmit(
+        this.seriesForm,
+        this.namesExcludingFirst
+      ),
       ...form,
       tagNames: this.tagNames,
     };

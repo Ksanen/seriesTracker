@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SeriesInterface } from '../../shared/interfaces/series';
 import seriesFilterSettings from '../../shared/interfaces/seriesSettings/seriesFilterSettings';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -40,4 +41,18 @@ export class SeriesHelperService {
       return false;
     return true;
   };
+  isFormValid(form: FormGroup) {
+    if (form.invalid) {
+      return false;
+    }
+    return true;
+  }
+  createUniqueId(idOfNames: number[]) {
+    let id = Math.floor(Math.random() * 1000);
+    while (idOfNames.includes(id)) {
+      console.log(id);
+      id = Math.floor(Math.random() * 1000);
+    }
+    return id;
+  }
 }

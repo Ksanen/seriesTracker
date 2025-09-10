@@ -5,6 +5,8 @@ import { SeriesInterface } from '../../shared/interfaces/series';
 import defaultFilterSettings from '../../shared/utils/defaultValues/defaultFilterSettings';
 import { provideZonelessChangeDetection } from '@angular/core';
 import seriesFilterSettings from '../../shared/interfaces/seriesSettings/seriesFilterSettings';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import defaultSeriesForm from '../../shared/utils/forms/defaultSeriesForm';
 const series: SeriesInterface = {
   _id: '1',
   names: [],
@@ -24,10 +26,13 @@ describe('SeriesHelperService', () => {
   let nameValue: string;
   let filterSettings: seriesFilterSettings;
   let exampleSeriesToTest: SeriesInterface;
+  let formBuilder: FormBuilder;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()],
+      imports: [ReactiveFormsModule],
+      providers: [provideZonelessChangeDetection(), FormBuilder],
     });
+    formBuilder = TestBed.inject(FormBuilder);
     service = TestBed.inject(SeriesHelperService);
     exampleSeriesToTest = structuredClone(series);
     filterSettings = structuredClone(defaultFilterSettings);
@@ -244,5 +249,15 @@ describe('SeriesHelperService', () => {
       nameValue
     );
     expect(result).toBe(true);
+  });
+  it('isFormValid should return true, when seriesForm is valid', () => {
+    const form = formBuilder.group(defaultSeriesForm);
+    form.controls['name'].setValue('Imie');
+    expect(service.isFormValid(form)).toBe(true);
+  });
+  it('isFormValid should return false, when seriesForm is invalid', () => {
+    const form = formBuilder.group(defaultSeriesForm);
+    form.controls['name'].setValue('');
+    expect(service.isFormValid(form)).toBe(false);
   });
 });

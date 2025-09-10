@@ -9,23 +9,23 @@ import {
 import { Tag } from '../../components/tag/tag';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { AddTag } from '../../components/add-tag/add-tag';
 import { SeriesToSend } from '../../../shared/interfaces/series';
 import { CommonModule } from '@angular/common';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 import { SeriesViewService } from '../../services/seriesViewService';
-import defaultSeriesFormValues from '../../../shared/utils/defaultValues/defaultSeriesFormValues';
+import defaultSeriesFormValues from '../../../shared/utils/forms/defaultSeriesFormValues';
 import { NamesService } from '../../services/names-service';
 import { Observable } from 'rxjs';
 import { SeriesNames } from '../../components/series-names/series-names';
 import { SeriesWatchtime } from '../../components/series-watchtime/series-watchtime';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SeriesHelperService } from '../../services/series-helper-service';
+import defaultSeriesForm from '../../../shared/utils/forms/defaultSeriesForm';
 @Component({
   selector: 'series-add',
   imports: [
@@ -46,7 +46,7 @@ export class SeriesAdd implements OnInit {
   genreList!: Observable<string[]>;
   typeList!: Observable<string[]>;
   animationList!: Observable<string[]>;
-  namesValues: string[] = [];
+  namesExcludingFirst: string[] = [];
   destroyRef = inject(DestroyRef);
   error: string = '';
   ngOnInit(): void {
@@ -64,30 +64,17 @@ export class SeriesAdd implements OnInit {
     private store: SeriesStoreService,
     private view: SeriesViewService,
     private namesService: NamesService,
+    private helper: SeriesHelperService,
     private cd: ChangeDetectorRef
   ) {
-    this.seriesForm = this.fb.group({
-      name: ['', Validators.required],
-      type: '',
-      genre: '',
-      animation: '',
-      season: null,
-      episode: null,
-      watchTimeActive: false,
-      watchTime: new FormGroup({
-        hours: new FormControl(0),
-        minutes: new FormControl(0),
-        seconds: new FormControl(0),
-      }),
-      watched: 0,
-    });
+    this.seriesForm = this.fb.group(defaultSeriesForm);
   }
   tagNames: string[] = [];
   close() {
     this.view.toggleAddSeriesForm();
     this.wasValidated = false;
     this.seriesForm.reset(defaultSeriesFormValues);
-    this.namesValues = [];
+    this.namesExcludingFirst = [];
     this.error = '';
     this.tagNames = [];
   }
@@ -97,17 +84,14 @@ export class SeriesAdd implements OnInit {
     );
   }
   onSubmit() {
-    if (this.seriesForm.invalid) {
-      this.wasValidated = true;
-      return;
-    }
+    this.wasValidated = true;
+    if (this.helper.isFormValid(this.seriesForm) === false) return;
     const form = this.seriesForm.value;
-    let names: string[] = this.namesService.removeUnnecessaryNames(
-      this.namesValues
-    );
-    const namesToSubmit = [form.name, ...names];
     const objectToSubmit: SeriesToSend = {
-      names: namesToSubmit,
+      names: this.namesService.createNamesToSubmit(
+        this.seriesForm,
+        this.namesExcludingFirst
+      ),
       ...form,
       tagNames: this.tagNames,
     };

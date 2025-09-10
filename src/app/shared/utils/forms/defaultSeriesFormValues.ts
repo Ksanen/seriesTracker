@@ -1,4 +1,4 @@
-import defaultWatchTime from './defaultWatchTimeValues';
+import defaultWatchTime from '../defaultValues/defaultWatchTimeValues';
 
 const defaultSeriesFormValues = {
   type: '',
