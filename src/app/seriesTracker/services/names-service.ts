@@ -52,10 +52,14 @@ export class NamesService {
     namesSet.delete('');
     return [...namesSet];
   }
-  createNamesToSubmit(form: FormGroup, namesValues: string[]): string[] {
-    let names: string[] = this.removeUnnecessaryNames(namesValues);
+  createNamesToSubmit(
+    form: FormGroup,
+    namesExcludingFirst: string[]
+  ): string[] {
+    let names: string[] = this.removeUnnecessaryNames(namesExcludingFirst);
     names = this.removeWhiteSpacesFromNames(names);
-    const namesToSubmit = [form.value.name, ...names];
+    let firstName = form.value.name;
+    const namesToSubmit = [firstName, ...names];
     return namesToSubmit;
   }
 }
