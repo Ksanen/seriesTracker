@@ -25,18 +25,20 @@ export class Loading implements OnInit {
     return `${this.text()}${this.dots()}`;
   });
   ngOnInit(): void {
-    interval(100)
+    interval(300)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.updateLoading());
   }
   updateLoading() {
-    let newDotsValue = this.dots();
-    newDotsValue =
-      this.direction === 'right'
-        ? `${newDotsValue}.`
-        : this.dots().slice(0, this.dots().length - 1);
-    this.dots.set(newDotsValue);
+    this.dots.set(this.setNewDotsValue());
     this.selectDirection(this.dots().length);
+  }
+  setNewDotsValue() {
+    const newDotsValue =
+      this.direction === 'right'
+        ? `${this.dots()}.`
+        : this.dots().slice(0, this.dots().length - 1);
+    return newDotsValue;
   }
   selectDirection(length: number) {
     switch (length) {
