@@ -8,6 +8,17 @@ import RemovableName from '../../shared/interfaces/removableName';
 describe('NamesService', () => {
   let service: NamesService;
   let fb: FormBuilder;
+  const removableNames: RemovableName[] = [
+    {
+      id: 1,
+      value: 'Jan',
+    },
+    {
+      id: 2,
+      value: 'test',
+    },
+    { id: 3, value: 'test2' },
+  ];
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideZonelessChangeDetection(), FormBuilder],
@@ -20,38 +31,23 @@ describe('NamesService', () => {
     expect(service).toBeTruthy();
   });
   it('getRemovableNamesValues should get correct values', () => {
-    const removableNames: RemovableName[] = [
-      {
-        id: 1,
-        value: 'Jan',
-      },
+    const values = service.getRemovableNamesValues(removableNames);
+    expect(values).toEqual(['Jan', 'test', 'test2']);
+  });
+  it('getRemovableNamesId should get correct id', () => {
+    const values = service.getRemovableNamesId(removableNames);
+    expect(values).toEqual([1, 2, 3]);
+  });
+  it('should remove name from array', () => {
+    const result = service.removeName(removableNames, 1);
+    expect(result).toEqual([
       {
         id: 2,
         value: 'test',
       },
-      { id: 3, value: 'test2' },
-    ];
-    const values = service.getRemovableNamesValues(removableNames);
-    expect(values).toEqual(['Jan', 'test', 'test2']);
-  });
-  it('should remove name from array', () => {
-    const result = service.removeName(
-      [
-        {
-          id: 1,
-          value: 'nazwa1',
-        },
-        {
-          id: 2,
-          value: 'nazwa2',
-        },
-      ],
-      1
-    );
-    expect(result).toEqual([
       {
-        id: 2,
-        value: 'nazwa2',
+        id: 3,
+        value: 'test2',
       },
     ]);
   });
@@ -73,37 +69,29 @@ describe('NamesService', () => {
     const namesAfter = service.removeUnnecessaryNames(names);
     expect(namesAfter).toEqual(['jan', 'adam', 'marek', 'john']);
   });
-  it('addNewName should add new name', () => {
+  it('createRemovableName should create new name', () => {
+    const names: RemovableName[] = [
+      {
+        id: 1,
+        value: 'jan',
+      },
+    ];
+    const idOfNames = service.getRemovableNamesId(names);
+    names.push(service.createRemovableName(idOfNames));
+    expect(names.length).toBe(2);
+  });
+  it('newRemovableName`s value should be empty', () => {
     const names = [
       {
         id: 1,
         value: 'jan',
       },
     ];
-    const newNames = service.createNewRemovableName(names);
-    expect(newNames.length).toBe(2);
+    const idOfNames = service.getRemovableNamesId(names);
+    names.push(service.createRemovableName(idOfNames));
+    expect(names[1].value).toBe('');
   });
-  it('new name should be empty', () => {
-    const names = [
-      {
-        id: 1,
-        value: 'jan',
-      },
-    ];
-    const newNames = service.createNewRemovableName(names);
-    expect(newNames[1].value).toBe('');
-  });
-  it('new name should not be added when previous name is empty', () => {
-    const names = [
-      {
-        id: 1,
-        value: '',
-      },
-    ];
-    const newNames = service.createNewRemovableName(names);
-    expect(newNames.length).toBe(1);
-  });
-  it('createNamesToSubmit should return main name and others names as an array', () => {
+  it('createNamesToSubmit should return main name and others names in an an array', () => {
     const form = fb.group(defaultSeriesForm);
     form.controls['name'].setValue('test1');
     let names = ['test2', 'test3'];
@@ -119,5 +107,17 @@ describe('NamesService', () => {
     service.createNamesToSubmit(form, names);
     expect(service.removeWhiteSpacesFromNames).toHaveBeenCalledTimes(1);
     expect(service.removeUnnecessaryNames).toHaveBeenCalledTimes(1);
+  });
+  it("canCreateRemovableName should return false,when last element's value is empty", () => {
+    const testRemovableNames = structuredClone(removableNames);
+    testRemovableNames[testRemovableNames.length - 1].value = '';
+    const result = service.canCreateNewRemovableName(testRemovableNames);
+    expect(result).toBe(false);
+  });
+  it("canCreateRemovableName should return true,when last element's value is not empty", () => {
+    const testRemovableNames = structuredClone(removableNames);
+    testRemovableNames[testRemovableNames.length - 1].value = 'tee';
+    const result = service.canCreateNewRemovableName(testRemovableNames);
+    expect(result).toBe(true);
   });
 });

@@ -40,7 +40,11 @@ export class SeriesNames implements OnInit {
     );
   }
   addNewName() {
-    this.names.set(this.namesService.createNewRemovableName(this.names()));
+    if (this.namesService.canCreateNewRemovableName(this.names()) === false)
+      return;
+    const idOfNames = this.namesService.getRemovableNamesId(this.names());
+    const newRemovableName = this.namesService.createRemovableName(idOfNames);
+    this.names().push(newRemovableName);
   }
   removeName(id: number) {
     this.names.set(this.namesService.removeName(this.names(), id));

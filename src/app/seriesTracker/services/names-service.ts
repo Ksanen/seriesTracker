@@ -8,31 +8,28 @@ import { SeriesHelperService } from './series-helper-service';
 })
 export class NamesService {
   helper = inject(SeriesHelperService);
-  createNewRemovableName(names: RemovableName[]) {
+  canCreateNewRemovableName(names: RemovableName[]): boolean {
     if (names.length > 0 && names[names.length - 1].value === '') {
-      return names;
+      return false;
     }
-    const idOfNames = names.map((name) => name.id);
-    const newName: RemovableName = {
-      id: this.helper.createUniqueId(idOfNames),
-      value: '',
-    };
-    names.push(newName);
-    return names;
+    return true;
   }
-  getRemovableNamesValues(names: RemovableName[]) {
+  createRemovableName(idOfNames: number[] = [], value?: string): RemovableName {
+    return {
+      id: this.helper.createUniqueId(idOfNames),
+      value: value ? value : '',
+    };
+  }
+  getRemovableNamesValues(names: RemovableName[]): string[] {
     return names.map((name) => name.value);
   }
-
-  createRemovableNamesArray(names: string[]) {
+  getRemovableNamesId(names: RemovableName[]): number[] {
+    return names.map((name) => name.id);
+  }
+  createRemovableNamesArray(names: string[]): RemovableName[] {
     let removableNames: RemovableName[] = [];
     for (let i = 0; i < names.length; i++) {
-      const idOfNames = removableNames.map((name) => name.id);
-      let id = this.helper.createUniqueId(idOfNames);
-      const newName: RemovableName = {
-        id: id,
-        value: names[i],
-      };
+      const newName = this.createRemovableName([], names[i]);
       removableNames.push(newName);
     }
     return removableNames;
@@ -41,13 +38,13 @@ export class NamesService {
     names = names.filter((name) => name.id !== id);
     return names;
   }
-  removeWhiteSpacesFromNames(array: string[]) {
+  removeWhiteSpacesFromNames(array: string[]): string[] {
     for (let i = 0; i < array.length; i++) {
       array[i] = array[i].trim();
     }
     return array;
   }
-  removeUnnecessaryNames(names: string[]) {
+  removeUnnecessaryNames(names: string[]): string[] {
     const namesSet = new Set(names);
     namesSet.delete('');
     return [...namesSet];
