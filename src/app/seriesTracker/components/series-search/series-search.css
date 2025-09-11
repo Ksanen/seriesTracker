@@ -2,7 +2,8 @@ input {
   padding: 10px;
   border: none;
   outline: none;
-  border-bottom: 1px solid black;
   box-sizing: border-box;
   width: 100%;
+  background-color: var(--headerBg);
+  border-bottom: 1px solid black;
 }

@@ -7,6 +7,7 @@
     --indicator: black;
     --darkModeBg: white;
     --seriesbg: rgb(169, 207, 165);
+    --headerBg: rgb(154, 168, 248);
   }
 }
 .dark-scheme {
@@ -18,5 +19,6 @@
     --indicator: white;
     --darkModeBg: black;
     --seriesbg: rgb(3, 18, 34);
+    --headerBg: rgba(203, 238, 182, 0.877);
   }
 }

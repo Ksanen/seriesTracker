@@ -8,6 +8,7 @@
   display: flex;
   padding: 0.5rem;
   gap: 10px;
+  background-color: var(--headerBg);
 }
 .header__search {
   flex-grow: 1;
