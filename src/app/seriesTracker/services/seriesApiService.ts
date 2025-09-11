@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import ServerResponse from '../../shared/interfaces/serverResponse';
 import Tag from '../../shared/interfaces/tag';
 import { environment } from '../../../environments/environment';
+import seriesViewSettings from '../../shared/interfaces/seriesSettings/seriesViewSettings';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,6 +17,17 @@ export class SeriesApiService {
   }
   getTags() {
     return this.http.get<Tag[]>(`${this.apiUrl}/api/tags`);
+  }
+  getViewSettings() {
+    return this.http.get<seriesViewSettings>(
+      `${this.apiUrl}/api/series/settings/view`
+    );
+  }
+  saveViewSettings(viewSettings: seriesViewSettings) {
+    return this.http.post(
+      `${this.apiUrl}/api/series/settings/view`,
+      viewSettings
+    );
   }
   deleteSeries(seriesId: string) {
     return this.http.delete(`${this.apiUrl}/api/series/${seriesId}`);
@@ -34,10 +46,9 @@ export class SeriesApiService {
       tagName: tagName,
     });
   }
-
   /* zwraca serie, które zostały zmienione
     w wyniku usunięcia z nich taga */
-  deleteTag(tagName: string) {
+  deleteTag(tagName: string): Observable<SeriesInterface[]> {
     return this.http.delete<SeriesInterface[]>(
       `${this.apiUrl}/api/tags/${tagName}`
     );

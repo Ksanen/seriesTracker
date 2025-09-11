@@ -62,4 +62,45 @@ describe('SeriesViewService', () => {
     service.toggleAddSeriesForm();
     expect(service.toggleOverlay).toHaveBeenCalledTimes(1);
   });
+  it("should setError with message 'failed to get resources from server' when status is 0", () => {
+    spyOn(service, 'setError').and.callThrough();
+    const response = {
+      status: 0,
+    };
+    service.handleError(response);
+    expect(service.setError).toHaveBeenCalledWith(
+      'failed to get resources from server'
+    );
+  });
+  it('if error status belongs to the globalStatusErrors then error should be set with response.error.msg', () => {
+    spyOn(service, 'setError').and.callThrough();
+    const response = {
+      status: 404,
+      error: {
+        success: false,
+        msg: 'series not found',
+      },
+    };
+    service.handleError(response);
+    expect(service.setError).toHaveBeenCalledWith(response.error.msg);
+  });
+  it('default value of options should be defaultAppViewOptions', () => {
+    const subscription = service.options$.subscribe((options) => {
+      expect(options).toEqual(defaultAppViewOptions);
+    });
+    subscription.unsubscribe();
+  });
+  it('toggleOption should toggle an option', () => {
+    const newOptions = {
+      showOverlay: false,
+      showAddSeriesForm: true,
+      showAside: false,
+      showDeleteSeriesConfirmation: false,
+    };
+    service.toggleOption('showAside');
+    const subscription = service.options$.subscribe((options) => {
+      expect(options.showAside).toEqual(true);
+    });
+    subscription.unsubscribe();
+  });
 });

@@ -9,6 +9,7 @@ import {
 } from '@angular/common/http/testing';
 import { SeriesInterface } from '../../shared/interfaces/series';
 import Tag from '../../shared/interfaces/tag';
+import seriesViewSettings from '../../shared/interfaces/seriesSettings/seriesViewSettings';
 
 describe('SeriesApiService', () => {
   let service: SeriesApiService;
@@ -71,7 +72,7 @@ describe('SeriesApiService', () => {
     expect(httpRequest.request.method).toBe('GET');
     httpRequest.flush(mockSeries);
   });
-  it('should gets tags', () => {
+  it('should get tags', () => {
     const mockData: Tag[] = [
       {
         name: 'test1',
@@ -82,6 +83,27 @@ describe('SeriesApiService', () => {
       expect(data).toEqual(mockData);
     });
     const req = httpController.expectOne(`${environment.apiUrl}/api/tags`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockData);
+  });
+  it('should get view settings', () => {
+    const mockData: seriesViewSettings = {
+      name: true,
+      season: true,
+      episode: true,
+      watched: true,
+      watchtime: true,
+      type: true,
+      genre: true,
+      animation: true,
+      tags: true,
+    };
+    service.getViewSettings().subscribe((data) => {
+      expect(data).toEqual(mockData);
+    });
+    const req = httpController.expectOne(
+      `${environment.apiUrl}/api/series/settings/view`
+    );
     expect(req.request.method).toBe('GET');
     req.flush(mockData);
   });

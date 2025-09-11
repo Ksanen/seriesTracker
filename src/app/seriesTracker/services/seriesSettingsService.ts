@@ -7,11 +7,11 @@ import defaultViewSettings from '../../shared/utils/defaultValues/defaultViewSet
 import defaultFilterSettings from '../../shared/utils/defaultValues/defaultFilterSettings';
 import { environment } from '../../../environments/environment';
 import { SeriesViewService } from './seriesViewService';
+import { SeriesApiService } from './seriesApiService';
 @Injectable({
   providedIn: 'root',
 })
 export class SeriesSettingsService {
-  private apiUrl = environment.apiUrl;
   private _viewSettings$ = new BehaviorSubject<seriesViewSettings>(
     defaultViewSettings
   );
@@ -20,12 +20,12 @@ export class SeriesSettingsService {
   );
   viewSettings$ = this._viewSettings$.asObservable();
   filterSettings$ = this._filterSettings$.asObservable();
-  constructor(private http: HttpClient, private view: SeriesViewService) {
+  constructor(private view: SeriesViewService, private api: SeriesApiService) {
     this.getViewSettings();
   }
   getViewSettings() {
-    this.http
-      .get<seriesViewSettings>(`${this.apiUrl}/api/series/settings/view`)
+    this.api
+      .getViewSettings()
       .pipe(catchError((error) => this.view.handleError(error)))
       .subscribe({
         next: (settings) => {
@@ -37,8 +37,8 @@ export class SeriesSettingsService {
       });
   }
   saveViewSettings(viewSettings: seriesViewSettings) {
-    this.http
-      .post(`${this.apiUrl}/api/series/settings/view`, viewSettings)
+    this.api
+      .saveViewSettings(viewSettings)
       .pipe(catchError((error) => this.view.handleError(error)))
       .subscribe({
         next: () => {
