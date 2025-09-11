@@ -75,7 +75,7 @@ describe('SeriesFilter', () => {
       tags: component.tagNames,
     });
   });
-  it('should call resetSeriesFilterForm and updateFilterSettings', () => {
+  it('should reset method call resetSeriesFilterForm and updateFilterSettings', () => {
     spyOn(component, 'updateFilterSettings');
     spyOn(component, 'resetSeriesFilterForm');
     component.reset();

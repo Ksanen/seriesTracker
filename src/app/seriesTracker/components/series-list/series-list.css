@@ -1,6 +1,20 @@
+:host {
+  flex-grow: 1;
+}
 .title {
   text-align: center;
   background-color: blue;
   color: White;
   margin: 0;
+}
+.list {
+  height: 100%;
+}
+.message {
+  height: 100%;
+  font-size: 40px;
+  color: var(--seriesText);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,9 +1,12 @@
-<h1 class="title">Liczba serii:{{ filteredSeries().length }}</h1>
 @defer {
 <div class="list">
-  @for(series of filteredSeries() ;track series._id;let even=$even ){
+  @if(filteredSeries().length!==0){
+  <h1 class="title">Number of series:{{ filteredSeries().length }}</h1>
+  } @for(series of filteredSeries() ;track series._id;let even=$even ){
   <series [even]="even" [series]="series"></series>
-  }@empty{ There is no series }
+  }@empty{
+  <div class="message">There is no series</div>
+  }
 </div>
 } @placeholder {
 <loading text="loading series"></loading>
