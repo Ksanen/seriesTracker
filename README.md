@@ -40,7 +40,7 @@ You can save season,episode,type,animation style and many more
 
 
 ## Run
-Make sure you have installed Node.js<br>
+Make sure you have installed Node.js and you have mongodb<br>
 1. Clone repository <br>
 <code>git clone https://github.com/Ksanen/seriesTracker.git</code>
 2. open project<br>
