@@ -41,6 +41,12 @@ export class SeriesHelperService {
       return false;
     return true;
   };
+  getSpecyficNumberOfSeries(
+    seriesList: SeriesInterface[],
+    numberOfSeriesToGet: number
+  ) {
+    return seriesList.slice(0, numberOfSeriesToGet);
+  }
   isFormValid(form: FormGroup) {
     if (form.invalid) {
       return false;

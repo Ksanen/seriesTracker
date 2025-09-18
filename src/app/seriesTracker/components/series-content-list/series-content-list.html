@@ -1,5 +1,8 @@
 <main class="content__list">
-  <series-list [name]="name()"></series-list>
+  <series-list
+    [name]="name()"
+    [maxNumberOfSeriesToLoad]="maxNumberOfSeries"
+  ></series-list>
   <div
     #arrowContainer
     class="top"

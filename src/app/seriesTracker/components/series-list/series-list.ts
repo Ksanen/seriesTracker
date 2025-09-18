@@ -1,4 +1,12 @@
-import { Component, computed, inject, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  Signal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { Series } from '../series/series';
 import { SeriesStoreService } from '../../services/seriesStoreService';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -15,6 +23,8 @@ import { SeriesHelperService } from '../../services/series-helper-service';
 })
 export class SeriesList {
   name = input<string>('');
+  maxNumberOfSeriesToLoad = input<number>(20);
+  numberOfSeries!: number;
   store = inject(SeriesStoreService);
   seriesSettings = inject(SeriesSettingsService);
   seriesHelper = inject(SeriesHelperService);
@@ -25,8 +35,13 @@ export class SeriesList {
   filteredSeries = computed(() => {
     const nameValue = this.name().toLowerCase();
     const settings = this.filterSettings();
-    return this.seriesList().filter((series) =>
+    const filtered = this.seriesList().filter((series) =>
       this.seriesHelper.filterSeries(series, settings, nameValue)
+    );
+    this.numberOfSeries = filtered.length;
+    return this.seriesHelper.getSpecyficNumberOfSeries(
+      filtered,
+      this.maxNumberOfSeriesToLoad()
     );
   });
 }

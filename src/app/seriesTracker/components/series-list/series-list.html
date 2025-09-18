@@ -1,7 +1,7 @@
 @defer {
 <div class="list">
-  @if(filteredSeries().length!==0){
-  <h1 class="title">Number of series:{{ filteredSeries().length }}</h1>
+  @if(numberOfSeries!==0){
+  <h1 class="title">Number of series:{{ numberOfSeries }}</h1>
   } @for(series of filteredSeries() ;track series._id;let even=$even ){
   <series [even]="even" [series]="series"></series>
   }@empty{

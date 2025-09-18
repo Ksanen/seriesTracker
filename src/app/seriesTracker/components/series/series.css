@@ -1,7 +1,6 @@
 .series {
   display: flex;
   flex-direction: column;
-  color: #ffffff;
   padding: 1rem;
   flex-wrap: wrap;
   gap: 20px;
