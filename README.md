@@ -57,7 +57,7 @@ If you decide to change Port you have to change port in another files (screensho
 <img width="1175" height="305" alt="do" src="https://github.com/user-attachments/assets/4046c002-2ad8-4684-b37a-19d3745df100" /><br>
 
 5. Run project<br>
-<code>ng run all</code>
+<code>npm run all</code>
 6. open link in the browser<br><br>
 
 Additional commands:<br>
